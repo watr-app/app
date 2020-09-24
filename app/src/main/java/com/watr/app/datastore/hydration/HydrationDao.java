@@ -1,5 +1,6 @@
 package com.watr.app.datastore.hydration;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -41,9 +42,10 @@ public interface HydrationDao {
 
   // Get all hydration records ordered by latest to oldest (Largest => smallest Unix timestamp)
   @Query("SELECT * FROM hydration_records ORDER BY timestamp DESC")
-  ArrayList<HydrationEntity> getAll();
+  LiveData<ArrayList<HydrationEntity>> getAll();
 
   // Get all hydration records in a certain time frame, sorted by latest to oldest
+  // "start" and "end" need to be Unix timestamps
   @Query("SELECT * FROM hydration_records WHERE timestamp >= :start AND timestamp <= :end ORDER BY timestamp DESC")
-  ArrayList<HydrationEntity> getByTimeFrame(int start, int end);
+  LiveData<ArrayList<HydrationEntity>> getByTimeFrame(int start, int end);
 }
