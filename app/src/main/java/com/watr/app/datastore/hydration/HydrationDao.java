@@ -18,6 +18,14 @@ import java.util.ArrayList;
 @Dao
 public interface HydrationDao {
 
+  // Get all hydration records ordered by latest to oldest (Largest => smallest Unix timestamp)
+  @Query("SELECT * FROM hydration_records ORDER BY timestamp DESC")
+  LiveData<ArrayList<HydrationEntity>> getAll();
+
+  // Wipe the entire database (Use with caution)
+  @Query("DELETE FROM hydration_records")
+  void wipe();
+
   // Using ignore conflict resolution strategy because two records will never be the same,
   // seeing as they will at the very least have different IDs and Unix timestamps
   @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -41,17 +49,4 @@ public interface HydrationDao {
   // Bulk delete hydration records with a matcher list
   @Delete
   void bulkDelete(ArrayList<HydrationEntity> matcherEntityList);
-
-  // Wipe the entire database (Use with caution)
-  @Query("DELETE FROM hydration_records")
-  void wipe();
-
-  // Get all hydration records ordered by latest to oldest (Largest => smallest Unix timestamp)
-  @Query("SELECT * FROM hydration_records ORDER BY timestamp DESC")
-  LiveData<ArrayList<HydrationEntity>> getAll();
-
-  // Get all hydration records in a certain time frame, sorted by latest to oldest
-  // "start" and "end" need to be Unix timestamps
-  @Query("SELECT * FROM hydration_records WHERE timestamp >= :start AND timestamp <= :end ORDER BY timestamp DESC")
-  LiveData<ArrayList<HydrationEntity>> getByTimeFrame(int start, int end);
 }
