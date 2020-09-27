@@ -3,11 +3,11 @@ package com.watr.app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import com.watr.app.hydration.UserSharedPreferenceManager;
+import com.watr.app.datastore.settings.SettingsManager;
 
 public class MainActivity extends AppCompatActivity {
 
-  private UserSharedPreferenceManager prefmanager = new UserSharedPreferenceManager();
+  private SettingsManager prefmanager = new SettingsManager();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
