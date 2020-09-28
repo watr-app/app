@@ -15,7 +15,7 @@ public class UserProfileManager {
   private static final String SHARED_PREFS = "sharedPrefs";
   private static final String SEX = "sex";
   private static final String WEIGHT = "weight";
-
+/*
   public void saveData(boolean sex, int weight) {
     SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -24,4 +24,5 @@ public class UserProfileManager {
   }
 
   Boolean sex = sharedPreferences.getBoolean(SEX, false);
+ */
 }

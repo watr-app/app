@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-package com.watr.app.ui;
+package com.watr.app.ui.utils;
 
 import android.util.Log;
 import com.watr.app.utils.ArrayUtils;

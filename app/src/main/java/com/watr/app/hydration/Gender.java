@@ -16,9 +16,9 @@ public enum Gender {
 
   private int gender;
 
-  public Gender(int gender) {
+  /*public Gender(int gender) {
     this.gender = gender;
-  }
+  }*/
 
   public int getGender() {
     return this.gender;

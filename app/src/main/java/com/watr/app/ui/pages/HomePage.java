@@ -4,26 +4,26 @@
  * All rights reserved.
  */
 
-package com.watr.app;
+package com.watr.app.ui.pages;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
-import lombok.RequiredArgsConstructor;
+import com.watr.app.R;
+import lombok.NoArgsConstructor;
 
 /**
- * View pager fragment page skeleton. Dynamically selects a layout for the fragment page based on a
- * provided layout ID.
+ * Home page. All functionality specific to the home page goes here.
  */
-@RequiredArgsConstructor
-public class FragmentPage extends Fragment {
-  private final int layoutId;
+@NoArgsConstructor
+public class HomePage extends Fragment {
 
   @Override
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    return inflater.inflate(layoutId, container, false);
+    return inflater.inflate(R.layout.fragment_home, container, false);
   }
 }
+

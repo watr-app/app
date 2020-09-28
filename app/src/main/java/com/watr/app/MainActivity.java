@@ -9,8 +9,10 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener;
 import com.google.android.material.tabs.TabLayout.Tab;
-import com.watr.app.ui.PageTracker;
-import com.watr.app.ui.FragmentLayouts;
+import com.watr.app.ui.pages.HistoryPage;
+import com.watr.app.ui.pages.HomePage;
+import com.watr.app.ui.pages.SettingsPage;
+import com.watr.app.ui.utils.PageTracker;
 import lombok.val;
 
 public class MainActivity extends FragmentActivity {
@@ -115,7 +117,16 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public Fragment createFragment(int index) {
-      return new FragmentPage(FragmentLayouts.values()[index].layoutId);
+      switch (index) {
+        case 0:
+          return new HistoryPage();
+        case 2:
+          return new SettingsPage();
+        case 1:
+        default:
+          // In case any new pages beyond the 3 initial ones get added later
+          return new HomePage();
+      }
     }
 
     @Override
