@@ -6,32 +6,35 @@
 
 package com.watr.app.datastore.hydration;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import com.watr.app.hydration.DrinkType;
 import java.util.Date;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.ToString;
 
-@RequiredArgsConstructor
+@ToString
 @Entity(tableName = "hydration_records")
 public class HydrationEntity {
+  // BUG: Cannot use a RequiredArgsConstructor here or it breaks the build because it cannot find
+  // the setter for some reason, hence why the constructor has to be manually created here
+  public HydrationEntity(int id, DrinkType drinkType, double amount, Date timestamp) {
+    this.id = id;
+    this.drinkType = drinkType;
+    this.amount = amount;
+    this.timestamp = timestamp;
+  }
+
   @Getter
-  @Setter
   @PrimaryKey(autoGenerate = true)
-  private int id;
+  private final int id;
 
   @Getter
-  @Setter
-  private DrinkType drinkType;
+  @ColumnInfo(name = "drink_type")
+  private final DrinkType drinkType;
 
-  @Getter
-  @Setter
-  private double amount; // I.e. absolute amount of liquid ingested, in ml
+  @Getter private final double amount; // I.e. absolute amount of liquid ingested, in ml
 
-  @Getter
-  @Setter
-  private Date timestamp;
-
+  @Getter private final Date timestamp;
 }

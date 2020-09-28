@@ -1,12 +1,10 @@
 package com.watr.app;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 import com.watr.app.datastore.settings.SettingsManager;
 
 public class MainActivity extends AppCompatActivity {
-
   private SettingsManager prefmanager = new SettingsManager();
 
   @Override

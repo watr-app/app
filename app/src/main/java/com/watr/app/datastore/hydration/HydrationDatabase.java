@@ -20,7 +20,6 @@ import java.util.concurrent.Executors;
     exportSchema = false)
 @TypeConverters({TypeConversionUtils.class})
 public abstract class HydrationDatabase extends RoomDatabase {
-
   // Init DAO
   public abstract HydrationDao hydrationDao();
 
