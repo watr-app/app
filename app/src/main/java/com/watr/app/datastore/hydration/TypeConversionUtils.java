@@ -12,15 +12,15 @@ import com.watr.app.utils.StringifyUtils;
 import java.util.Date;
 import lombok.NonNull;
 
-public class TypeConverters {
+public class TypeConversionUtils {
 
   @TypeConverter
-  public static Date fromTimestamp(@NonNull Long unixTimestamp) {
+  public static Date dateFromUnixTimestamp(@NonNull Long unixTimestamp) {
     return new Date(unixTimestamp);
   }
 
   @TypeConverter
-  public static Long dateToTimestamp(@NonNull Date date) {
+  public static Long dateToUnixTimestamp(@NonNull Date date) {
     return date.getTime();
   }
 

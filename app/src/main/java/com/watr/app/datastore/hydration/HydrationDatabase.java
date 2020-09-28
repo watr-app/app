@@ -18,7 +18,7 @@ import java.util.concurrent.Executors;
     entities = {HydrationEntity.class},
     version = 1,
     exportSchema = false)
-@TypeConverters({com.watr.app.datastore.hydration.TypeConverters.class})
+@TypeConverters({TypeConversionUtils.class})
 public abstract class HydrationDatabase extends RoomDatabase {
 
   // Init DAO
