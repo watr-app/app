@@ -29,16 +29,19 @@ public abstract class HydrationDatabase extends RoomDatabase {
   private static final int THREAD_COUNT = 4;
 
   // Create multi-threaded write executor
-  static final ExecutorService executor = Executors
-      .newFixedThreadPool(THREAD_COUNT);
+  static final ExecutorService executor = Executors.newFixedThreadPool(THREAD_COUNT);
 
   // Singleton instance initialiser / getter
   static HydrationDatabase getDatabase(final Context context) {
     if (INSTANCE == null) {
       synchronized (HydrationDatabase.class) {
         if (INSTANCE == null) {
-          INSTANCE = Room.databaseBuilder(context.getApplicationContext(), HydrationDatabase.class,
-              "hydration_database").build();
+          INSTANCE =
+              Room.databaseBuilder(
+                      context.getApplicationContext(),
+                      HydrationDatabase.class,
+                      "hydration_database")
+                  .build();
         }
       }
     }
