@@ -1,15 +1,126 @@
 package com.watr.app;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import com.watr.app.datastore.settings.SettingsManager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener;
+import com.google.android.material.tabs.TabLayout.Tab;
+import com.watr.app.ui.PageTracker;
+import com.watr.app.ui.FragmentLayouts;
+import lombok.val;
 
-public class MainActivity extends AppCompatActivity {
-  private SettingsManager prefmanager = new SettingsManager();
+public class MainActivity extends FragmentActivity {
+  private static final int PAGE_COUNT = 3;
+  public static final int DEFAULT_PAGE = 1;
+
+  private TabLayout navigationBar;
+  private ViewPager2 viewPager;
+  private PageTracker pageTracker;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+    // Init
+    navigationBar = findViewById(R.id.navigation_bar);
+    viewPager = findViewById(R.id.view_pager);
+    pageTracker = new PageTracker(DEFAULT_PAGE);
+
+    // Initialise ViewPager and PagerAdapter, and set current item to the default one one
+    viewPager.setAdapter(new PagerAdapter(this));
+
+    // Set current navigation bar item and current page to the default
+    // Setting smoothScroll to false to prevent jitter on boot
+    val defaultPosition = pageTracker.getCurrentPage();
+    updateNavigationBar(defaultPosition);
+    updateViewPager(defaultPosition, false);
+
+    // Attaching a tab select listener that triggers the view pager to switch and vice versa here
+    // in order to synchro the navigation bar and the view pager
+
+    navigationBar.addOnTabSelectedListener(
+        new OnTabSelectedListener() {
+          @Override
+          public void onTabSelected(Tab tab) {
+            updateViewPager(tab.getPosition());
+          }
+
+          @Override
+          public void onTabUnselected(Tab tab) {}
+
+          @Override
+          public void onTabReselected(Tab tab) {}
+        });
+
+    viewPager.registerOnPageChangeCallback(
+        new OnPageChangeCallback() {
+          @Override
+          public void onPageSelected(int position) {
+            super.onPageSelected(position);
+            updateNavigationBar(position);
+            pageTracker.setCurrentPage(position);
+          }
+        });
+  }
+
+  @Override
+  public void onBackPressed() {
+    if (pageTracker.currentPageIsFirst(true)) {
+      // If at first occurrence of home page, allow system to handle the Back button (Suspend app)
+      super.onBackPressed();
+    } else {
+      // Otherwise, select previous page
+      updateViewPager(pageTracker.getPreviousPage());
+    }
+  }
+
+  /**
+   * Sets the navigation bar to the tab at the submitted index.
+   *
+   * @param position Tab index
+   */
+  private void updateNavigationBar(int position) {
+    navigationBar.selectTab(navigationBar.getTabAt(position));
+  }
+
+  /**
+   * Sends the view pager to the page at the submitted index.
+   *
+   * @param position Page index
+   */
+  private void updateViewPager(int position) {
+    viewPager.setCurrentItem(position);
+  }
+
+  /**
+   * Sends the view pager to the page at the submitted index, with a special case for where
+   * smoothScroll needs to be overridden.
+   *
+   * @param position Page index
+   * @param smoothScroll Override for whether to trigger the scroll animation on the view pager
+   */
+  private void updateViewPager(int position, boolean smoothScroll) {
+    viewPager.setCurrentItem(position, smoothScroll);
+  }
+
+  private class PagerAdapter extends FragmentStateAdapter {
+    public PagerAdapter(FragmentActivity fragmentActivity) {
+      super(fragmentActivity);
+    }
+
+    @Override
+    public Fragment createFragment(int index) {
+      return new FragmentPage(FragmentLayouts.values()[index].layoutId);
+    }
+
+    @Override
+    public int getItemCount() {
+      return PAGE_COUNT;
+    }
   }
 }
