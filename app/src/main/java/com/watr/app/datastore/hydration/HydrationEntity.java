@@ -9,27 +9,30 @@ package com.watr.app.datastore.hydration;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import com.watr.app.hydration.DrinkType;
+import java.util.Date;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @RequiredArgsConstructor
 @Entity(tableName = "hydration_records")
 public class HydrationEntity {
-
   @Getter
+  @Setter
   @PrimaryKey(autoGenerate = true)
   private int id;
 
   @Getter
-  @NonNull
-  private final DrinkType drinkType;
+  @Setter
+  private DrinkType drinkType;
 
   @Getter
-  @NonNull
-  private final double amount; // I.e. absolute amount of liquid ingested
+  @Setter
+  private double amount; // I.e. absolute amount of liquid ingested, in ml
 
   @Getter
-  @NonNull
-  private final int timestamp;
+  @Setter
+  private Date timestamp;
+
 }

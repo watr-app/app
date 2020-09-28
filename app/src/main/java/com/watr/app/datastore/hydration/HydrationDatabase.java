@@ -10,10 +10,15 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {HydrationEntity.class}, version = 1, exportSchema = false)
+@Database(
+    entities = {HydrationEntity.class},
+    version = 1,
+    exportSchema = false)
+@TypeConverters({com.watr.app.datastore.hydration.TypeConverters.class})
 public abstract class HydrationDatabase extends RoomDatabase {
 
   // Init DAO
