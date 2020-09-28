@@ -8,7 +8,9 @@ package com.watr.app.datastore.hydration;
 
 import android.app.Application;
 import androidx.lifecycle.LiveData;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Future;
 import lombok.Getter;
 
 public class HydrationDatabaseController {
@@ -19,17 +21,26 @@ public class HydrationDatabaseController {
 
   // FIXME: If we want to unit test this, we can't depend on Application
   // Should be fine for now though
-  private HydrationDatabaseController(Application application) {
+  public HydrationDatabaseController(Application application) {
     HydrationDatabase db = HydrationDatabase.getDatabase(application);
     hydrationDao = db.hydrationDao();
     allHydrationRecords = hydrationDao.getAll();
   }
 
+  // All methods here are merely execution scheduler shell methods for the DAO
+  // For documentation on the methods themselves, see the HydrationDao interface (HydrationDao.java)
+
   // Note: All methods must be called on non-UI threads, or the app will throw an exception
   // This is to prevent running queries on the main thread and thus threadblocking the UI
 
-  // All methods here are merely execution scheduler shell methods for the DAO
-  // For documentation on the methods themselves, see the HydrationDao interface (HydrationDao.java)
+  public Future<HydrationEntity> getLatest() {
+    return HydrationDatabase.executor.submit(() -> hydrationDao.getLatest());
+  }
+
+  public Future<List<HydrationEntity>> getByTimeFrame(Date start, Date end) {
+    return HydrationDatabase.executor.submit(
+        () -> hydrationDao.getByTimeFrame(start.getTime(), end.getTime()));
+  }
 
   void wipe() {
     HydrationDatabase.executor.execute(() -> hydrationDao.wipe());
@@ -37,6 +48,10 @@ public class HydrationDatabaseController {
 
   void insert(HydrationEntity newEntity) {
     HydrationDatabase.executor.execute(() -> hydrationDao.insert(newEntity));
+  }
+
+  void bulkInsert(List<HydrationEntity> newEntityList) {
+    HydrationDatabase.executor.execute(() -> hydrationDao.bulkInsert(newEntityList));
   }
 
   void update(HydrationEntity patcherEntity) {

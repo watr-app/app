@@ -22,14 +22,26 @@ public interface HydrationDao {
   @Query("SELECT * FROM hydration_records ORDER BY timestamp DESC")
   LiveData<List<HydrationEntity>> getAll();
 
+  // Get latest hydration record
+  @Query("SELECT * FROM hydration_records ORDER BY timestamp DESC LIMIT 1")
+  HydrationEntity getLatest();
+
+  // Get hydration records between two Unix timestamps
+  @Query("SELECT * FROM hydration_records WHERE timestamp <= :start AND timestamp >= :end ORDER BY timestamp DESC LIMIT 1")
+  List<HydrationEntity> getByTimeFrame (Long start, Long end);
+
   // Wipe the entire database (Use with caution)
   @Query("DELETE FROM hydration_records")
   void wipe();
 
-  // Using ignore conflict resolution strategy because two records will never be the same,
+  // Using ignore conflict resolution strategy here because two records will never be the same,
   // seeing as they will at the very least have different IDs and Unix timestamps
+
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   void insert(HydrationEntity newEntity);
+
+  @Insert(onConflict = OnConflictStrategy.IGNORE)
+  void bulkInsert(List<HydrationEntity> newEntityList);
 
   // Update a hydration record through a patcher entity
   // Entity with matching primary key is deleted
