@@ -8,15 +8,14 @@ package com.watr.app.datastore.hydration;
 
 import android.app.Application;
 import androidx.lifecycle.LiveData;
-import java.util.ArrayList;
+import java.util.List;
 import lombok.Getter;
 
 public class HydrationDatabaseController {
 
   private HydrationDao hydrationDao;
 
-  @Getter
-  private LiveData<ArrayList<HydrationEntity>> allHydrationRecords;
+  @Getter private LiveData<List<HydrationEntity>> allHydrationRecords;
 
   // FIXME: If we want to unit test this, we can't depend on Application
   // Should be fine for now though
@@ -44,7 +43,7 @@ public class HydrationDatabaseController {
     HydrationDatabase.executor.execute(() -> hydrationDao.update(patcherEntity));
   }
 
-  void bulkUpdate(ArrayList<HydrationEntity> patcherEntityList) {
+  void bulkUpdate(List<HydrationEntity> patcherEntityList) {
     HydrationDatabase.executor.execute(() -> hydrationDao.bulkUpdate(patcherEntityList));
   }
 
@@ -52,7 +51,7 @@ public class HydrationDatabaseController {
     HydrationDatabase.executor.execute(() -> hydrationDao.delete(matcherEntity));
   }
 
-  void bulkDelete(ArrayList<HydrationEntity> matcherEntityList) {
+  void bulkDelete(List<HydrationEntity> matcherEntityList) {
     HydrationDatabase.executor.execute(() -> hydrationDao.bulkDelete(matcherEntityList));
   }
 }

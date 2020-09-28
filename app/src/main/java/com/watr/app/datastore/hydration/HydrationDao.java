@@ -13,14 +13,14 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
-import java.util.ArrayList;
+import java.util.List;
 
 @Dao
 public interface HydrationDao {
 
   // Get all hydration records ordered by latest to oldest (Largest => smallest Unix timestamp)
   @Query("SELECT * FROM hydration_records ORDER BY timestamp DESC")
-  LiveData<ArrayList<HydrationEntity>> getAll();
+  LiveData<List<HydrationEntity>> getAll();
 
   // Wipe the entire database (Use with caution)
   @Query("DELETE FROM hydration_records")
@@ -31,7 +31,8 @@ public interface HydrationDao {
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   void insert(HydrationEntity newEntity);
 
-  // Update a hydration record through a patcher entity (Entity with matching primary key is deleted)
+  // Update a hydration record through a patcher entity
+  // Entity with matching primary key is deleted
   // https://developer.android.com/reference/androidx/room/Update
   @Update(onConflict = OnConflictStrategy.IGNORE)
   void update(HydrationEntity patcherEntity);
@@ -39,7 +40,7 @@ public interface HydrationDao {
   // Bulk update hydration records with a matcher list
   // https://developer.android.com/reference/androidx/room/Update
   @Update(onConflict = OnConflictStrategy.IGNORE)
-  void bulkUpdate(ArrayList<HydrationEntity> patcherEntityList);
+  void bulkUpdate(List<HydrationEntity> patcherEntityList);
 
   // Delete a hydration record through a matcher (Entity with matching primary key is deleted)
   // https://developer.android.com/reference/androidx/room/Delete
@@ -48,5 +49,5 @@ public interface HydrationDao {
 
   // Bulk delete hydration records with a matcher list
   @Delete
-  void bulkDelete(ArrayList<HydrationEntity> matcherEntityList);
+  void bulkDelete(List<HydrationEntity> matcherEntityList);
 }
