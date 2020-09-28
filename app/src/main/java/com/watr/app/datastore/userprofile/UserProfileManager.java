@@ -4,14 +4,13 @@
  * All rights reserved.
  */
 
-package com.watr.app.sharedPreferences;
+package com.watr.app.datastore.userprofile;
 
 import static android.content.Context.MODE_PRIVATE;
 
 import android.content.SharedPreferences;
 
 
- 
 public class sharedPreferences {
 
   private static final String SHARED_PREFS = "sharedPrefs";
@@ -26,6 +25,5 @@ public class sharedPreferences {
     editor.apply();
   }
 
-    Boolean sex = sharedPreferences.getBoolean(SEX, false);
-  }
+  Boolean sex = sharedPreferences.getBoolean(SEX, false);
 }
