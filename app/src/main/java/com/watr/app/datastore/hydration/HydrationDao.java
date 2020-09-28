@@ -15,51 +15,87 @@ import androidx.room.Query;
 import androidx.room.Update;
 import java.util.List;
 
+/** Hydration DAO (Data Access Object). */
 @Dao
 public interface HydrationDao {
 
-  // Get all hydration records ordered by latest to oldest (Largest => smallest Unix timestamp)
+  /**
+   * @return All hydration records ordered by latest to oldest (Largest => smallest Unix timestamp)
+   */
   @Query("SELECT * FROM hydration_records ORDER BY timestamp DESC")
   LiveData<List<HydrationEntity>> getAll();
 
-  // Get latest hydration record
+  /** @return Latest hydration record */
   @Query("SELECT * FROM hydration_records ORDER BY timestamp DESC LIMIT 1")
   HydrationEntity getLatest();
 
-  // Get hydration records between two Unix timestamps
-  @Query("SELECT * FROM hydration_records WHERE timestamp <= :start AND timestamp >= :end ORDER BY timestamp DESC LIMIT 1")
-  List<HydrationEntity> getByTimeFrame (Long start, Long end);
+  /**
+   * Get hydration records between two Unix timestamps. Start and end are inclusive.
+   *
+   * @param start Record range start timestamp
+   * @param end Record range end timestamp
+   * @return All hydration records between start and end.
+   */
+  @Query(
+      "SELECT * FROM hydration_records WHERE timestamp <= :start AND timestamp >= :end ORDER BY timestamp DESC LIMIT 1")
+  List<HydrationEntity> getByTimeFrame(Long start, Long end);
 
-  // Wipe the entire database (Use with caution)
+  /** Wipes the entire database. Use with caution. */
   @Query("DELETE FROM hydration_records")
   void wipe();
 
-  // Using ignore conflict resolution strategy here because two records will never be the same,
-  // seeing as they will at the very least have different IDs and Unix timestamps
+  // Note: Using ignore conflict resolution strategy here, because two records will never be the
+  // same, seeing as they will at the very least have different IDs and Unix timestamps
 
+  /**
+   * Adds a new hydration record to the database.
+   *
+   * @param newEntity New hydration record (Entity)
+   */
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   void insert(HydrationEntity newEntity);
 
+  /**
+   * Adds new hydration records to the database in bulk.
+   *
+   * @param newEntityList List of new hydration records (Entities)
+   */
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   void bulkInsert(List<HydrationEntity> newEntityList);
 
-  // Update a hydration record through a patcher entity
-  // Entity with matching primary key is deleted
-  // https://developer.android.com/reference/androidx/room/Update
+  /**
+   * Updates a hydration record through a patcher entity. An entity with a matching primary key will
+   * be updated. See: https://developer.android.com/reference/androidx/room/Update
+   *
+   * @param patcherEntity Hydration record to update
+   */
   @Update(onConflict = OnConflictStrategy.IGNORE)
   void update(HydrationEntity patcherEntity);
 
-  // Bulk update hydration records with a matcher list
-  // https://developer.android.com/reference/androidx/room/Update
+  /**
+   * Updates hydration records in bulk with a list of patcher entities. Entities with matching
+   * primary keys will be updated. See: https://developer.android.com/reference/androidx/room/Update
+   *
+   * @param patcherEntityList Hydration records to update
+   */
   @Update(onConflict = OnConflictStrategy.IGNORE)
   void bulkUpdate(List<HydrationEntity> patcherEntityList);
 
-  // Delete a hydration record through a matcher (Entity with matching primary key is deleted)
-  // https://developer.android.com/reference/androidx/room/Delete
+  /**
+   * Delete a hydration record through a matcher, i.e. an entity with a matching primary key will be
+   * deleted. See: https://developer.android.com/reference/androidx/room/Delete
+   *
+   * @param matcherEntity Hydration record to delete
+   */
   @Delete
   void delete(HydrationEntity matcherEntity);
 
-  // Bulk delete hydration records with a matcher list
+  /**
+   * Deletes hydration records in bulk with a matcher, i.e. an entity with a matching primary key
+   * will be deleted. See: https://developer.android.com/reference/androidx/room/Delete
+   *
+   * @param matcherEntityList Hydration records to delete
+   */
   @Delete
   void bulkDelete(List<HydrationEntity> matcherEntityList);
 }

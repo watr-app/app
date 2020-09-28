@@ -14,6 +14,9 @@ import java.util.Date;
 import lombok.Getter;
 import lombok.ToString;
 
+/**
+ * Hydration record.
+ */
 @ToString
 @Entity(tableName = "hydration_records")
 public class HydrationEntity {

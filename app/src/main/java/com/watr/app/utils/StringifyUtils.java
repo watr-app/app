@@ -8,6 +8,9 @@ package com.watr.app.utils;
 
 import com.google.gson.Gson;
 
+/**
+ * Miscellaneous stringification utilities and helpers.
+ */
 public class StringifyUtils {
   public static Gson gson = new Gson();
 }

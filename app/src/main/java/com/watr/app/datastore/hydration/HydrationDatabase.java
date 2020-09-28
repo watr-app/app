@@ -14,6 +14,9 @@ import androidx.room.TypeConverters;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Hydration database.
+ */
 @Database(
     entities = {HydrationEntity.class},
     version = 1,
@@ -30,7 +33,11 @@ public abstract class HydrationDatabase extends RoomDatabase {
   // Create multi-threaded write executor
   static final ExecutorService executor = Executors.newFixedThreadPool(THREAD_COUNT);
 
-  // Singleton instance initialiser / getter
+  /**
+   * Gets the global Room database instance.
+   * @param context Application context
+   * @return Room database instance
+   */
   static HydrationDatabase getDatabase(final Context context) {
     if (INSTANCE == null) {
       synchronized (HydrationDatabase.class) {

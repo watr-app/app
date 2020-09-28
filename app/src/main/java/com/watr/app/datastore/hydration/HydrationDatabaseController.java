@@ -13,6 +13,15 @@ import java.util.List;
 import java.util.concurrent.Future;
 import lombok.Getter;
 
+/**
+ * Hydration database controller / repository.
+ *
+ * All methods here are merely execution scheduler shell methods for the DAO. For documentation
+ * on the methods themselves, see the HydrationDao interface (HydrationDao.java).
+ *
+ * Note: All methods must be called on non-UI threads, or the app will throw an exception. This
+ * is to prevent running queries on the main thread and thus threadblocking the UI.
+ */
 public class HydrationDatabaseController {
 
   private HydrationDao hydrationDao;
@@ -26,12 +35,6 @@ public class HydrationDatabaseController {
     hydrationDao = db.hydrationDao();
     allHydrationRecords = hydrationDao.getAll();
   }
-
-  // All methods here are merely execution scheduler shell methods for the DAO
-  // For documentation on the methods themselves, see the HydrationDao interface (HydrationDao.java)
-
-  // Note: All methods must be called on non-UI threads, or the app will throw an exception
-  // This is to prevent running queries on the main thread and thus threadblocking the UI
 
   public Future<HydrationEntity> getLatest() {
     return HydrationDatabase.executor.submit(() -> hydrationDao.getLatest());
