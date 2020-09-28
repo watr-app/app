@@ -11,7 +11,6 @@ import androidx.room.PrimaryKey;
 import com.watr.app.hydration.DrinkType;
 import java.util.Date;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
