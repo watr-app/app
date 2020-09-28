@@ -10,13 +10,11 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.content.SharedPreferences;
 
-
-public class sharedPreferences {
+public class UserProfileManager {
 
   private static final String SHARED_PREFS = "sharedPrefs";
   private static final String SEX = "sex";
   private static final String WEIGHT = "weight";
-
 
   public void saveData(boolean sex, int weight) {
     SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
