@@ -8,7 +8,12 @@ package com.watr.app.hydration;
 
 import lombok.AllArgsConstructor;
 
-/** Record of biological genders and their IDs. */
+/**
+ * Record of biological genders and their IDs.
+ *
+ * @author linuswillner
+ * @version 1.0.0
+ */
 @AllArgsConstructor
 public enum Gender {
   MALE(0),

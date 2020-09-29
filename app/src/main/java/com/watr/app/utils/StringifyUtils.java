@@ -10,6 +10,9 @@ import com.google.gson.Gson;
 
 /**
  * Miscellaneous stringification utilities and helpers.
+ *
+ * @author linuswillner
+ * @version 1.0.0
  */
 public class StringifyUtils {
   public static Gson gson = new Gson();

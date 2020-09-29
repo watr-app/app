@@ -5,14 +5,16 @@
  */
 
 package com.watr.app.datastore.userprofile;
-// import static android.content.Context.MODE_PRIVATE;
 import android.content.SharedPreferences;
 import com.watr.app.hydration.Gender;
 
-
+/**
+ * User profile information manager leveraging SharedPreferences.
+ *
+ * @author mhgitti
+ * @version 1.0.0
+ */
 public class UserProfileManager {
-
-
 
   // sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
   public void addSex(SharedPreferences sharedPreferences, String key, int sex) {

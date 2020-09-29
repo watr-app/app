@@ -10,6 +10,9 @@ import java.util.List;
 
 /**
  * Miscellaneous array utilities and helpers.
+ *
+ * @author linuswillner
+ * @version 1.0.0
  */
 public class ArrayUtils {
 

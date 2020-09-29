@@ -16,6 +16,9 @@ import lombok.NoArgsConstructor;
 
 /**
  * Home page. All functionality specific to the home page goes here.
+ *
+ * @author linuswillner
+ * @version 1.0.0
  */
 @NoArgsConstructor
 public class HomePage extends Fragment {

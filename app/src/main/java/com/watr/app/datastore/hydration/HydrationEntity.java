@@ -16,6 +16,9 @@ import lombok.ToString;
 
 /**
  * Hydration record.
+ *
+ * @author linuswillner
+ * @version 1.0.0
  */
 @ToString
 @Entity(tableName = "hydration_records")

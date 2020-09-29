@@ -15,7 +15,13 @@ import androidx.room.Query;
 import androidx.room.Update;
 import java.util.List;
 
-/** Hydration DAO (Data Access Object). */
+/**
+ * Hydration DAO (Data Access Object).
+ *
+ * @see <a href="https://developer.android.com/reference/android/arch/persistence/room/Dao">Dao</a>
+ * @author linuswillner
+ * @version 1.0.0
+ */
 @Dao
 public interface HydrationDao {
 
@@ -65,8 +71,9 @@ public interface HydrationDao {
 
   /**
    * Updates a hydration record through a patcher entity. An entity with a matching primary key will
-   * be updated. See: https://developer.android.com/reference/androidx/room/Update
+   * be updated.
    *
+   * @see <a href="https://developer.android.com/reference/androidx/room/Update">Update</a>
    * @param patcherEntity Hydration record to update
    */
   @Update(onConflict = OnConflictStrategy.IGNORE)
@@ -74,8 +81,9 @@ public interface HydrationDao {
 
   /**
    * Updates hydration records in bulk with a list of patcher entities. Entities with matching
-   * primary keys will be updated. See: https://developer.android.com/reference/androidx/room/Update
+   * primary keys will be updated.
    *
+   * @see <a href="https://developer.android.com/reference/androidx/room/Update">Update</a>
    * @param patcherEntityList Hydration records to update
    */
   @Update(onConflict = OnConflictStrategy.IGNORE)
@@ -83,8 +91,9 @@ public interface HydrationDao {
 
   /**
    * Delete a hydration record through a matcher, i.e. an entity with a matching primary key will be
-   * deleted. See: https://developer.android.com/reference/androidx/room/Delete
+   * deleted.
    *
+   * @see <a href="https://developer.android.com/reference/androidx/room/Delete">Delete</a>
    * @param matcherEntity Hydration record to delete
    */
   @Delete
@@ -92,8 +101,9 @@ public interface HydrationDao {
 
   /**
    * Deletes hydration records in bulk with a matcher, i.e. an entity with a matching primary key
-   * will be deleted. See: https://developer.android.com/reference/androidx/room/Delete
+   * will be deleted.
    *
+   * @see <a href="https://developer.android.com/reference/androidx/room/Delete">Delete</a>
    * @param matcherEntityList Hydration records to delete
    */
   @Delete

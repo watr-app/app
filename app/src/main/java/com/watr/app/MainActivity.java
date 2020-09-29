@@ -15,6 +15,12 @@ import com.watr.app.ui.pages.SettingsPage;
 import com.watr.app.ui.utils.PageTracker;
 import lombok.val;
 
+/**
+ * Application main activity.
+ *
+ * @author linuswillner
+ * @version 1.0.0
+ */
 public class MainActivity extends FragmentActivity {
   private static final int PAGE_COUNT = 3;
   public static final int DEFAULT_PAGE = 1;
@@ -110,7 +116,13 @@ public class MainActivity extends FragmentActivity {
     viewPager.setCurrentItem(position, smoothScroll);
   }
 
-  private class PagerAdapter extends FragmentStateAdapter {
+  /**
+   * Adapter to create ViewPager2 page fragments based on separately defined Fragment subclasses.
+   *
+   * @author linuswillner
+   * @version 1.0.0
+   */
+  private static class PagerAdapter extends FragmentStateAdapter {
     public PagerAdapter(FragmentActivity fragmentActivity) {
       super(fragmentActivity);
     }

@@ -8,7 +8,12 @@ package com.watr.app.hydration;
 
 import lombok.AllArgsConstructor;
 
-/** Drink types used in the application, with their labels and hydration coefficients. */
+/**
+ * Drink types used in the application, with their labels and hydration coefficients.
+ *
+ * @author linuswillner
+ * @version 1.0.0
+ */
 @AllArgsConstructor
 public enum DrinkType {
   WATER("Water", 1.0),

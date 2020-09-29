@@ -8,6 +8,12 @@ package com.watr.app.datastore.settings;
 
 import android.content.SharedPreferences;
 
+/**
+ * User settings manager leveraging SharedPreferences.
+ *
+ * @author panueronen
+ * @version 1.0.0
+ */
 public class SettingsManager {
 
   /*

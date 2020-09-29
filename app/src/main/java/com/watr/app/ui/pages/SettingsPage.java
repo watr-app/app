@@ -16,6 +16,9 @@ import lombok.NoArgsConstructor;
 
 /**
  * Settings page. All functionality specific to the settings page goes here.
+ *
+ * @author linuswillner
+ * @version 1.0.0
  */
 @NoArgsConstructor
 public class SettingsPage extends Fragment {

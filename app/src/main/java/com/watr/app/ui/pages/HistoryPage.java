@@ -16,6 +16,9 @@ import lombok.NoArgsConstructor;
 
 /**
  * History page. All functionality specific to the history page goes here.
+ *
+ * @author linuswillner
+ * @version 1.0.0
  */
 @NoArgsConstructor
 public class HistoryPage extends Fragment {
@@ -26,4 +29,3 @@ public class HistoryPage extends Fragment {
     return inflater.inflate(R.layout.fragment_history, container, false);
   }
 }
-

@@ -13,7 +13,12 @@ import java.util.List;
 import lombok.Getter;
 import lombok.val;
 
-/** Utility class to keep track of what page is currently selected in the view pager. */
+/**
+ * Utility class to keep track of what page is currently selected in the view pager.
+ *
+ * @author linuswillner
+ * @version 1.0.0
+ */
 public class PageTracker {
   @Getter private int currentPage;
   private boolean ignoreNextSet;

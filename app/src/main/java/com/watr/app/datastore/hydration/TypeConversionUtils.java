@@ -12,11 +12,17 @@ import com.watr.app.utils.StringifyUtils;
 import java.util.Date;
 import lombok.NonNull;
 
-/** Room type conversion utilities for complex types that Room cannot natively handle. */
+/**
+ * Room type conversion utilities for complex types that Room cannot natively handle.
+ *
+ * @author linuswillner
+ * @version 1.0.0
+ */
 public class TypeConversionUtils {
 
   /**
    * Serialises a Date object from a Unix timestamp.
+   *
    * @param unixTimestamp Unix timestamp
    * @return Serialised Date object
    */
@@ -27,6 +33,7 @@ public class TypeConversionUtils {
 
   /**
    * Converts a Date object to a Unix timestamp (Long)
+   *
    * @param date Date object
    * @return Unix timestamp
    */
@@ -37,6 +44,7 @@ public class TypeConversionUtils {
 
   /**
    * Stringifies a DrinkType enum to JSON via the Gson library.
+   *
    * @param drinkType DrinkType enum
    * @return JSON-ified enum
    */
@@ -47,6 +55,7 @@ public class TypeConversionUtils {
 
   /**
    * Serialises a JSON-ified DrinkType to a DrinkType enum
+   *
    * @param stringified JSON-ified enum
    * @return DrinkType enum
    */

@@ -16,6 +16,9 @@ import java.util.concurrent.Executors;
 
 /**
  * Hydration database.
+ *
+ * @author linuswillner
+ * @version 1.0.0
  */
 @Database(
     entities = {HydrationEntity.class},
@@ -35,6 +38,7 @@ public abstract class HydrationDatabase extends RoomDatabase {
 
   /**
    * Gets the global Room database instance.
+   *
    * @param context Application context
    * @return Room database instance
    */
