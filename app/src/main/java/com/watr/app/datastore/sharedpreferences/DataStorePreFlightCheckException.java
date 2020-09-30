@@ -6,8 +6,8 @@
 
 package com.watr.app.datastore.sharedpreferences;
 
-public class SharedPreferenceNotFoundException extends Exception {
-  public SharedPreferenceNotFoundException (String message) {
+public class DataStorePreFlightCheckFailedException extends Exception {
+  public DataStorePreflightCheckFailedException(String message) {
     super(message);
   }
 }

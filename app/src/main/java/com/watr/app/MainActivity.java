@@ -1,6 +1,8 @@
 package com.watr.app;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -9,6 +11,9 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener;
 import com.google.android.material.tabs.TabLayout.Tab;
+import com.watr.app.datastore.sharedpreferences.DataStorePreFlightCheckException;
+import com.watr.app.datastore.sharedpreferences.settings.SettingsManager;
+import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
 import com.watr.app.ui.pages.HistoryPage;
 import com.watr.app.ui.pages.HomePage;
 import com.watr.app.ui.pages.SettingsPage;
@@ -25,6 +30,9 @@ public class MainActivity extends FragmentActivity {
   private static final int PAGE_COUNT = 3;
   public static final int DEFAULT_PAGE = 1;
 
+  private SettingsManager settingsManager;
+  private UserProfileManager userProfileManager;
+
   private TabLayout navigationBar;
   private ViewPager2 viewPager;
   private PageTracker pageTracker;
@@ -33,6 +41,17 @@ public class MainActivity extends FragmentActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+    // Initialise manager classes
+    settingsManager = new SettingsManager(getSharedPreferences("settings", Context.MODE_PRIVATE));
+    userProfileManager = new UserProfileManager(getSharedPreferences("userprofile", Context.MODE_PRIVATE));
+
+    // Run pre-flight checks for data stores
+    try {
+      userProfileManager.checkRequiredProfileSettings();
+    } catch (DataStorePreFlightCheckException e) {
+      Log.e("datastore-preflight", "Data store pre-flight checks failed: ", e);
+    }
 
     // Init
     navigationBar = findViewById(R.id.navigation_bar);

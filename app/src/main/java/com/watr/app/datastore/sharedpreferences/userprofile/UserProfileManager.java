@@ -8,12 +8,14 @@ package com.watr.app.datastore.sharedpreferences.userprofile;
 
 import android.content.SharedPreferences;
 import com.watr.app.datastore.sharedpreferences.SharedPreferenceManager;
-import com.watr.app.datastore.sharedpreferences.SharedPreferenceNotFoundException;
+import com.watr.app.datastore.sharedpreferences.DataStorePreflightCheckFailedException;
 import com.watr.app.datastore.sharedpreferences.SharedPreferenceType;
 import com.watr.app.hydration.Gender;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.val;
 
 /**
  * User profile information manager leveraging SharedPreferences.
@@ -28,6 +30,21 @@ public class UserProfileManager extends SharedPreferenceManager {
   public UserProfileManager(SharedPreferences ctx) {
     super(ctx);
     this.ctx = ctx;
+  }
+
+  public void checkRequiredProfileSettings() throws DataStorePreflightCheckFailedException {
+    val requiredKeys = new ArrayList<String>();
+    requiredKeys.add("gender");
+    requiredKeys.add("dailyTarget");
+    requiredKeys.add("wakeTime");
+    requiredKeys.add("bedTime");
+
+    val notDefined = requiredKeys.stream().filter(key -> !ctx.contains(key)).toArray();
+
+    if (notDefined.length > 0) {
+      throw new DataStorePreflightCheckFailedException(
+          String.format("Required user profile settings %s not defined", notDefined.toString()));
+    }
   }
 
   /**
@@ -70,14 +87,8 @@ public class UserProfileManager extends SharedPreferenceManager {
    * Gets the user's gender.
    *
    * @return Gender enum
-   * @throws SharedPreferenceNotFoundException if setting has not been initialised during setup
    */
-  public Gender getGender() throws SharedPreferenceNotFoundException {
-    if (!ctx.contains("gender")) {
-      throw new SharedPreferenceNotFoundException(
-          "Critical user profile setting 'gender' not found");
-    }
-
+  public Gender getGender() {
     // Using 0 as the default even though this value will always be set
     return Gender.getGenderFromId(ctx.getInt("gender", 0));
   }
@@ -86,14 +97,8 @@ public class UserProfileManager extends SharedPreferenceManager {
    * Gets the user's daily drink target.
    *
    * @return Daily drink target in millilitres
-   * @throws SharedPreferenceNotFoundException if setting has not been initialised during setup
    */
-  public int getDailyTarget() throws SharedPreferenceNotFoundException {
-    if (!ctx.contains("dailyTarget")) {
-      throw new SharedPreferenceNotFoundException(
-          "Critical user profile setting 'dailyTarget' not found");
-    }
-
+  public int getDailyTarget() {
     // Getting the default from Gender even though this value will always be set
     return ctx.getInt("dailyTarget", this.getGender().getDefaultDailyTarget());
   }
@@ -102,14 +107,8 @@ public class UserProfileManager extends SharedPreferenceManager {
    * Gets the user's preferred wake up time.
    *
    * @return LocalTime object representing the user's preferred wake up time
-   * @throws SharedPreferenceNotFoundException if setting has not been initialised during setup
    */
-  public LocalTime getWakeTime() throws SharedPreferenceNotFoundException {
-    if (!ctx.contains("wakeTime")) {
-      throw new SharedPreferenceNotFoundException(
-          "Critical user profile setting 'wakeTime' not found");
-    }
-
+  public LocalTime getWakeTime() {
     // Using noon as default even though this value will always be set
     return LocalTime.parse(ctx.getString("wakeTime", LocalTime.NOON.toString()));
   }
@@ -118,14 +117,8 @@ public class UserProfileManager extends SharedPreferenceManager {
    * Gets the user's preferred bed time.
    *
    * @return LocalTime object representing the user's preferred bed time
-   * @throws SharedPreferenceNotFoundException if setting has not been initialised during setup
    */
-  public LocalTime getBedTime() throws SharedPreferenceNotFoundException {
-    if (!ctx.contains("bedTime")) {
-      throw new SharedPreferenceNotFoundException(
-          "Critical user profile setting 'bedTime' not found");
-    }
-
+  public LocalTime getBedTime() {
     // Using midnight (Min) as default even though this value will always be set
     return LocalTime.parse(ctx.getString("bedTime", LocalTime.MIN.toString()));
   }
