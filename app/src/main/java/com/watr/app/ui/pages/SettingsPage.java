@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 /**
  * Settings page. All functionality specific to the settings page goes here.
  *
- * @author linuswillner
+ * @author panueronen
  * @version 1.0.0
  */
 @NoArgsConstructor
