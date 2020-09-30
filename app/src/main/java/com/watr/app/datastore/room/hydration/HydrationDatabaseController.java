@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-package com.watr.app.datastore.hydration;
+package com.watr.app.datastore.room.hydration;
 
 import android.app.Application;
 import androidx.lifecycle.LiveData;
