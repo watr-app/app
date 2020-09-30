@@ -8,7 +8,7 @@ package com.watr.app.datastore.sharedpreferences.userprofile;
 
 import android.content.SharedPreferences;
 import com.watr.app.datastore.sharedpreferences.SharedPreferenceManager;
-import com.watr.app.datastore.sharedpreferences.DataStorePreflightCheckFailedException;
+import com.watr.app.datastore.sharedpreferences.DataStorePreFlightCheckException;
 import com.watr.app.datastore.sharedpreferences.SharedPreferenceType;
 import com.watr.app.hydration.Gender;
 import java.time.LocalTime;
@@ -32,7 +32,7 @@ public class UserProfileManager extends SharedPreferenceManager {
     this.ctx = ctx;
   }
 
-  public void checkRequiredProfileSettings() throws DataStorePreflightCheckFailedException {
+  public void checkRequiredProfileSettings() throws DataStorePreFlightCheckException {
     val requiredKeys = new ArrayList<String>();
     requiredKeys.add("gender");
     requiredKeys.add("dailyTarget");
@@ -42,7 +42,7 @@ public class UserProfileManager extends SharedPreferenceManager {
     val notDefined = requiredKeys.stream().filter(key -> !ctx.contains(key)).toArray();
 
     if (notDefined.length > 0) {
-      throw new DataStorePreflightCheckFailedException(
+      throw new DataStorePreFlightCheckException(
           String.format("Required user profile settings %s not defined", notDefined.toString()));
     }
   }
