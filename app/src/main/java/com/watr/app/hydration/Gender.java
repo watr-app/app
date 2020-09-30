@@ -6,7 +6,8 @@
 
 package com.watr.app.hydration;
 
-import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Record of biological genders and their IDs.
@@ -14,18 +15,15 @@ import lombok.AllArgsConstructor;
  * @author linuswillner
  * @version 1.0.0
  */
-@AllArgsConstructor
+@RequiredArgsConstructor
 public enum Gender {
-  MALE(0),
-  FEMALE(1);
+  MALE(0, 3700),
+  FEMALE(1, 2700);
 
-  private int gender;
+  @Getter private final int genderId;
+  @Getter private final int defaultDailyTarget;
 
-  public Gender(int gender) {
-    this.gender = gender;
-  }
-
-  public int getGender() {
-    return this.gender;
+  public static Gender getGenderFromId (int id) {
+    return Gender.values()[id];
   }
 }
