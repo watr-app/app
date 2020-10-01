@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-package com.watr.app.ui.animationutils;
+package com.watr.app.ui.utils;
 
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;

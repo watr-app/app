@@ -14,7 +14,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import androidx.fragment.app.Fragment;
 import com.watr.app.R;
-import com.watr.app.ui.animationutils.ImageViewAnimator;
+import com.watr.app.ui.utils.ImageViewAnimator;
 import java.util.ArrayList;
 import lombok.val;
 
