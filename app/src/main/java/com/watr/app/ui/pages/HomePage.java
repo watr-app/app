@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.watr.app.R;
 import com.watr.app.ui.utils.ImageViewAnimator;
@@ -37,8 +39,9 @@ public class HomePage extends Fragment {
     // Developer note: DO NOT try to optimise this by cloning arrays etc.
     // For some reason, if sourced from the same ArrayList, the animation set that was defined first
     // will stop after the first animation, and no known method of cloning appears to solve it.
-    // The *ONLY* way to get the animations to work properly is to do what is done below, i.e. the
-    // complete antithesis of DRY. Pretty it ain't, but hey, problem solved.
+    // The *ONLY* way to get the animations to work properly is to do what is done below, which
+    // unfortunately happens to be the complete antithesis of DRY.
+    // Pretty it ain't, but hey, problem solved.
 
     leftEyeAnimations.add(new TranslateAnimation(0, 10, 0, 10));
     leftEyeAnimations.add(new TranslateAnimation(10, -10, 10, 10));
@@ -60,11 +63,14 @@ public class HomePage extends Fragment {
   }
 
   @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    this.view = view;
+  }
+
+  @Override
   public void onResume() {
     super.onResume();
-
-    view = getView();
-    assert view != null;
     leftEye = view.findViewById(R.id.statusMascotLeftEye);
     rightEye = view.findViewById(R.id.statusMascotRightEye);
 
