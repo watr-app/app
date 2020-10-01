@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
   private TabLayout navigationBar;
   private ViewPager2 viewPager;
+
   private PageTracker pageTracker;
 
   @Override
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     // Init
     navigationBar = findViewById(R.id.navigationBar);
     viewPager = findViewById(R.id.viewPager);
+
     pageTracker = new PageTracker(DEFAULT_PAGE);
 
     // Hide action bar
