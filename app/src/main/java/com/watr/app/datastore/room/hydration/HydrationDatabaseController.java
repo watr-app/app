@@ -48,31 +48,31 @@ public class HydrationDatabaseController {
         () -> hydrationDao.getByTimeFrame(start.getTime(), end.getTime()));
   }
 
-  void wipe() {
+  public void wipe() {
     HydrationDatabase.executor.execute(() -> hydrationDao.wipe());
   }
 
-  void insert(HydrationEntity newEntity) {
+  public void insert(HydrationEntity newEntity) {
     HydrationDatabase.executor.execute(() -> hydrationDao.insert(newEntity));
   }
 
-  void bulkInsert(List<HydrationEntity> newEntityList) {
+  public void bulkInsert(List<HydrationEntity> newEntityList) {
     HydrationDatabase.executor.execute(() -> hydrationDao.bulkInsert(newEntityList));
   }
 
-  void update(HydrationEntity patcherEntity) {
+  public void update(HydrationEntity patcherEntity) {
     HydrationDatabase.executor.execute(() -> hydrationDao.update(patcherEntity));
   }
 
-  void bulkUpdate(List<HydrationEntity> patcherEntityList) {
+  public void bulkUpdate(List<HydrationEntity> patcherEntityList) {
     HydrationDatabase.executor.execute(() -> hydrationDao.bulkUpdate(patcherEntityList));
   }
 
-  void delete(HydrationEntity matcherEntity) {
+  public void delete(HydrationEntity matcherEntity) {
     HydrationDatabase.executor.execute(() -> hydrationDao.delete(matcherEntity));
   }
 
-  void bulkDelete(List<HydrationEntity> matcherEntityList) {
+  public void bulkDelete(List<HydrationEntity> matcherEntityList) {
     HydrationDatabase.executor.execute(() -> hydrationDao.bulkDelete(matcherEntityList));
   }
 }
