@@ -2,7 +2,7 @@ package com.watr.app;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -11,13 +11,13 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener;
 import com.google.android.material.tabs.TabLayout.Tab;
-import com.watr.app.datastore.sharedpreferences.DataStorePreFlightCheckException;
 import com.watr.app.datastore.sharedpreferences.settings.SettingsManager;
 import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
 import com.watr.app.ui.pages.HistoryPage;
 import com.watr.app.ui.pages.HomePage;
 import com.watr.app.ui.pages.SettingsPage;
 import com.watr.app.ui.utils.PageTracker;
+import java.util.Objects;
 import lombok.val;
 
 /**
@@ -26,9 +26,9 @@ import lombok.val;
  * @author linuswillner
  * @version 1.0.0
  */
-public class MainActivity extends FragmentActivity {
-  private static final int PAGE_COUNT = 3;
+public class MainActivity extends AppCompatActivity {
   public static final int DEFAULT_PAGE = 1;
+  private static final int PAGE_COUNT = 3;
 
   private SettingsManager settingsManager;
   private UserProfileManager userProfileManager;
@@ -44,19 +44,25 @@ public class MainActivity extends FragmentActivity {
 
     // Initialise manager classes
     settingsManager = new SettingsManager(getSharedPreferences("settings", Context.MODE_PRIVATE));
-    userProfileManager = new UserProfileManager(getSharedPreferences("userprofile", Context.MODE_PRIVATE));
+    userProfileManager =
+        new UserProfileManager(getSharedPreferences("userprofile", Context.MODE_PRIVATE));
 
+    /*
     // Run pre-flight checks for data stores
     try {
       userProfileManager.checkRequiredProfileSettings();
     } catch (DataStorePreFlightCheckException e) {
       Log.e("datastore-preflight", "Data store pre-flight checks failed: ", e);
     }
+    */
 
     // Init
-    navigationBar = findViewById(R.id.navigation_bar);
-    viewPager = findViewById(R.id.view_pager);
+    navigationBar = findViewById(R.id.navigationBar);
+    viewPager = findViewById(R.id.viewPager);
     pageTracker = new PageTracker(DEFAULT_PAGE);
+
+    // Hide action bar
+    Objects.requireNonNull(getSupportActionBar()).hide();
 
     // Initialise ViewPager and PagerAdapter, and set current item to the default one one
     viewPager.setAdapter(new PagerAdapter(this));

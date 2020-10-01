@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Watr. Android application
+  ~ Copyright (c) 2020 Linus Willner, Panu Eronen and Markus Hartikainen.
+  ~ All rights reserved.
+  -->
+
+<resources>
+  <string name="status_mascot_content_description">A water droplet, the app\'s mascot</string>
+  <string name="status_mascot_left_eye_background_content_description">Droplet left eyeball</string>
+  <string name="status_mascot_left_eye_content_description">Droplet left iris</string>
+  <string name="status_mascot_right_eye_background_content_description">Droplet right eyeball</string>
+  <string name="status_mascot_right_eye_content_description">Droplet right iris</string>
+  <string name="status_mascot_mouth_content_description">Droplet mouth</string>
+</resources>
