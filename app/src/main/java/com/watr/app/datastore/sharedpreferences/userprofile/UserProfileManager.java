@@ -7,8 +7,8 @@
 package com.watr.app.datastore.sharedpreferences.userprofile;
 
 import android.content.SharedPreferences;
-import com.watr.app.datastore.sharedpreferences.SharedPreferenceManager;
 import com.watr.app.datastore.sharedpreferences.DataStorePreFlightCheckException;
+import com.watr.app.datastore.sharedpreferences.SharedPreferenceManager;
 import com.watr.app.datastore.sharedpreferences.SharedPreferenceType;
 import com.watr.app.hydration.Gender;
 import java.time.LocalTime;
@@ -24,7 +24,6 @@ import lombok.val;
  * @version 1.0.0
  */
 public class UserProfileManager extends SharedPreferenceManager {
-
   @Getter private final SharedPreferences ctx;
 
   public UserProfileManager(SharedPreferences ctx) {
@@ -48,42 +47,6 @@ public class UserProfileManager extends SharedPreferenceManager {
   }
 
   /**
-   * Sets the user's gender.
-   *
-   * @param gender Gender enum
-   */
-  public void setGender(@NonNull Gender gender) {
-    super.editAndApply(SharedPreferenceType.INTEGER, "genderId", gender.getGenderId());
-  }
-
-  /**
-   * Sets the daily drink target for the user.
-   *
-   * @param millilitres Drink target in millilitres
-   */
-  public void setDailyTarget(int millilitres) {
-    super.editAndApply(SharedPreferenceType.INTEGER, "dailyTarget", millilitres);
-  }
-
-  /**
-   * Sets the wake up time for the user.
-   *
-   * @param time User's preferred wake-up time
-   */
-  public void setWakeTime(@NonNull LocalTime time) {
-    super.editAndApply(SharedPreferenceType.STRING, "wakeTime", time.toString());
-  }
-
-  /**
-   * Sets the bed time for the user.
-   *
-   * @param time User's preferred bed time
-   */
-  public void setBedTime(@NonNull LocalTime time) {
-    super.editAndApply(SharedPreferenceType.STRING, "bedTime", time.toString());
-  }
-
-  /**
    * Gets the user's gender.
    *
    * @return Gender enum
@@ -91,6 +54,15 @@ public class UserProfileManager extends SharedPreferenceManager {
   public Gender getGender() {
     // Using 0 as the default even though this value will always be set
     return Gender.getGenderFromId(ctx.getInt("gender", 0));
+  }
+
+  /**
+   * Sets the user's gender.
+   *
+   * @param gender Gender enum
+   */
+  public void setGender(@NonNull Gender gender) {
+    super.editAndApply(SharedPreferenceType.INTEGER, "genderId", gender.getGenderId());
   }
 
   /**
@@ -104,6 +76,15 @@ public class UserProfileManager extends SharedPreferenceManager {
   }
 
   /**
+   * Sets the daily drink target for the user.
+   *
+   * @param millilitres Drink target in millilitres
+   */
+  public void setDailyTarget(int millilitres) {
+    super.editAndApply(SharedPreferenceType.INTEGER, "dailyTarget", millilitres);
+  }
+
+  /**
    * Gets the user's preferred wake up time.
    *
    * @return LocalTime object representing the user's preferred wake up time
@@ -114,6 +95,15 @@ public class UserProfileManager extends SharedPreferenceManager {
   }
 
   /**
+   * Sets the wake up time for the user.
+   *
+   * @param time User's preferred wake-up time
+   */
+  public void setWakeTime(@NonNull LocalTime time) {
+    super.editAndApply(SharedPreferenceType.STRING, "wakeTime", time.toString());
+  }
+
+  /**
    * Gets the user's preferred bed time.
    *
    * @return LocalTime object representing the user's preferred bed time
@@ -121,5 +111,14 @@ public class UserProfileManager extends SharedPreferenceManager {
   public LocalTime getBedTime() {
     // Using midnight (Min) as default even though this value will always be set
     return LocalTime.parse(ctx.getString("bedTime", LocalTime.MIN.toString()));
+  }
+
+  /**
+   * Sets the bed time for the user.
+   *
+   * @param time User's preferred bed time
+   */
+  public void setBedTime(@NonNull LocalTime time) {
+    super.editAndApply(SharedPreferenceType.STRING, "bedTime", time.toString());
   }
 }

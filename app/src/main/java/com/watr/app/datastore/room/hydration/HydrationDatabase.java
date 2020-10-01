@@ -26,15 +26,13 @@ import java.util.concurrent.Executors;
     exportSchema = false)
 @TypeConverters({TypeConversionUtils.class})
 public abstract class HydrationDatabase extends RoomDatabase {
-  // Init DAO
-  public abstract HydrationDao hydrationDao();
-
-  // Define singleton instance and thread count
-  private static volatile HydrationDatabase INSTANCE;
   private static final int THREAD_COUNT = 4;
 
   // Create multi-threaded write executor
   static final ExecutorService executor = Executors.newFixedThreadPool(THREAD_COUNT);
+
+  // Define singleton instance and thread count
+  private static volatile HydrationDatabase INSTANCE;
 
   /**
    * Gets the global Room database instance.
@@ -58,4 +56,7 @@ public abstract class HydrationDatabase extends RoomDatabase {
 
     return INSTANCE;
   }
+
+  // Init DAO
+  public abstract HydrationDao hydrationDao();
 }

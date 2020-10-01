@@ -29,4 +29,3 @@ public class SettingsPage extends Fragment {
     return inflater.inflate(R.layout.fragment_settings, container, false);
   }
 }
-

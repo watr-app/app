@@ -23,7 +23,7 @@ public enum Gender {
   @Getter private final int genderId;
   @Getter private final int defaultDailyTarget;
 
-  public static Gender getGenderFromId (int id) {
+  public static Gender getGenderFromId(int id) {
     return Gender.values()[id];
   }
 }

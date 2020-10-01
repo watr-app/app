@@ -29,6 +29,7 @@ public class ArrayUtils {
 
   /**
    * Shorthand to get the index of the last item in a list, without going into the negatives.
+   *
    * @param list List object to get the last item index from
    * @return Last item index
    */

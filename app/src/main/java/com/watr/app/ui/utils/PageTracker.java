@@ -20,10 +20,11 @@ import lombok.val;
  * @version 1.0.0
  */
 public class PageTracker {
-  @Getter private int currentPage;
-  private boolean ignoreNextSet;
-
   private final List<Integer> previousPages = new ArrayList<>();
+
+  @Getter private int currentPage;
+
+  private boolean ignoreNextSet;
 
   public PageTracker(int initialPage) {
     this.currentPage = initialPage;
