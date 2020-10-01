@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
   public static final int DEFAULT_PAGE = 1;
   private static final int PAGE_COUNT = 3;
 
+  @Getter private static MainViewModel mainViewModel;
   @Getter private static SettingsManager settingsManager;
   @Getter private static UserProfileManager userProfileManager;
 
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
     // Initialise manager classes
+    mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
     settingsManager = new SettingsManager(getSharedPreferences("settings", Context.MODE_PRIVATE));
     userProfileManager =
         new UserProfileManager(getSharedPreferences("userprofile", Context.MODE_PRIVATE));

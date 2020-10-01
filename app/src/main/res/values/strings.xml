@@ -14,4 +14,5 @@
   <string name="contextual_message_default_value">{contextualMessage}</string>
   <string name="last_ingestion_default_value">Last ingestion: {lastIngestion}</string>
   <string name="action_button_hint_default_value">{actionButtonHint}</string>
+  <string name="hydration_record_list_item_default_value">Loading...</string>
 </resources>
