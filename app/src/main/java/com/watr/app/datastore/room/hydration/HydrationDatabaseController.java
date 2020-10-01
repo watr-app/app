@@ -17,7 +17,8 @@ import lombok.Getter;
  * Hydration database controller / repository.
  *
  * <p>All methods here are merely execution scheduler shell methods for the DAO. For documentation
- * on the methods themselves, see the HydrationDao interface (HydrationDao.java).
+ * on the methods themselves, see the HydrationDao interface ({@link
+ * com.watr.app.datastore.room.hydration.HydrationDao}).
  *
  * <p>Note: All methods must be called on non-UI threads, or the app will throw an exception. This
  * is to prevent running queries on the main thread and thus threadblocking the UI.
