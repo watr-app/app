@@ -4,13 +4,13 @@
  * All rights reserved.
  */
 
-package com.watr.app.hydration;
+package com.watr.app.constants;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Record of biological genders and their IDs.
+ * Constants for biological genders and their IDs.
  *
  * @author linuswillner
  * @version 1.0.0

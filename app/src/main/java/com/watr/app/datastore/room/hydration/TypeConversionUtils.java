@@ -7,7 +7,7 @@
 package com.watr.app.datastore.room.hydration;
 
 import androidx.room.TypeConverter;
-import com.watr.app.hydration.DrinkType;
+import com.watr.app.constants.DrinkType;
 import com.watr.app.utils.StringifyUtils;
 import java.util.Date;
 import lombok.NonNull;

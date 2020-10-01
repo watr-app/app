@@ -4,10 +4,10 @@
  * All rights reserved.
  */
 
-package com.watr.app.datastore.sharedpreferences;
+package com.watr.app.constants;
 
 /**
- * Record of supported types for SharedPreferences.
+ * Constants for supported types for SharedPreferences.
  *
  * @see <a href="https://developer.android.com/reference/android/content/SharedPreferences>SharedPreferences</a>
  * @author linuswillner

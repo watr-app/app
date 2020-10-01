@@ -9,7 +9,7 @@ package com.watr.app.datastore.room.hydration;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import com.watr.app.hydration.DrinkType;
+import com.watr.app.constants.DrinkType;
 import java.util.Date;
 import lombok.Getter;
 import lombok.ToString;

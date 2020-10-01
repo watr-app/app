@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-package com.watr.app.utils;
+package com.watr.app.timemgmt;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

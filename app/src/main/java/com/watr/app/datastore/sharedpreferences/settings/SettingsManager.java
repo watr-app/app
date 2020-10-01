@@ -8,7 +8,7 @@ package com.watr.app.datastore.sharedpreferences.settings;
 
 import android.content.SharedPreferences;
 import com.watr.app.datastore.sharedpreferences.SharedPreferenceManager;
-import com.watr.app.datastore.sharedpreferences.SharedPreferenceType;
+import com.watr.app.constants.SharedPreferenceType;
 import java.util.Set;
 import lombok.Getter;
 

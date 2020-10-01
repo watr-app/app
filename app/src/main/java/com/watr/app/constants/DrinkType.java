@@ -4,12 +4,12 @@
  * All rights reserved.
  */
 
-package com.watr.app.hydration;
+package com.watr.app.constants;
 
 import lombok.AllArgsConstructor;
 
 /**
- * Drink types used in the application, with their labels and hydration coefficients.
+ * Constants for drink types used in the application, with their labels and hydration coefficients.
  *
  * @author linuswillner
  * @version 1.0.0
