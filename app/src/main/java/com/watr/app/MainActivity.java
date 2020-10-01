@@ -18,6 +18,7 @@ import com.watr.app.ui.pages.HomePage;
 import com.watr.app.ui.pages.SettingsPage;
 import com.watr.app.ui.utils.PageTracker;
 import java.util.Objects;
+import lombok.Getter;
 import lombok.val;
 
 /**
@@ -30,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
   public static final int DEFAULT_PAGE = 1;
   private static final int PAGE_COUNT = 3;
 
-  private SettingsManager settingsManager;
-  private UserProfileManager userProfileManager;
+  @Getter private static SettingsManager settingsManager;
+  @Getter private static UserProfileManager userProfileManager;
 
   private TabLayout navigationBar;
   private ViewPager2 viewPager;
