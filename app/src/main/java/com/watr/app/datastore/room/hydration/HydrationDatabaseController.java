@@ -8,12 +8,9 @@ package com.watr.app.datastore.room.hydration;
 
 import android.app.Application;
 import androidx.lifecycle.LiveData;
-import com.watr.app.MainActivity;
-import com.watr.app.timemgmt.TimeUtils;
 import java.util.List;
 import java.util.concurrent.Future;
 import lombok.Getter;
-import lombok.val;
 
 /**
  * Hydration database controller / repository.
@@ -33,7 +30,6 @@ public class HydrationDatabaseController {
   private HydrationDao hydrationDao;
 
   @Getter private LiveData<List<HydrationEntity>> allHydrationRecords;
-  @Getter private LiveData<List<HydrationEntity>> hydrationRecordsForToday;
 
   // FIXME: If we want to unit test this properly, we can't depend on Application
   // Should be fine for now though
@@ -41,18 +37,14 @@ public class HydrationDatabaseController {
     HydrationDatabase db = HydrationDatabase.getDatabase(application);
     hydrationDao = db.hydrationDao();
     allHydrationRecords = hydrationDao.getAll();
-
-    val wakeTime = MainActivity.getUserProfileManager().getWakeTime();
-    val bedTime = MainActivity.getUserProfileManager().getBedTime();
-
-    val wakeTimeEpoch = TimeUtils.localTimeToUnixTimestamp(wakeTime);
-    val bedTimeEpoch = TimeUtils.localTimeToUnixTimestamp(bedTime);
-
-    hydrationRecordsForToday = hydrationDao.getByTimeFrame(wakeTimeEpoch, bedTimeEpoch);
   }
 
   public Future<HydrationEntity> getLatest() {
     return HydrationDatabase.executor.submit(() -> hydrationDao.getLatest());
+  }
+
+  public Future<List<HydrationEntity>> getByTimeFrame (long start, long end) {
+    return HydrationDatabase.executor.submit(() -> hydrationDao.getByTimeFrame(start, end));
   }
 
   public void wipe() {

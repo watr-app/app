@@ -6,18 +6,26 @@
 
 package com.watr.app.timemgmt;
 
+import com.watr.app.constants.DateOffset;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import lombok.NonNull;
 import lombok.val;
 
 /**
- * Miscellaneous time utilities.
+ * Utilities centered around dealing with logically complex time evaluations.
  *
  * @author linuswillner
  * @version 1.0.0
  */
 public class TimeUtils {
+  // Developer note: Much of the code in this class is *incredibly* complex. This is because
+  // programming around human-parsable time really, really sucks. In fact, time in general
+  // is just a nightmare. These functions are intended to bear a lot of that headache and
+  // get things to a point where you can actually make sense of how things are supposed to work.
+  // Barely.
+
   /**
    * Converts a LocalTime object to a Unix timestamp within the current date. Accuracy depends on
    * the accuracy of the return value of <a
@@ -25,10 +33,10 @@ public class TimeUtils {
    * which in turn depends on the accuracy of the return value of <a
    * href="https://docs.oracle.com/javase/8/docs/api/java/util/TimeZone.html#getDefault--">TimeZone.getDefault()</a>.
    *
-   * @param relativeTime LocalTime object
+   * @param relativeTime LocalTime instance to extract Unix timestamp from
    * @return Unix timestamp as a long integer
    */
-  public static long localTimeToUnixTimestamp(LocalTime relativeTime) {
+  public static long localTimeToUnixTimestamp(@NonNull LocalTime relativeTime) {
     // This is quite a bit of a faff, but turns out that "relative time within an absolute date" is
     // actually a really hard thing to pull off from a logical standpoint
 
@@ -38,7 +46,115 @@ public class TimeUtils {
     // Return the provided relative time at the determined "today" in the time zone the system is in
     // (Or, well, at least the time zone it thinks it's in, based on what the JVM or host OS is
     // telling it it's in - or, annoyingly, if it can't figure that out, it just defaults to GMT)
-    // Calendars and computing do not go well together
+    // Takeaway: Human measurements of time do not jive well with their computational equivalents
     return relativeTime.atDate(today).atZone(systemTimeZone).toEpochSecond();
+  }
+
+  /**
+   * Same as {@link com.watr.app.timemgmt.TimeUtils}.localTimeToUnixTimestamp(), but takes a date
+   * offset to allow calculation across date boundaries.
+   *
+   * @param relativeTime LocalTime instance to extract Unix timestamp from
+   * @param dateOffset DateOffset enum
+   * @return Unix timestamp as a long integer
+   */
+  public static long localTimeToUnixTimestamp(
+      @NonNull LocalTime relativeTime, @NonNull DateOffset dateOffset) {
+    val today = LocalDate.now(); // Get the current date
+    val dateAtOffset = today.plusDays(dateOffset.getOffset()); // Get date at the provided offset
+    val systemTimeZone = ZoneId.systemDefault(); // Get the system time zone
+
+    return relativeTime.atDate(dateAtOffset).atZone(systemTimeZone).toEpochSecond();
+  }
+
+  /**
+   * Checks if the current time is before a time today.
+   *
+   * @param comparisonTime LocalTime instance to compare
+   * @return Whether the current time is before the provided time today
+   */
+  public static boolean currentTimeIsBefore(LocalTime comparisonTime) {
+    return LocalTime.now().isBefore(comparisonTime);
+  }
+
+  /**
+   * Same as {@link com.watr.app.timemgmt.TimeUtils}.currentTimeIsBefore(), but takes a date offset
+   * to allow calculation across date boundaries.
+   *
+   * @param comparisonTime LocalTime instance to compare
+   * @param dateOffset DateOffset enum
+   * @return Whether current time is before the provided LocalTime instance
+   */
+  public static boolean currentTimeIsBefore(
+      @NonNull LocalTime comparisonTime, @NonNull DateOffset dateOffset) {
+    val today = LocalDate.now();
+    val comparisonTimeAtOffset = comparisonTime.atDate(today.plusDays(dateOffset.getOffset()));
+    val now = LocalTime.now().atDate(today);
+
+    return now.isBefore(comparisonTimeAtOffset);
+  }
+
+  /**
+   * Checks if the current time is after a time today.
+   *
+   * @param comparisonTime LocalTime instance to compare
+   * @return Whether the current time is after the provided time today
+   */
+  public static boolean currentTimeIsAfter(LocalTime comparisonTime) {
+    return LocalTime.now().isAfter(comparisonTime);
+  }
+
+  /**
+   * Same as {@link com.watr.app.timemgmt.TimeUtils}.currentTimeIsAfter(), but takes a date offset
+   * to allow calculation across date boundaries.
+   *
+   * @param comparisonTime LocalTime instance to compare
+   * @param dateOffset DateOffset enum
+   * @return Whether current time is after the provided LocalTime instance yesterday
+   */
+  public static boolean currentTimeIsAfter(
+      @NonNull LocalTime comparisonTime, @NonNull DateOffset dateOffset) {
+    val today = LocalDate.now();
+    val comparisonTimeAtOffset = comparisonTime.atDate(today.plusDays(dateOffset.getOffset()));
+    val now = LocalTime.now().atDate(today);
+
+    return now.isAfter(comparisonTimeAtOffset);
+  }
+
+  /**
+   * Checks if current time is between two LocalTime instances, i.e. in their interval.
+   *
+   * @param start Interval-starting LocalTime instance
+   * @param end Interval-ending LocalTime instance
+   * @return Whether current time is between the provided LocalTime instances
+   */
+  public static boolean currentTimeIsInInterval(LocalTime start, LocalTime end) {
+    val now = LocalTime.now();
+    return now.isAfter(start) && now.isBefore(end);
+  }
+
+  /**
+   * Same as {@link com.watr.app.timemgmt.TimeUtils}.currentTimeIsInInterval(), but takes start and
+   * end date offsets to allow calculation across date boundaries.
+   *
+   * @param start Interval-starting LocalTime instance
+   * @param startOffset DateOffset enum for the start of the interval
+   * @param end Interval-ending LocalTime instance
+   * @param endOffset DateOffset enum for the end of the interval
+   * @return Whether current time is between the provided LocalTime instances
+   */
+  public static boolean currentTimeIsInterval(
+      @NonNull LocalTime start,
+      @NonNull DateOffset startOffset,
+      @NonNull LocalTime end,
+      @NonNull DateOffset endOffset) {
+    val now = LocalTime.now();
+    val today = LocalDate.now();
+
+    val startTimeAtOffset = start.atDate(today.plusDays(startOffset.getOffset()));
+    val endTimeAtOffset = end.atDate(today.plusDays(endOffset.getOffset()));
+
+    return now.atDate(today).isAfter(startTimeAtOffset)
+        && now.atDate(today).isBefore(endTimeAtOffset);
   }
 }

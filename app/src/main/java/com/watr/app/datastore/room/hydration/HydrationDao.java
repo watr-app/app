@@ -43,14 +43,14 @@ public interface HydrationDao {
    * @return All hydration records between start and end.
    */
   @Query("SELECT * FROM hydration_records WHERE timestamp <= :start AND timestamp >= :end ORDER BY timestamp DESC LIMIT 1")
-  LiveData<List<HydrationEntity>> getByTimeFrame(Long start, Long end);
+  List<HydrationEntity> getByTimeFrame(long start, long end);
 
   /** Wipes the entire database. Use with caution. */
   @Query("DELETE FROM hydration_records")
   void wipe();
 
   // Note: Using ignore conflict resolution strategy here, because two records will never be the
-  // same, seeing as they will at the very least have different IDs and Unix timestamps
+  // same, seeing as they will have Unix timestamps
 
   /**
    * Adds a new hydration record to the database.
