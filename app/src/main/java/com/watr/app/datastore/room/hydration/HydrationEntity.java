@@ -23,9 +23,7 @@ import lombok.ToString;
 @ToString
 @Entity(tableName = "hydration_records")
 public class HydrationEntity {
-  @Getter
-  @PrimaryKey(autoGenerate = true)
-  private final int id;
+  @Getter @PrimaryKey private final Date timestamp;
 
   @Getter
   @ColumnInfo(name = "drink_type")
@@ -33,12 +31,9 @@ public class HydrationEntity {
 
   @Getter private final double amount; // I.e. absolute amount of liquid ingested, in ml
 
-  @Getter private final Date timestamp;
-
   // BUG: Cannot use a RequiredArgsConstructor here or it breaks the build because it cannot find
   // the setter for some reason, hence why the constructor has to be manually created here
-  public HydrationEntity(int id, DrinkType drinkType, double amount, Date timestamp) {
-    this.id = id;
+  public HydrationEntity(DrinkType drinkType, double amount, Date timestamp) {
     this.drinkType = drinkType;
     this.amount = amount;
     this.timestamp = timestamp;
