@@ -13,6 +13,7 @@ import com.watr.app.datastore.sharedpreferences.SharedPreferenceType;
 import com.watr.app.hydration.Gender;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.val;
@@ -42,7 +43,8 @@ public class UserProfileManager extends SharedPreferenceManager {
 
     if (notDefined.length > 0) {
       throw new DataStorePreFlightCheckException(
-          String.format("Required user profile settings %s not defined", notDefined.toString()));
+          String.format("Required user profile settings %s not defined",
+              Arrays.toString(notDefined)));
     }
   }
 
