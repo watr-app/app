@@ -1,3 +1,9 @@
+<!--
+  ~ Watr. Android application
+  ~ Copyright (c) 2020 Linus Willner, Panu Eronen and Markus Hartikainen.
+  ~ All rights reserved.
+  -->
+
 <resources>
   <string name="app_name">Watr</string>
   <string name="navigation_history_button">History</string>
