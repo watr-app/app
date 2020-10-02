@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Watr. Android application
+  ~ Copyright (c) 2020 Linus Willner, Panu Eronen and Markus Hartikainen.
+  ~ All rights reserved.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".ui.activities.NewHydrationRecordActivity">
+  <TextView
+    android:id="@+id/hydrationRecordActivityTitle"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:text="@string/hydration_record_title"
+    android:textAlignment="center"
+    android:textColor="@color/colorText"
+    android:textSize="30sp"
+    app:layout_constraintBottom_toTopOf="@+id/ingestedLiquidTypeDescription"
+    app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="@+id/leftGuideline"
+    app:layout_constraintTop_toTopOf="parent" />
+  <TextView
+    android:id="@+id/ingestedLiquidTypeDescription"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="24dp"
+    android:text="@string/hydration_record_ingested_liquid_type"
+    android:textAlignment="center"
+    android:textSize="18sp"
+    app:layout_constraintBottom_toTopOf="@+id/ingestedLiquidType"
+    app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
+    app:layout_constraintStart_toStartOf="@+id/leftGuideline" />
+  <Spinner
+    android:id="@+id/ingestedLiquidType"
+    android:layout_width="288dp"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="24dp"
+    app:layout_constraintBottom_toTopOf="@+id/verticalCenterGuideline"
+    app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
+    app:layout_constraintStart_toStartOf="@+id/leftGuideline" />
+  <TextView
+    android:id="@+id/ingestedLiquidAmountDescription"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp"
+    android:text="@string/hydration_record_ingested_liquid_amount"
+    android:textAlignment="center"
+    android:textSize="18sp"
+    app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
+    app:layout_constraintHorizontal_bias="0.461"
+    app:layout_constraintStart_toStartOf="@+id/leftGuideline"
+    app:layout_constraintTop_toTopOf="@+id/verticalCenterGuideline" />
+  <EditText
+    android:id="@+id/ingestedLiquidAmount"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp"
+    android:ems="10"
+    android:hint="@string/ingestion_amount_hint"
+    android:inputType="number"
+    android:textAlignment="center"
+    app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="@+id/leftGuideline"
+    app:layout_constraintTop_toBottomOf="@+id/ingestedLiquidAmountDescription" />
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/saveHydrationRecord"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    app:backgroundTint="@color/colorPrimary"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
+    app:layout_constraintHorizontal_bias="0.495"
+    app:layout_constraintStart_toStartOf="@+id/leftGuideline"
+    app:layout_constraintTop_toBottomOf="@+id/ingestedLiquidAmount"
+    app:layout_constraintVertical_bias="0.35000002"
+    app:srcCompat="@drawable/ic_baseline_free_breakfast_24" />
+  <TextView
+    android:id="@+id/saveHydrationRecordHint"
+    android:textStyle="italic"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="36dp"
+    android:text="@string/hydration_record_save_hint"
+    android:textAlignment="center"
+    android:textSize="18sp"
+    app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
+    app:layout_constraintHorizontal_bias="0.492"
+    app:layout_constraintStart_toStartOf="@+id/leftGuideline"
+    app:layout_constraintTop_toBottomOf="@+id/saveHydrationRecord" />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/leftGuideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_percent="0.15" />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/rightGuideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_percent="0.85" />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/verticalCenterGuideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_percent="0.5" />
+</androidx.constraintlayout.widget.ConstraintLayout>

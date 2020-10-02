@@ -6,17 +6,26 @@
 
 package com.watr.app.ui.pages;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.watr.app.R;
+import com.watr.app.ui.activities.MainActivity;
+import com.watr.app.ui.activities.NewHydrationRecordActivity;
 import com.watr.app.ui.utils.ImageViewAnimator;
+import com.watr.app.ui.viewmodels.MainViewModel;
 import java.util.ArrayList;
 import lombok.val;
 
@@ -27,11 +36,16 @@ import lombok.val;
  * @version 1.0.0
  */
 public class HomePage extends Fragment {
+  public static final int NEW_HYDRATION_RECORD_REQUEST_CODE = 1;
+
   private static final int ANIMATION_DURATION = 1500;
   private static final int ANIMATION_START_OFFSET = 500;
+  private MainViewModel mainViewModel;
   private ImageView leftEye;
   private ImageView rightEye;
+  private FloatingActionButton actionButton;
   private View view;
+
   private ArrayList<TranslateAnimation> leftEyeAnimations = new ArrayList<>();
   private ArrayList<TranslateAnimation> rightEyeAnimations = new ArrayList<>();
 
@@ -66,13 +80,35 @@ public class HomePage extends Fragment {
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     this.view = view;
+    mainViewModel = MainActivity.getMainViewModel();
+
+    leftEye = view.findViewById(R.id.statusMascotLeftEye);
+    rightEye = view.findViewById(R.id.statusMascotRightEye);
+    actionButton = view.findViewById(R.id.actionButton);
+
+    actionButton.setOnClickListener(
+        v -> {
+          val intent = new Intent(getContext(), NewHydrationRecordActivity.class);
+          startActivityForResult(intent, NEW_HYDRATION_RECORD_REQUEST_CODE);
+        });
+  }
+
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    Log.d("test", "onActivityResult: ");
+    super.onActivityResult(requestCode, resultCode, data);
+
+    if (requestCode == HomePage.NEW_HYDRATION_RECORD_REQUEST_CODE && resultCode == RESULT_OK) {
+      // TODO: Make this work
+      // val hydrationRecord = new HydrationEntity(data.getStringExtra(NewHydrationRecordActivity.REPLY));
+      // mainViewModel.insert(hydrationRecord);
+    } else {
+      Toast.makeText(getContext(), "Hydration record not saved!", Toast.LENGTH_SHORT).show();
+    }
   }
 
   @Override
   public void onResume() {
     super.onResume();
-    leftEye = view.findViewById(R.id.statusMascotLeftEye);
-    rightEye = view.findViewById(R.id.statusMascotRightEye);
 
     val leftEyeAnimation =
         new ImageViewAnimator(
@@ -85,7 +121,6 @@ public class HomePage extends Fragment {
     rightEyeAnimation.start();
 
     // TODO: Set runtime values in here
-    // TODO: Make the action button do something in conjunction with the history view
     // TODO: Maybe make the eyes stoppable on click?
   }
 }

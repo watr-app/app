@@ -6,19 +6,26 @@
 
 package com.watr.app.ui.pages;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.watr.app.ui.activities.MainActivity;
-import com.watr.app.ui.viewmodels.MainViewModel;
 import com.watr.app.R;
+import com.watr.app.datastore.room.hydration.HydrationEntity;
+import com.watr.app.ui.activities.MainActivity;
+import com.watr.app.ui.activities.NewHydrationRecordActivity;
 import com.watr.app.ui.utils.HydrationRecordListAdapter;
+import com.watr.app.ui.viewmodels.MainViewModel;
 import lombok.NoArgsConstructor;
 import lombok.val;
 

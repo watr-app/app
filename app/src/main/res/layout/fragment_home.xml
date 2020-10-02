@@ -40,7 +40,7 @@
     app:layout_constraintEnd_toEndOf="@+id/statusMascotLeftEyeBackground"
     app:layout_constraintStart_toStartOf="@+id/statusMascotLeftEyeBackground"
     app:layout_constraintTop_toTopOf="@+id/statusMascotLeftEyeBackground"
-    app:srcCompat="@drawable/ic_droplet_eye" />
+    app:srcCompat="@drawable/ic_droplet_eye_24" />
   <ImageView
     android:id="@+id/statusMascotRightEyeBackground"
     android:layout_width="46dp"
@@ -61,7 +61,7 @@
     app:layout_constraintEnd_toEndOf="@+id/statusMascotRightEyeBackground"
     app:layout_constraintStart_toStartOf="@+id/statusMascotRightEyeBackground"
     app:layout_constraintTop_toTopOf="@+id/statusMascotRightEyeBackground"
-    app:srcCompat="@drawable/ic_droplet_eye" />
+    app:srcCompat="@drawable/ic_droplet_eye_24" />
   <ImageView
     android:id="@+id/statusMascotMouth"
     android:layout_width="139dp"

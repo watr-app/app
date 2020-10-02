@@ -18,7 +18,6 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener;
 import com.google.android.material.tabs.TabLayout.Tab;
-import com.watr.app.ui.viewmodels.MainViewModel;
 import com.watr.app.R;
 import com.watr.app.datastore.sharedpreferences.settings.SettingsManager;
 import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
@@ -26,6 +25,7 @@ import com.watr.app.ui.pages.HistoryPage;
 import com.watr.app.ui.pages.HomePage;
 import com.watr.app.ui.pages.SettingsPage;
 import com.watr.app.ui.utils.PageTracker;
+import com.watr.app.ui.viewmodels.MainViewModel;
 import java.util.Objects;
 import lombok.Getter;
 import lombok.val;
@@ -151,7 +151,8 @@ public class MainActivity extends AppCompatActivity {
    * smoothScroll needs to be overridden.
    *
    * @param position {@link Integer} Page index
-   * @param smoothScroll {@link Boolean} Override for whether to trigger the scroll animation on the view pager
+   * @param smoothScroll {@link Boolean} Override for whether to trigger the scroll animation on the
+   *     view pager
    */
   private void updateViewPager(int position, boolean smoothScroll) {
     viewPager.setCurrentItem(position, smoothScroll);
