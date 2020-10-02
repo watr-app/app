@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-package com.watr.app;
+package com.watr.app.ui.viewmodels;
 
 import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;

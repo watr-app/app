@@ -1,4 +1,10 @@
-package com.watr.app;
+/*
+ * Watr. Android application
+ * Copyright (c) 2020 Linus Willner, Panu Eronen and Markus Hartikainen.
+ * All rights reserved.
+ */
+
+package com.watr.app.ui.activities;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +18,8 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener;
 import com.google.android.material.tabs.TabLayout.Tab;
+import com.watr.app.ui.viewmodels.MainViewModel;
+import com.watr.app.R;
 import com.watr.app.datastore.sharedpreferences.settings.SettingsManager;
 import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
 import com.watr.app.ui.pages.HistoryPage;
