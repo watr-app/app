@@ -9,7 +9,7 @@ package com.watr.app.constants;
 /**
  * Constants for supported types for SharedPreferences.
  *
- * @see <a href="https://developer.android.com/reference/android/content/SharedPreferences>SharedPreferences</a>
+ * @see android.content.SharedPreferences
  * @author linuswillner
  * @version 1.0.0
  */

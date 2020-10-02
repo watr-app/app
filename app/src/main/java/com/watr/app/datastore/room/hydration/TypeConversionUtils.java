@@ -24,10 +24,10 @@ public class TypeConversionUtils {
    * Serialises a Date object from a Unix timestamp.
    *
    * @param unixTimestamp Unix timestamp
-   * @return Serialised Date object
+   * @return {@link Date} Serialised Date object
    */
   @TypeConverter
-  public static Date dateFromUnixTimestamp(@NonNull Long unixTimestamp) {
+  public static Date dateFromUnixTimestamp(@NonNull long unixTimestamp) {
     return new Date(unixTimestamp);
   }
 
@@ -35,10 +35,10 @@ public class TypeConversionUtils {
    * Converts a Date object to a Unix timestamp (Long)
    *
    * @param date Date object
-   * @return Unix timestamp
+   * @return {@link Long} Unix timestamp
    */
   @TypeConverter
-  public static Long dateToUnixTimestamp(@NonNull Date date) {
+  public static long dateToUnixTimestamp(@NonNull Date date) {
     return date.getTime();
   }
 
@@ -46,7 +46,7 @@ public class TypeConversionUtils {
    * Stringifies a DrinkType enum to JSON via the Gson library.
    *
    * @param drinkType DrinkType enum
-   * @return JSON-ified enum
+   * @return {@link String} JSON-ified enum
    */
   @TypeConverter
   public static String stringifyDrinkType(@NonNull DrinkType drinkType) {
@@ -57,7 +57,7 @@ public class TypeConversionUtils {
    * Serialises a JSON-ified DrinkType to a DrinkType enum
    *
    * @param stringified JSON-ified enum
-   * @return DrinkType enum
+   * @return {@link DrinkType}
    */
   @TypeConverter
   public static DrinkType serializeDrinkType(@NonNull String stringified) {

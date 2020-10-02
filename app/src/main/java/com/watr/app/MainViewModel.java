@@ -20,8 +20,7 @@ import lombok.NonNull;
  * ViewModel class to create a unified access point to the database controller that survives across
  * activity lifecycles.
  *
- * <p>All methods in this class are merely wrappers for those found in {@link
- * com.watr.app.datastore.room.hydration.HydrationDatabaseController} (Which in turn are merely
+ * <p>All methods in this class are merely wrappers for those found in {@link HydrationDatabaseController} (Which in turn are merely
  * execution schedulers for {@link com.watr.app.datastore.room.hydration.HydrationDao}). For
  * documentation on the methods themselves, see the HydrationDao interface ({@link
  * com.watr.app.datastore.room.hydration.HydrationDao}).

@@ -33,8 +33,8 @@ public class TimeUtils {
    * which in turn depends on the accuracy of the return value of <a
    * href="https://docs.oracle.com/javase/8/docs/api/java/util/TimeZone.html#getDefault--">TimeZone.getDefault()</a>.
    *
-   * @param relativeTime LocalTime instance to extract Unix timestamp from
-   * @return Unix timestamp as a long integer
+   * @param relativeTime {@link LocalTime} LocalTime instance to extract Unix timestamp from
+   * @return {@link Long} Unix timestamp
    */
   public static long localTimeToUnixTimestamp(@NonNull LocalTime relativeTime) {
     // This is quite a bit of a faff, but turns out that "relative time within an absolute date" is
@@ -51,12 +51,12 @@ public class TimeUtils {
   }
 
   /**
-   * Same as {@link com.watr.app.timemgmt.TimeUtils}.localTimeToUnixTimestamp(), but takes a date
+   * Same as {@link TimeUtils}.localTimeToUnixTimestamp(), but takes a date
    * offset to allow calculation across date boundaries.
    *
-   * @param relativeTime LocalTime instance to extract Unix timestamp from
-   * @param dateOffset DateOffset enum
-   * @return Unix timestamp as a long integer
+   * @param relativeTime {@link LocalTime} LocalTime instance to extract Unix timestamp from
+   * @param dateOffset {@link DateOffset}
+   * @return {@link Long} Unix timestamp
    */
   public static long localTimeToUnixTimestamp(
       @NonNull LocalTime relativeTime, @NonNull DateOffset dateOffset) {
@@ -70,20 +70,20 @@ public class TimeUtils {
   /**
    * Checks if the current time is before a time today.
    *
-   * @param comparisonTime LocalTime instance to compare
-   * @return Whether the current time is before the provided time today
+   * @param comparisonTime {@link LocalTime} LocalTime instance to compare
+   * @return {@link Boolean} Whether the current time is before the provided time today
    */
   public static boolean currentTimeIsBefore(LocalTime comparisonTime) {
     return LocalTime.now().isBefore(comparisonTime);
   }
 
   /**
-   * Same as {@link com.watr.app.timemgmt.TimeUtils}.currentTimeIsBefore(), but takes a date offset
+   * Same as {@link TimeUtils}.currentTimeIsBefore(), but takes a date offset
    * to allow calculation across date boundaries.
    *
-   * @param comparisonTime LocalTime instance to compare
-   * @param dateOffset DateOffset enum
-   * @return Whether current time is before the provided LocalTime instance
+   * @param comparisonTime {@link LocalTime} LocalTime instance to compare
+   * @param dateOffset {@link DateOffset}
+   * @return {@link Boolean} Whether current time is before the provided LocalTime instance
    */
   public static boolean currentTimeIsBefore(
       @NonNull LocalTime comparisonTime, @NonNull DateOffset dateOffset) {
@@ -97,20 +97,20 @@ public class TimeUtils {
   /**
    * Checks if the current time is after a time today.
    *
-   * @param comparisonTime LocalTime instance to compare
-   * @return Whether the current time is after the provided time today
+   * @param comparisonTime {@link LocalTime} LocalTime instance to compare
+   * @return {@link Boolean} Whether the current time is after the provided time today
    */
   public static boolean currentTimeIsAfter(LocalTime comparisonTime) {
     return LocalTime.now().isAfter(comparisonTime);
   }
 
   /**
-   * Same as {@link com.watr.app.timemgmt.TimeUtils}.currentTimeIsAfter(), but takes a date offset
+   * Same as {@link TimeUtils}.currentTimeIsAfter(), but takes a date offset
    * to allow calculation across date boundaries.
    *
-   * @param comparisonTime LocalTime instance to compare
-   * @param dateOffset DateOffset enum
-   * @return Whether current time is after the provided LocalTime instance yesterday
+   * @param comparisonTime {@link LocalTime} LocalTime instance to compare
+   * @param dateOffset {@link DateOffset} DateOffset enum
+   * @return {@link Boolean} Whether current time is after the provided LocalTime instance yesterday
    */
   public static boolean currentTimeIsAfter(
       @NonNull LocalTime comparisonTime, @NonNull DateOffset dateOffset) {
@@ -124,9 +124,9 @@ public class TimeUtils {
   /**
    * Checks if current time is between two LocalTime instances, i.e. in their interval.
    *
-   * @param start Interval-starting LocalTime instance
-   * @param end Interval-ending LocalTime instance
-   * @return Whether current time is between the provided LocalTime instances
+   * @param start {@link LocalTime} Interval-starting LocalTime instance
+   * @param end {@link LocalTime} Interval-ending LocalTime instance
+   * @return {@link Boolean} Whether current time is between the provided LocalTime instances
    */
   public static boolean currentTimeIsInInterval(LocalTime start, LocalTime end) {
     val now = LocalTime.now();
@@ -134,14 +134,14 @@ public class TimeUtils {
   }
 
   /**
-   * Same as {@link com.watr.app.timemgmt.TimeUtils}.currentTimeIsInInterval(), but takes start and
+   * Same as {@link TimeUtils}.currentTimeIsInInterval(), but takes start and
    * end date offsets to allow calculation across date boundaries.
    *
-   * @param start Interval-starting LocalTime instance
-   * @param startOffset DateOffset enum for the start of the interval
-   * @param end Interval-ending LocalTime instance
-   * @param endOffset DateOffset enum for the end of the interval
-   * @return Whether current time is between the provided LocalTime instances
+   * @param start {@link LocalTime} Interval-starting LocalTime instance
+   * @param startOffset {@link DateOffset} DateOffset enum for the start of the interval
+   * @param end {@link LocalTime} Interval-ending LocalTime instance
+   * @param endOffset {@link DateOffset} DateOffset enum for the end of the interval
+   * @return {@link Boolean} Whether current time is between the provided LocalTime instances
    */
   public static boolean currentTimeIsInterval(
       @NonNull LocalTime start,

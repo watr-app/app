@@ -30,8 +30,8 @@ public class SettingsManager extends SharedPreferenceManager {
   /**
    * Sets a string value.
    *
-   * @param key
-   * @param value
+   * @param key {@link String}
+   * @param value {@link String}
    */
   public void addString(String key, String value) {
     super.editAndApply(SharedPreferenceType.STRING, key, value);
@@ -40,8 +40,8 @@ public class SettingsManager extends SharedPreferenceManager {
   /**
    * Sets a (32-bit) integer value.
    *
-   * @param key
-   * @param value
+   * @param key {@link String}
+   * @param value {@link Integer}
    */
   public void addInt(String key, int value) {
     super.editAndApply(SharedPreferenceType.INTEGER, key, value);
@@ -50,8 +50,8 @@ public class SettingsManager extends SharedPreferenceManager {
   /**
    * Sets a boolean value.
    *
-   * @param key
-   * @param value
+   * @param key {@link String}
+   * @param value {@link Boolean}
    */
   public void addBoolean(String key, boolean value) {
     super.editAndApply(SharedPreferenceType.BOOLEAN, key, value);
@@ -60,8 +60,8 @@ public class SettingsManager extends SharedPreferenceManager {
   /**
    * Sets a floating-point value.
    *
-   * @param key
-   * @param value
+   * @param key {@link String}
+   * @param value {@link Float}
    */
   public void addFloat(String key, float value) {
     super.editAndApply(SharedPreferenceType.FLOAT, key, value);
@@ -70,8 +70,8 @@ public class SettingsManager extends SharedPreferenceManager {
   /**
    * Sets a long (64-bit integer) value.
    *
-   * @param key
-   * @param value
+   * @param key {@link String}
+   * @param value {@link Long}
    */
   public void addLong(String key, long value) {
     super.editAndApply(SharedPreferenceType.LONG, key, value);
@@ -80,8 +80,8 @@ public class SettingsManager extends SharedPreferenceManager {
   /**
    * Sets a string set value.
    *
-   * @param key
-   * @param value
+   * @param key {@link String}
+   * @param value {@link Set}<{@link String}>
    */
   public void addStringSet(String key, Set<String> value) {
     super.editAndApply(SharedPreferenceType.STRINGSET, key, value);

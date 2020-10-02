@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Hydration DAO (Data Access Object).
  *
- * @see <a href="https://developer.android.com/reference/android/arch/persistence/room/Dao">Dao</a>
+ * @see Dao
  * @author linuswillner
  * @version 1.0.0
  */
@@ -26,23 +26,31 @@ import java.util.List;
 public interface HydrationDao {
 
   /**
-   * @return All hydration records ordered by latest to oldest (Largest => smallest Unix timestamp)
+   * Gets all hydration records.
+   *
+   * @return {@link LiveData}<{@link List}<{@link HydrationEntity}>> All hydration records ordered
+   *     by latest to oldest (Largest => smallest Unix timestamp)
    */
   @Query("SELECT * FROM hydration_records ORDER BY timestamp DESC")
   LiveData<List<HydrationEntity>> getAll();
 
-  /** @return Latest hydration record */
+  /**
+   * Gets the latest hydration record.
+   *
+   * @return {@link HydrationEntity} Latest hydration record
+   */
   @Query("SELECT * FROM hydration_records ORDER BY timestamp DESC LIMIT 1")
   HydrationEntity getLatest();
 
   /**
-   * Get hydration records between two Unix timestamps. Start and end are inclusive.
+   * Gets hydration records between two Unix timestamps. Start and end are inclusive.
    *
-   * @param start Record range start timestamp
-   * @param end Record range end timestamp
-   * @return All hydration records between start and end.
+   * @param start {@link Long} Record range start timestamp
+   * @param end {@link Long} Record range end timestamp
+   * @return {@link List}<{@link HydrationEntity}> All hydration records between start and end
    */
-  @Query("SELECT * FROM hydration_records WHERE timestamp <= :start AND timestamp >= :end ORDER BY timestamp DESC LIMIT 1")
+  @Query(
+      "SELECT * FROM hydration_records WHERE timestamp <= :start AND timestamp >= :end ORDER BY timestamp DESC LIMIT 1")
   List<HydrationEntity> getByTimeFrame(long start, long end);
 
   /** Wipes the entire database. Use with caution. */
@@ -50,12 +58,12 @@ public interface HydrationDao {
   void wipe();
 
   // Note: Using ignore conflict resolution strategy here, because two records will never be the
-  // same, seeing as they will have Unix timestamps
+  // same, seeing as they will have different Unix timestamps
 
   /**
    * Adds a new hydration record to the database.
    *
-   * @param newEntity New hydration record (Entity)
+   * @param newEntity {@link HydrationEntity} New hydration record (Entity)
    */
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   void insert(HydrationEntity newEntity);
@@ -63,7 +71,8 @@ public interface HydrationDao {
   /**
    * Adds new hydration records to the database in bulk.
    *
-   * @param newEntityList List of new hydration records (Entities)
+   * @param newEntityList {@link List}<{@link HydrationEntity}> List of new hydration records
+   *     (Entities)
    */
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   void bulkInsert(List<HydrationEntity> newEntityList);
@@ -72,8 +81,8 @@ public interface HydrationDao {
    * Updates a hydration record through a patcher entity. An entity with a matching primary key will
    * be updated.
    *
-   * @see <a href="https://developer.android.com/reference/androidx/room/Update">Update</a>
-   * @param patcherEntity Hydration record to update
+   * @see Update
+   * @param patcherEntity {@link HydrationEntity} Hydration record to update
    */
   @Update(onConflict = OnConflictStrategy.IGNORE)
   void update(HydrationEntity patcherEntity);
@@ -82,8 +91,8 @@ public interface HydrationDao {
    * Updates hydration records in bulk with a list of patcher entities. Entities with matching
    * primary keys will be updated.
    *
-   * @see <a href="https://developer.android.com/reference/androidx/room/Update">Update</a>
-   * @param patcherEntityList Hydration records to update
+   * @see Update
+   * @param patcherEntityList {@link List}<{@link HydrationEntity}> Hydration records to update
    */
   @Update(onConflict = OnConflictStrategy.IGNORE)
   void bulkUpdate(List<HydrationEntity> patcherEntityList);
@@ -92,8 +101,8 @@ public interface HydrationDao {
    * Delete a hydration record through a matcher, i.e. an entity with a matching primary key will be
    * deleted.
    *
-   * @see <a href="https://developer.android.com/reference/androidx/room/Delete">Delete</a>
-   * @param matcherEntity Hydration record to delete
+   * @see Delete
+   * @param matcherEntity {@link HydrationEntity} Hydration record to delete
    */
   @Delete
   void delete(HydrationEntity matcherEntity);
@@ -102,8 +111,8 @@ public interface HydrationDao {
    * Deletes hydration records in bulk with a matcher, i.e. an entity with a matching primary key
    * will be deleted.
    *
-   * @see <a href="https://developer.android.com/reference/androidx/room/Delete">Delete</a>
-   * @param matcherEntityList Hydration records to delete
+   * @see Delete
+   * @param matcherEntityList {@link List}<{@link HydrationEntity}> Hydration records to delete
    */
   @Delete
   void bulkDelete(List<HydrationEntity> matcherEntityList);

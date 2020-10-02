@@ -17,7 +17,7 @@ import lombok.val;
 /**
  * Image view animator with support for sequencing based off of a list of TranslateAnimations.
  *
- * @see <a href="https://developer.android.com/reference/android/view/animation/TranslateAnimation">TranslateAnimation</a>
+ * @see TranslateAnimation
  * @author linuswillner
  * @version 1.0.0
  */
@@ -44,6 +44,12 @@ public class ImageViewAnimator {
     imageView.startAnimation(animation);
   }
 
+  /**
+   * Animation listener to start the next animation in the sequence when the previous one ends.
+   *
+   * @author linuswillner
+   * @version 1.0.0
+   */
   @RequiredArgsConstructor
   private static class ImageViewAnimationListener implements AnimationListener {
     private final ImageViewAnimator animator;

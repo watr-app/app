@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     userProfileManager =
         new UserProfileManager(getSharedPreferences("userprofile", Context.MODE_PRIVATE));
 
+    // TODO: Check if setup is needed from the needsSetup variable before preflight
+
     /*
     // Run pre-flight checks for data stores
     try {
@@ -121,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
   /**
    * Sets the navigation bar to the tab at the submitted index.
    *
-   * @param position Tab index
+   * @param position {@link Integer} Tab index
    */
   private void updateNavigationBar(int position) {
     navigationBar.selectTab(navigationBar.getTabAt(position));
@@ -130,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
   /**
    * Sends the view pager to the page at the submitted index.
    *
-   * @param position Page index
+   * @param position {@link Integer} Page index
    */
   private void updateViewPager(int position) {
     viewPager.setCurrentItem(position);
@@ -140,8 +142,8 @@ public class MainActivity extends AppCompatActivity {
    * Sends the view pager to the page at the submitted index, with a special case for where
    * smoothScroll needs to be overridden.
    *
-   * @param position Page index
-   * @param smoothScroll Override for whether to trigger the scroll animation on the view pager
+   * @param position {@link Integer} Page index
+   * @param smoothScroll {@link Boolean} Override for whether to trigger the scroll animation on the view pager
    */
   private void updateViewPager(int position, boolean smoothScroll) {
     viewPager.setCurrentItem(position, smoothScroll);

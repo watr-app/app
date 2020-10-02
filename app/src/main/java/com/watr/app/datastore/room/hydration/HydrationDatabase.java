@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Hydration database.
+ * Multi-threaded Room database query executor.
  *
  * @author linuswillner
  * @version 1.0.0
@@ -38,7 +38,7 @@ public abstract class HydrationDatabase extends RoomDatabase {
    * Gets the global Room database instance.
    *
    * @param context Application context
-   * @return Room database instance
+   * @return {@link HydrationDatabase}
    */
   static HydrationDatabase getDatabase(final Context context) {
     if (INSTANCE == null) {

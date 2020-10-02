@@ -83,5 +83,9 @@ public class HomePage extends Fragment {
         new ImageViewAnimator(
             ANIMATION_DURATION, ANIMATION_START_OFFSET, rightEye, rightEyeAnimations);
     rightEyeAnimation.start();
+
+    // TODO: Set runtime values in here
+    // TODO: Make the action button do something in conjunction with the history view
+    // TODO: Maybe make the eyes stoppable on click?
   }
 }

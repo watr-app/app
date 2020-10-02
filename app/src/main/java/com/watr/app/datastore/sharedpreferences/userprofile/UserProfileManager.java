@@ -7,10 +7,10 @@
 package com.watr.app.datastore.sharedpreferences.userprofile;
 
 import android.content.SharedPreferences;
+import com.watr.app.constants.Gender;
+import com.watr.app.constants.SharedPreferenceType;
 import com.watr.app.datastore.sharedpreferences.DataStorePreFlightCheckException;
 import com.watr.app.datastore.sharedpreferences.SharedPreferenceManager;
-import com.watr.app.constants.SharedPreferenceType;
-import com.watr.app.constants.Gender;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +32,11 @@ public class UserProfileManager extends SharedPreferenceManager {
     this.ctx = ctx;
   }
 
+  /**
+   * Checks that required profile settings are set.
+   *
+   * @throws DataStorePreFlightCheckException if one or more required settings were not set.
+   */
   public void checkRequiredProfileSettings() throws DataStorePreFlightCheckException {
     val requiredKeys = new ArrayList<String>();
     requiredKeys.add("gender");
@@ -43,15 +48,15 @@ public class UserProfileManager extends SharedPreferenceManager {
 
     if (notDefined.length > 0) {
       throw new DataStorePreFlightCheckException(
-          String.format("Required user profile settings %s not defined",
-              Arrays.toString(notDefined)));
+          String.format(
+              "Required user profile settings %s not defined", Arrays.toString(notDefined)));
     }
   }
 
   /**
    * Gets the user's gender.
    *
-   * @return Gender enum
+   * @return {@link Gender}
    */
   public Gender getGender() {
     // Using 0 as the default even though this value will always be set
@@ -61,7 +66,7 @@ public class UserProfileManager extends SharedPreferenceManager {
   /**
    * Sets the user's gender.
    *
-   * @param gender Gender enum
+   * @param gender {@link Gender}
    */
   public void setGender(@NonNull Gender gender) {
     super.editAndApply(SharedPreferenceType.INTEGER, "genderId", gender.getGenderId());
@@ -70,7 +75,7 @@ public class UserProfileManager extends SharedPreferenceManager {
   /**
    * Gets the user's daily drink target.
    *
-   * @return Daily drink target in millilitres
+   * @return {@link Integer} Daily drink target in millilitres
    */
   public int getDailyTarget() {
     // Getting the default from Gender even though this value will always be set
@@ -80,7 +85,7 @@ public class UserProfileManager extends SharedPreferenceManager {
   /**
    * Sets the daily drink target for the user.
    *
-   * @param millilitres Drink target in millilitres
+   * @param millilitres {@link Integer} Drink target in millilitres
    */
   public void setDailyTarget(int millilitres) {
     super.editAndApply(SharedPreferenceType.INTEGER, "dailyTarget", millilitres);
@@ -89,7 +94,7 @@ public class UserProfileManager extends SharedPreferenceManager {
   /**
    * Gets the user's preferred wake up time.
    *
-   * @return LocalTime object representing the user's preferred wake up time
+   * @return {@link LocalTime} LocalTime object representing the user's preferred wake up time
    */
   public LocalTime getWakeTime() {
     // Using noon as default even though this value will always be set
@@ -99,7 +104,7 @@ public class UserProfileManager extends SharedPreferenceManager {
   /**
    * Sets the wake up time for the user.
    *
-   * @param time User's preferred wake-up time
+   * @param time {@link LocalTime} User's preferred wake-up time
    */
   public void setWakeTime(@NonNull LocalTime time) {
     super.editAndApply(SharedPreferenceType.STRING, "wakeTime", time.toString());
@@ -108,7 +113,7 @@ public class UserProfileManager extends SharedPreferenceManager {
   /**
    * Gets the user's preferred bed time.
    *
-   * @return LocalTime object representing the user's preferred bed time
+   * @return {@link LocalTime} LocalTime object representing the user's preferred bed time
    */
   public LocalTime getBedTime() {
     // Using midnight (Min) as default even though this value will always be set
@@ -118,7 +123,7 @@ public class UserProfileManager extends SharedPreferenceManager {
   /**
    * Sets the bed time for the user.
    *
-   * @param time User's preferred bed time
+   * @param time {@link LocalTime} User's preferred bed time
    */
   public void setBedTime(@NonNull LocalTime time) {
     super.editAndApply(SharedPreferenceType.STRING, "bedTime", time.toString());

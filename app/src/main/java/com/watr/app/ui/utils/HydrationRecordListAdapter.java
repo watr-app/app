@@ -17,6 +17,12 @@ import com.watr.app.datastore.room.hydration.HydrationEntity;
 import java.util.List;
 import lombok.NonNull;
 
+/**
+ * Hydration record recycler view adapter.
+ *
+ * @author linuswillner
+ * @version 1.0.0
+ */
 public class HydrationRecordListAdapter
     extends RecyclerView.Adapter<HydrationRecordListAdapter.HydrationRecordViewHolder> {
 
@@ -57,6 +63,12 @@ public class HydrationRecordListAdapter
     return hydrationRecords != null ? hydrationRecords.size() : 0;
   }
 
+  /**
+   * Hydration record recycler view view holder.
+   *
+   * @author linuswillner
+   * @version 1.0.0
+   */
   public static class HydrationRecordViewHolder extends RecyclerView.ViewHolder {
     private final TextView hydrationRecordItemView;
 

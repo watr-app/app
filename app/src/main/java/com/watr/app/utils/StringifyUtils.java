@@ -15,5 +15,6 @@ import com.google.gson.Gson;
  * @version 1.0.0
  */
 public class StringifyUtils {
+  /** Globally available GSON instance. */
   public static Gson gson = new Gson();
 }

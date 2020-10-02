@@ -33,7 +33,7 @@ public class PageTracker {
   /**
    * Updates the current page index and stores the now old page index in history.
    *
-   * @param newPage Index of the new page
+   * @param newPage {@link Integer} Index of the new page
    */
   public void setCurrentPage(int newPage) {
     if (!shouldIgnoreNext()) {
@@ -52,7 +52,7 @@ public class PageTracker {
   /**
    * Retrieves the previous page and removes that page from the history.
    *
-   * @return Previous page index
+   * @return {@link Integer} Previous page index
    */
   public int getPreviousPage() {
     Log.d(
@@ -74,8 +74,8 @@ public class PageTracker {
    * history to actually run out at some point, instead of just flipping between the same two items
    * all the time.
    *
-   * @param isBackPress Whether this function was triggered from a backpress, i.e. pressing Back
-   * @return Whether this page is the first instance (Or not)
+   * @param isBackPress {@link Boolean} Whether this function was triggered from a backpress, i.e. pressing Back
+   * @return {@link Boolean} Whether this page is the first instance (Or not)
    */
   public boolean currentPageIsFirst(boolean isBackPress) {
     if (isBackPress) {
@@ -95,7 +95,7 @@ public class PageTracker {
    * If so, returns true and then flips the ignore switch back to false, in order to allow for the
    * check to occur again from a clean slate on the next setCurrentPage() call.
    *
-   * @return Whether the next setCurrentPage() call should be ignored (Or not)
+   * @return {@link Boolean} Whether the next setCurrentPage() call should be ignored (Or not)
    */
   private boolean shouldIgnoreNext() {
     // If next change should be ignored, return true for ignore and reset tracker

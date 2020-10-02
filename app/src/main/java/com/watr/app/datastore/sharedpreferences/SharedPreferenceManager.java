@@ -26,10 +26,10 @@ public abstract class SharedPreferenceManager {
   /**
    * Edit and apply a change to the provided SharedPreferences instance.
    *
-   * @param type Shared preference type of the value being set (From the SharedPreferenceType enum).
-   * @param key
-   * @param value
-   * @throws ClassCastException if the type coercion failed.
+   * @param type {@link SharedPreferenceType}
+   * @param key {@link String}
+   * @param value {@link Object
+   * @throws {@link ClassCastException} if the type coercion failed.
    */
   // Suppressing the typecast warning here because we cannot know the type before runtime and the
   // Set<String> coercion will complain otherwise
