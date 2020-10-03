@@ -15,21 +15,47 @@
     android:id="@+id/pageTitle"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="24dp"
+    android:layout_marginTop="16dp"
     android:text="@string/history_page_title_awake"
     android:textColor="@color/colorText"
     android:textSize="24sp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/titleRightGuideline"
+    app:layout_constraintStart_toStartOf="@+id/titleLeftGuideline"
     app:layout_constraintTop_toTopOf="parent" />
+  <TextView
+    android:id="@+id/helperText"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:text="(Number in parenthesis denotes relative hydration, i.e. actual effect on your fluid balance)"
+    android:textAlignment="center"
+    android:textSize="18sp"
+    app:layout_constraintEnd_toStartOf="@+id/titleRightGuideline"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="@+id/titleLeftGuideline"
+    app:layout_constraintTop_toBottomOf="@+id/pageTitle" />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/titleLeftGuideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_percent="0.05" />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/titleRightGuideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_percent="0.95" />
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/recyclerView"
-    android:layout_width="match_parent"
+    android:layout_width="0dp"
     android:layout_height="0dp"
     android:layout_marginTop="24dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/pageTitle"
+    app:layout_constraintTop_toBottomOf="@+id/helperText"
+    app:layout_constraintVertical_bias="1.0"
     tools:listitem="@layout/recyclerview_item" />
 </androidx.constraintlayout.widget.ConstraintLayout>

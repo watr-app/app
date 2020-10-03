@@ -11,7 +11,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -20,7 +19,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.watr.app.R;
 import com.watr.app.constants.DrinkType;
@@ -54,7 +52,7 @@ public class NewHydrationRecordActivity extends AppCompatActivity {
 
     // Init
     drinkTypeDropdown = findViewById(R.id.ingestedLiquidTypeInput);
-    drinkAmountInput = findViewById(R.id.ingestedLiquidAmountInput);
+    drinkAmountInput = findViewById(R.id.ingestedLiquidAmount);
     saveButton = findViewById(R.id.saveHydrationRecordButton);
     saveButtonHint = findViewById(R.id.saveHydrationRecordHint);
 
