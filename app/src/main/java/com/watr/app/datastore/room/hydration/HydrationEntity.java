@@ -6,15 +6,13 @@
 
 package com.watr.app.datastore.room.hydration;
 
-import android.annotation.SuppressLint;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import com.watr.app.constants.DrinkType;
 import java.util.Date;
 import lombok.Getter;
-import lombok.NonNull;
-import org.jetbrains.annotations.NotNull;
+import lombok.ToString;
 
 /**
  * Hydration record.
@@ -22,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
  * @author linuswillner
  * @version 1.0.0
  */
+@ToString
 @Entity(tableName = "hydration_records")
 public class HydrationEntity {
   @Getter @PrimaryKey private final Date timestamp;
@@ -38,11 +37,5 @@ public class HydrationEntity {
     this.drinkType = drinkType;
     this.amount = amount;
     this.timestamp = timestamp;
-  }
-
-  @SuppressLint("DefaultLocale")
-  @Override
-  public String toString() {
-    return String.format("%tR: %s, %d ml", this.timestamp, this.drinkType.getLabel(), this.amount);
   }
 }
