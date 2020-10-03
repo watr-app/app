@@ -18,6 +18,7 @@
   <string name="ingestion_amount_hint">Ingested amount in millilitres…</string>
   <string name="hydration_record_title">Let\'s get your drink logged!</string>
   <string name="hydration_record_ingested_liquid_type">What did you drink?</string>
-  <string name="hydration_record_ingested_liquid_amount">How much of it did you drink?</string>
-  <string name="hydration_record_save_hint">Click to log ingestion…</string>
+  <string name="hydration_record_ingested_liquid_amount">How much of it did you drink? (ml)</string>
+  <string name="hydration_record_save_hint">All good, click to log ingestion!</string>
+  <string name="hydration_record_save_hint_error">Cannot save while a field value is incorrect!</string>
 </resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Watr. Android application
+  ~ Copyright (c) 2020 Linus Willner, Panu Eronen and Markus Hartikainen.
+  ~ All rights reserved.
+  -->
+
+<resources>
+  <string-array name="drink_types_array">
+    <item>Water</item>
+    <item>Water (Carbonated)</item>
+    <item>Water (Flavoured)</item>
+    <item>Milk</item>
+    <item>Tea</item>
+    <item>Coffee</item>
+    <item>Juice</item>
+    <item>Hot chocolate</item>
+    <item>Soft drink</item>
+    <item>Energy drink</item>
+    <item>Beer</item>
+    <item>Wine</item>
+    <item>Champagne</item>
+    <item>Spirit</item>
+  </string-array>
+</resources>

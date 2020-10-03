@@ -7,6 +7,7 @@
 package com.watr.app.ui.utils;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.watr.app.R;
 import com.watr.app.datastore.room.hydration.HydrationEntity;
+import com.watr.app.utils.StringifyUtils;
 import java.util.List;
 import lombok.NonNull;
 
@@ -53,6 +55,7 @@ public class HydrationRecordListAdapter
 
   public void setHydrationRecords(List<HydrationEntity> hydrationRecords) {
     this.hydrationRecords = hydrationRecords;
+    Log.d("test", StringifyUtils.gson.toJson(hydrationRecords));
     notifyDataSetChanged();
   }
 
@@ -74,7 +77,7 @@ public class HydrationRecordListAdapter
 
     private HydrationRecordViewHolder(View itemView) {
       super(itemView);
-      hydrationRecordItemView = itemView.findViewById(R.id.textView);
+      hydrationRecordItemView = itemView.findViewById(R.id.itemDescription);
     }
   }
 }

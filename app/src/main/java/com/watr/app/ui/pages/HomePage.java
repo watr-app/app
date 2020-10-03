@@ -22,11 +22,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.watr.app.R;
+import com.watr.app.constants.DrinkType;
+import com.watr.app.datastore.room.hydration.HydrationEntity;
 import com.watr.app.ui.activities.MainActivity;
 import com.watr.app.ui.activities.NewHydrationRecordActivity;
 import com.watr.app.ui.utils.ImageViewAnimator;
 import com.watr.app.ui.viewmodels.MainViewModel;
+import com.watr.app.utils.StringifyUtils;
 import java.util.ArrayList;
+import java.util.Date;
+import lombok.SneakyThrows;
 import lombok.val;
 
 /**
@@ -93,14 +98,17 @@ public class HomePage extends Fragment {
         });
   }
 
+  @SneakyThrows
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    Log.d("test", "onActivityResult: ");
     super.onActivityResult(requestCode, resultCode, data);
 
     if (requestCode == HomePage.NEW_HYDRATION_RECORD_REQUEST_CODE && resultCode == RESULT_OK) {
-      // TODO: Make this work
-      // val hydrationRecord = new HydrationEntity(data.getStringExtra(NewHydrationRecordActivity.REPLY));
-      // mainViewModel.insert(hydrationRecord);
+      val drinkType =
+          StringifyUtils.gson.fromJson(
+              data.getStringExtra(NewHydrationRecordActivity.REPLY_DRINK_TYPE), DrinkType.class);
+      val amount = data.getIntExtra(NewHydrationRecordActivity.REPLY_DRINK_AMOUNT, 1);
+
+      mainViewModel.insert(new HydrationEntity(new Date(), drinkType, amount));
     } else {
       Toast.makeText(getContext(), "Hydration record not saved!", Toast.LENGTH_SHORT).show();
     }
