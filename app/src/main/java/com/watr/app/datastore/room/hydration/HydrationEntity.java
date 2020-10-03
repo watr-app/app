@@ -29,13 +29,28 @@ public class HydrationEntity {
   @ColumnInfo(name = "drink_type")
   private final DrinkType drinkType;
 
-  @Getter private final int amount; // I.e. absolute amount of liquid ingested, in ml
+  // Absolute amount of liquid ingested, in ml
+  @Getter private final int absoluteHydration;
 
-  // BUG: Cannot use a RequiredArgsConstructor here or it breaks the build because it cannot find
-  // the setter for some reason, hence why the constructor has to be manually created here
-  public HydrationEntity(Date timestamp, DrinkType drinkType, int amount) {
+  // Relative amount of liquid ingested in ml, i.e. the absolute amount with drink type hydration
+  // coefficient applied
+  @Getter private final int relativeHydration;
+
+  // BUG: Cannot use a RequiredArgsConstructor here or Room breaks because it thinks it does not
+  // have a valid constructor, so we have to create it manually
+  // (That's quite dumb, but hey, problem solved)
+
+  // BUG: The relativeHydration parameter is intentionally ignored here because Room will chuck a
+  // hissy fit if all getter parameters do not have setters - which, as it turns out, means fields
+  // with exact same variable names in the constructor parameters
+  // (...that makes no God damn sense, but fine, we'll roll with it)
+  public HydrationEntity(
+      Date timestamp, DrinkType drinkType, int absoluteHydration, int relativeHydration) {
     this.drinkType = drinkType;
-    this.amount = amount;
+    this.absoluteHydration = absoluteHydration;
+    // We can afford to do an integer coercion here because, in reality, all the variables with this
+    // are going to end up
+    this.relativeHydration = (int) (absoluteHydration * drinkType.getHydrationCoefficient());
     this.timestamp = timestamp;
   }
 }
