@@ -21,4 +21,6 @@
   <string name="hydration_record_ingested_liquid_amount">How much of it did you drink? (ml)</string>
   <string name="hydration_record_save_hint">All good, click to log ingestion!</string>
   <string name="hydration_record_save_hint_error">Cannot save while a field value is incorrect!</string>
+  <string name="history_view_title_awake">Liquids ingested today</string>
+  <string name="history_view_title_asleep">Liquids ingested during the past day</string>
 </resources>

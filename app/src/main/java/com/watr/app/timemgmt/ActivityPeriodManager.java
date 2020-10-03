@@ -6,10 +6,10 @@
 
 package com.watr.app.timemgmt;
 
-import com.watr.app.ui.activities.MainActivity;
 import com.watr.app.constants.ActivityPeriod;
 import com.watr.app.constants.DateOffset;
 import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
+import com.watr.app.ui.activities.MainActivity;
 import lombok.val;
 
 /**
@@ -22,25 +22,26 @@ public class ActivityPeriodManager {
   private static UserProfileManager userProfileManager = MainActivity.getUserProfileManager();
 
   /**
-   * Returns the current activity period.
+   * Returns the current activity period. Wrapper for {@link
+   * ActivityPeriodManager}.getCurrentActivityPeriodWithOffsets().
    *
    * @return {@link ActivityPeriod}
    * @throws UnknownTimeIntervalException If time interval wasn't wake => bed or bed => wake (Which
    *     should be downright physically impossible).
    */
   public static ActivityPeriod getCurrentActivityPeriod() throws UnknownTimeIntervalException {
-    return checkActivityPeriod().activityPeriod;
+    return getCurrentActivityPeriodWithOffsets().activityPeriod;
   }
 
   /**
-   * Checks the current activity period, compensating for times potentially hitting across date
+   * Returns the current activity period, compensating for times potentially hitting across date
    * boundaries. Additionally returns the calculated offsets for the wake time and bed time.
    *
    * @return {@link ActivityPeriodWithOffsets}
    * @throws UnknownTimeIntervalException if time interval was not wake => bed or bed => wake (Which
    *     should be downright physically impossible).
    */
-  private static ActivityPeriodWithOffsets checkActivityPeriod()
+  public static ActivityPeriodWithOffsets getCurrentActivityPeriodWithOffsets()
       throws UnknownTimeIntervalException {
     val wakeTime = userProfileManager.getWakeTime();
     val bedTime = userProfileManager.getBedTime();
