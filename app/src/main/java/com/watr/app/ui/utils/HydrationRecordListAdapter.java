@@ -61,9 +61,9 @@ public class HydrationRecordListAdapter
       val activityPeriod = ActivityPeriodManager.getCurrentActivityPeriod();
 
       if (activityPeriod == ActivityPeriod.AWAKE) {
-        holder.hydrationRecordItemView.setText(R.string.history_view_title_awake);
+        holder.hydrationRecordItemView.setText(R.string.history_page_title_awake);
       } else {
-        holder.hydrationRecordItemView.setText(R.string.history_view_title_asleep);
+        holder.hydrationRecordItemView.setText(R.string.history_page_title_asleep);
       }
     } catch (UnknownTimeIntervalException e) {
       Log.e("history-view-adapter", "Could not determine current activity period: ", e);

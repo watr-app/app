@@ -54,6 +54,7 @@ public class HistoryPage extends Fragment {
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
+    // Start observer for the data being streamed in
     mainViewModel
         .getAllHydrationRecords()
         .observe(getViewLifecycleOwner(), adapter::setHydrationRecords);

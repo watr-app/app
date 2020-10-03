@@ -16,16 +16,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.watr.app.R;
+import com.watr.app.constants.ActivityPeriod;
 import com.watr.app.constants.DrinkType;
 import com.watr.app.datastore.room.hydration.HydrationEntity;
+import com.watr.app.timemgmt.ActivityPeriodManager;
+import com.watr.app.timemgmt.UnknownTimeIntervalException;
 import com.watr.app.ui.activities.MainActivity;
 import com.watr.app.ui.activities.NewHydrationRecordActivity;
+import com.watr.app.ui.utils.ButtonStateToggler;
 import com.watr.app.ui.utils.ImageViewAnimator;
 import com.watr.app.ui.viewmodels.MainViewModel;
 import com.watr.app.utils.StringifyUtils;
@@ -49,6 +54,7 @@ public class HomePage extends Fragment {
   private ImageView leftEye;
   private ImageView rightEye;
   private FloatingActionButton actionButton;
+  private TextView actionButtonHint;
   private View view;
 
   private ArrayList<TranslateAnimation> leftEyeAnimations = new ArrayList<>();
@@ -90,6 +96,7 @@ public class HomePage extends Fragment {
     leftEye = view.findViewById(R.id.statusMascotLeftEye);
     rightEye = view.findViewById(R.id.statusMascotRightEye);
     actionButton = view.findViewById(R.id.actionButton);
+    actionButtonHint = view.findViewById(R.id.actionButtonHint);
 
     actionButton.setOnClickListener(
         v -> {
@@ -118,6 +125,26 @@ public class HomePage extends Fragment {
   public void onResume() {
     super.onResume();
 
+    // Start eye animations
+    startEyeAnimations();
+
+    // Set computed values
+
+    // Set activity period dependent values
+    try {
+      if (ActivityPeriodManager.getCurrentActivityPeriod() == ActivityPeriod.ASLEEP) {
+        ButtonStateToggler.disableButton(actionButton);
+        actionButtonHint.setText(R.string.home_page_action_button_hint_asleep);
+      } else {
+        ButtonStateToggler.enableButton(actionButton);
+        actionButtonHint.setText(R.string.home_page_action_button_hint_awake);
+      }
+    } catch (UnknownTimeIntervalException e) {
+      Log.e("home-page", "Could not set computed values due to an error in determining current activity period: ", e);
+    }
+  }
+
+  private void startEyeAnimations() {
     val leftEyeAnimation =
         new ImageViewAnimator(
             ANIMATION_DURATION, ANIMATION_START_OFFSET, leftEye, leftEyeAnimations);
@@ -127,8 +154,5 @@ public class HomePage extends Fragment {
         new ImageViewAnimator(
             ANIMATION_DURATION, ANIMATION_START_OFFSET, rightEye, rightEyeAnimations);
     rightEyeAnimation.start();
-
-    // TODO: Set runtime values in here
-    // TODO: Maybe make the eyes stoppable on click?
   }
 }
