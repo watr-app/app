@@ -140,7 +140,10 @@ public class HomePage extends Fragment {
         actionButtonHint.setText(R.string.home_page_action_button_hint_awake);
       }
     } catch (UnknownTimeIntervalException e) {
-      Log.e("home-page", "Could not set computed values due to an error in determining current activity period: ", e);
+      Log.e(
+          "home-page",
+          "Could not set computed values due to an error in determining current activity period: ",
+          e);
     }
   }
 
