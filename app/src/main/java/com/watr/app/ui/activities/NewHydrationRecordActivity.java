@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.watr.app.R;
 import com.watr.app.constants.DrinkType;
+import com.watr.app.ui.utils.ButtonStateToggler;
 import com.watr.app.utils.StringifyUtils;
 import java.util.Objects;
 import lombok.NonNull;
@@ -91,15 +92,13 @@ public class NewHydrationRecordActivity extends AppCompatActivity {
               userHasChangedInput = true;
             } else {
               if (drinkAmountIsEmptyOrZero()) {
+                ButtonStateToggler.disableButton(saveButton);
                 drinkAmountInput.setError("Amount has to be non-zero!");
-                saveButton.setAlpha(0.1f);
-                saveButton.setEnabled(false);
                 saveButtonHint.setText(R.string.hydration_record_save_hint_error);
                 saveButtonHint.setTextColor(Color.RED);
               } else {
+                ButtonStateToggler.enableButton(saveButton);
                 drinkAmountInput.setError(null);
-                saveButton.setAlpha(1.0f);
-                saveButton.setEnabled(true);
                 saveButtonHint.setText(R.string.hydration_record_save_hint);
                 saveButtonHint.setTextColor(Color.GRAY);
               }
