@@ -10,6 +10,7 @@ import com.watr.app.constants.ActivityPeriod;
 import com.watr.app.constants.DateOffset;
 import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
 import com.watr.app.ui.activities.MainActivity;
+import com.watr.app.utils.TimeUtils;
 import lombok.val;
 
 /**

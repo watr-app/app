@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-package com.watr.app.timemgmt;
+package com.watr.app.utils;
 
 import com.watr.app.constants.DateOffset;
 import java.time.LocalDate;
@@ -12,6 +12,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import lombok.NonNull;
 import lombok.val;
+import org.ocpsoft.prettytime.PrettyTime;
 
 /**
  * Utilities centered around dealing with logically complex time evaluations.
@@ -25,6 +26,23 @@ public class TimeUtils {
   // is just a nightmare. These functions are intended to bear a lot of that headache and
   // get things to a point where you can actually make sense of how things are supposed to work.
   // Barely.
+
+  /**
+   * Globally available PrettyTime instance.
+   * @see PrettyTime
+   */
+  public static PrettyTime prettyTime = new PrettyTime();
+
+  /**
+   * Get a difference between two Unix timestamps in milliseconds.
+   *
+   * @param start {@link Long} Timestamp to start the interval being measured
+   * @param end {@link Long} Timestamp to end the interval being measured
+   * @return {@link Long} The difference between the two timestamps in milliseconds.
+   */
+  public static long getUnixTimestampDiff(long start, long end) {
+    return end - start;
+  }
 
   /**
    * Converts a LocalTime object to a Unix timestamp within the current date. Accuracy depends on
@@ -51,8 +69,8 @@ public class TimeUtils {
   }
 
   /**
-   * Same as {@link TimeUtils}.localTimeToUnixTimestamp(), but takes a date
-   * offset to allow calculation across date boundaries.
+   * Same as {@link TimeUtils}.localTimeToUnixTimestamp(), but takes a date offset to allow
+   * calculation across date boundaries.
    *
    * @param relativeTime {@link LocalTime} LocalTime instance to extract Unix timestamp from
    * @param dateOffset {@link DateOffset}
@@ -78,8 +96,8 @@ public class TimeUtils {
   }
 
   /**
-   * Same as {@link TimeUtils}.currentTimeIsBefore(), but takes a date offset
-   * to allow calculation across date boundaries.
+   * Same as {@link TimeUtils}.currentTimeIsBefore(), but takes a date offset to allow calculation
+   * across date boundaries.
    *
    * @param comparisonTime {@link LocalTime} LocalTime instance to compare
    * @param dateOffset {@link DateOffset}
@@ -105,8 +123,8 @@ public class TimeUtils {
   }
 
   /**
-   * Same as {@link TimeUtils}.currentTimeIsAfter(), but takes a date offset
-   * to allow calculation across date boundaries.
+   * Same as {@link TimeUtils}.currentTimeIsAfter(), but takes a date offset to allow calculation
+   * across date boundaries.
    *
    * @param comparisonTime {@link LocalTime} LocalTime instance to compare
    * @param dateOffset {@link DateOffset} DateOffset enum
@@ -134,8 +152,8 @@ public class TimeUtils {
   }
 
   /**
-   * Same as {@link TimeUtils}.currentTimeIsInInterval(), but takes start and
-   * end date offsets to allow calculation across date boundaries.
+   * Same as {@link TimeUtils}.currentTimeIsInInterval(), but takes start and end date offsets to
+   * allow calculation across date boundaries.
    *
    * @param start {@link LocalTime} Interval-starting LocalTime instance
    * @param startOffset {@link DateOffset} DateOffset enum for the start of the interval

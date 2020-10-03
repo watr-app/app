@@ -31,6 +31,7 @@ import com.watr.app.datastore.room.hydration.HydrationEntity;
 import com.watr.app.datastore.sharedpreferences.settings.SettingsManager;
 import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
 import com.watr.app.timemgmt.ActivityPeriodManager;
+import com.watr.app.utils.TimeUtils;
 import com.watr.app.timemgmt.UnknownTimeIntervalException;
 import com.watr.app.ui.activities.MainActivity;
 import com.watr.app.ui.activities.NewHydrationRecordActivity;
