@@ -7,6 +7,7 @@
 package com.watr.app.constants;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * Constants for drink types used in the application, with their labels and hydration coefficients.
@@ -31,6 +32,6 @@ public enum DrinkType {
   CHAMPAGNE("Champagne", -2.0),
   SPIRIT("Spirit", -4.0);
 
-  public final String label;
-  public final double hydrationCoefficient;
+  @Getter private final String label;
+  @Getter private final double hydrationCoefficient;
 }

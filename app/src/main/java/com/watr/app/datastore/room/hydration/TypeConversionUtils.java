@@ -27,7 +27,7 @@ public class TypeConversionUtils {
    * @return {@link Date} Serialised Date object
    */
   @TypeConverter
-  public static Date dateFromUnixTimestamp(@NonNull long unixTimestamp) {
+  public static Date dateFromUnixTimestamp(long unixTimestamp) {
     return new Date(unixTimestamp);
   }
 

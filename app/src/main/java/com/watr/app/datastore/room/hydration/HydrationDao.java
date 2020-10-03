@@ -35,14 +35,6 @@ public interface HydrationDao {
   LiveData<List<HydrationEntity>> getAll();
 
   /**
-   * Gets the latest hydration record.
-   *
-   * @return {@link HydrationEntity} Latest hydration record
-   */
-  @Query("SELECT * FROM hydration_records ORDER BY timestamp DESC LIMIT 1")
-  HydrationEntity getLatest();
-
-  /**
    * Gets hydration records between two Unix timestamps. Start and end are inclusive.
    *
    * @param start {@link Long} Record range start timestamp
