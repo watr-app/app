@@ -8,6 +8,7 @@ package com.watr.app.ui.pages;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -26,6 +28,8 @@ import com.watr.app.R;
 import com.watr.app.constants.ActivityPeriod;
 import com.watr.app.constants.DrinkType;
 import com.watr.app.datastore.room.hydration.HydrationEntity;
+import com.watr.app.datastore.sharedpreferences.settings.SettingsManager;
+import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
 import com.watr.app.timemgmt.ActivityPeriodManager;
 import com.watr.app.timemgmt.UnknownTimeIntervalException;
 import com.watr.app.ui.activities.MainActivity;
@@ -33,6 +37,7 @@ import com.watr.app.ui.activities.NewHydrationRecordActivity;
 import com.watr.app.ui.utils.ButtonStateToggler;
 import com.watr.app.ui.utils.ImageViewAnimator;
 import com.watr.app.ui.viewmodels.MainViewModel;
+import com.watr.app.utils.NumberUtils;
 import com.watr.app.utils.StringifyUtils;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,22 +51,45 @@ import lombok.val;
  * @version 1.0.0
  */
 public class HomePage extends Fragment {
+  // Constants
   public static final int NEW_HYDRATION_RECORD_REQUEST_CODE = 1;
-
   private static final int ANIMATION_DURATION = 1500;
   private static final int ANIMATION_START_OFFSET = 500;
+
+  // Manager classes
+  private final SettingsManager settingsManager;
+  private final UserProfileManager userProfileManager;
+
+  // Abstract components
   private MainViewModel mainViewModel;
-  private ImageView leftEye;
-  private ImageView rightEye;
-  private FloatingActionButton actionButton;
-  private TextView actionButtonHint;
   private View view;
 
+  // Hydration progress
+  private TextView currentHydrationAmountDisplay;
+  private TextView targetHydrationAmountDisplay;
+  private ProgressBar hydrationProgressBar;
+
+  // Contextual message and last ingestion time display
+  private TextView contextualMessageDisplay;
+  private TextView lastIngestionMessageDisplay;
+
+  // Mascot
+  private ImageView leftEye;
+  private ImageView rightEye;
+
+  // Action button and associated hint
+  private FloatingActionButton newHydrationRecordButton;
+  private TextView newHydrationRecordButtonHint;
+
+  // Animations
   private ArrayList<TranslateAnimation> leftEyeAnimations = new ArrayList<>();
   private ArrayList<TranslateAnimation> rightEyeAnimations = new ArrayList<>();
 
   public HomePage() {
-    // Developer note: DO NOT try to optimise this by cloning arrays etc.
+    settingsManager = MainActivity.getSettingsManager();
+    userProfileManager = MainActivity.getUserProfileManager();
+
+    // Developer note: DO NOT try to optimise below by cloning arrays etc.
     // For some reason, if sourced from the same ArrayList, the animation set that was defined first
     // will stop after the first animation, and no known method of cloning appears to solve it.
     // The *ONLY* way to get the animations to work properly is to do what is done below, which
@@ -90,15 +118,29 @@ public class HomePage extends Fragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    this.view = view;
-    mainViewModel = MainActivity.getMainViewModel();
 
+    // Abstract components
+    mainViewModel = MainActivity.getMainViewModel();
+    this.view = view;
+
+    // Hydration progress
+    currentHydrationAmountDisplay = view.findViewById(R.id.ingestedLiquidAmount);
+    targetHydrationAmountDisplay = view.findViewById(R.id.targetLiquidAmount);
+    hydrationProgressBar = view.findViewById(R.id.hydrationProgressBar);
+
+    // Contextual message and last ingestion time display
+    contextualMessageDisplay = view.findViewById(R.id.contextualMessage);
+    lastIngestionMessageDisplay = view.findViewById(R.id.lastIngestionMessage);
+
+    // Mascot
     leftEye = view.findViewById(R.id.statusMascotLeftEye);
     rightEye = view.findViewById(R.id.statusMascotRightEye);
-    actionButton = view.findViewById(R.id.actionButton);
-    actionButtonHint = view.findViewById(R.id.actionButtonHint);
 
-    actionButton.setOnClickListener(
+    // Action button and associated hint
+    newHydrationRecordButton = view.findViewById(R.id.newHydrationRecordButton);
+    newHydrationRecordButtonHint = view.findViewById(R.id.newHydrationRecordButtonHint);
+
+    newHydrationRecordButton.setOnClickListener(
         v -> {
           val intent = new Intent(getContext(), NewHydrationRecordActivity.class);
           startActivityForResult(intent, NEW_HYDRATION_RECORD_REQUEST_CODE);
@@ -128,25 +170,42 @@ public class HomePage extends Fragment {
     // Start eye animations
     startEyeAnimations();
 
-    // Set computed values
+    // Set runtime values
+    updateActionButtonState();
+    updateHydrationProgress();
+  }
 
-    // Set activity period dependent values
+  @SuppressLint("DefaultLocale")
+  private void updateHydrationProgress() {
+    val unit = settingsManager.getCtx().getBoolean("useMetricUnits", true) ? "ml" : "fl.oz";
+    val currentHydration = 0; // TODO: Get from DB
+    val hydrationTarget = userProfileManager.getDailyTarget();
+
+    currentHydrationAmountDisplay.setText(String.format("%d %s", currentHydration, unit));
+    targetHydrationAmountDisplay.setText(String.format("%d %s", hydrationTarget, unit));
+    hydrationProgressBar.setProgress(
+        NumberUtils.normalisePercentage(currentHydration / hydrationTarget, 100));
+  }
+
+  /** Updates action button state and associated hint based on user's current activity period. */
+  private void updateActionButtonState() {
     try {
       if (ActivityPeriodManager.getCurrentActivityPeriod() == ActivityPeriod.ASLEEP) {
-        ButtonStateToggler.disableButton(actionButton);
-        actionButtonHint.setText(R.string.home_page_action_button_hint_asleep);
+        ButtonStateToggler.disableButton(newHydrationRecordButton);
+        newHydrationRecordButtonHint.setText(R.string.home_page_action_button_hint_asleep);
       } else {
-        ButtonStateToggler.enableButton(actionButton);
-        actionButtonHint.setText(R.string.home_page_action_button_hint_awake);
+        ButtonStateToggler.enableButton(newHydrationRecordButton);
+        newHydrationRecordButtonHint.setText(R.string.home_page_action_button_hint_awake);
       }
     } catch (UnknownTimeIntervalException e) {
       Log.e(
           "home-page",
-          "Could not set computed values due to an error in determining current activity period: ",
+          "Could not adjust action button state due to an error in determining current activity period: ",
           e);
     }
   }
 
+  /** Starts mascot eye animations. */
   private void startEyeAnimations() {
     val leftEyeAnimation =
         new ImageViewAnimator(
