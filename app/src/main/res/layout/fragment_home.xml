@@ -81,9 +81,9 @@
     android:layout_width="0dp"
     android:layout_height="0dp"
     android:progress="0"
-    android:progressBackgroundTint="@color/colorAccent"
+    android:progressBackgroundTint="@color/colorAccentLight"
     android:progressBackgroundTintMode="src_over"
-    android:progressTint="@color/colorPrimary"
+    android:progressTint="@color/colorAccent"
     android:scaleY="14"
     app:layout_constraintBottom_toTopOf="@+id/progressBarGuideline"
     app:layout_constraintEnd_toEndOf="parent"
@@ -110,10 +110,10 @@
     app:layout_constraintEnd_toStartOf="@+id/rightPaddingGuideline"
     app:layout_constraintTop_toTopOf="parent" />
   <TextView
-    android:id="@+id/contextualMessage"
+    android:id="@+id/contextMessage"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:text="@string/contextual_message_default_value"
+    android:text="@string/context_message_default_value"
     android:textAlignment="center"
     android:textColor="@color/colorText"
     android:textSize="30sp"
@@ -131,7 +131,7 @@
     app:layout_constraintEnd_toStartOf="@+id/rightPaddingGuideline"
     app:layout_constraintHorizontal_bias="0.497"
     app:layout_constraintStart_toStartOf="@+id/leftPaddingGuideline"
-    app:layout_constraintTop_toBottomOf="@+id/contextualMessage" />
+    app:layout_constraintTop_toBottomOf="@+id/contextMessage" />
   <com.google.android.material.floatingactionbutton.FloatingActionButton
     android:id="@+id/newHydrationRecordButton"
     android:layout_width="wrap_content"
