@@ -29,7 +29,6 @@ public class HydrationDatabaseController {
   private HydrationDao hydrationDao;
 
   @Getter private LiveData<List<HydrationEntity>> allHydrationRecords;
-  @Getter private LiveData<HydrationEntity> latestHydrationRecord;
 
   // FIXME: If we want to unit test this properly, we can't depend on Application
   // Should be fine for now though

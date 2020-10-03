@@ -32,13 +32,11 @@ import lombok.NonNull;
 public class MainViewModel extends AndroidViewModel {
   private HydrationDatabaseController dbController;
   @Getter private LiveData<List<HydrationEntity>> allHydrationRecords;
-  @Getter private LiveData<HydrationEntity> latestHydrationRecord;
 
   public MainViewModel(@NonNull Application application) {
     super(application);
     dbController = new HydrationDatabaseController(application);
     allHydrationRecords = dbController.getAllHydrationRecords();
-    latestHydrationRecord = dbController.getLatestHydrationRecord();
   }
 
   public Future<List<HydrationEntity>> getByTimeFrame(long start, long end) {
