@@ -7,7 +7,10 @@
 package com.watr.app;
 
 import android.util.Log;
+import android.view.View;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.watr.app.constants.Gender;
@@ -17,6 +20,7 @@ import lombok.ToString;
 
 public class UserProfileSettings extends AppCompatActivity {
   private UserProfileManager userProfileManager;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +35,14 @@ public class UserProfileSettings extends AppCompatActivity {
     } else {
       rg.check(R.id.genderfemale);
     }
+    TextView tv = findViewById(R.id.dailytargetbox);
+    tv.setText(Integer.toString(userProfileManager.getDailyTarget()));
+
+
 
     //Listener that swaps he gender
     rg.setOnCheckedChangeListener(
-        new RadioGroup.OnCheckedChangeListener() {
+        new OnCheckedChangeListener() {
           public void onCheckedChanged(RadioGroup group, int checkedId) {
             switch (checkedId) {
               case R.id.gendermale:
@@ -46,5 +54,10 @@ public class UserProfileSettings extends AppCompatActivity {
             }
           }
         });
+
+  }
+  public void confirmdailytarget(View view){
+    TextView tv = findViewById(R.id.dailytargetbox);
+    userProfileManager.setDailyTarget(Integer.parseInt(String.valueOf(tv.getText())));
   }
 }

@@ -30,4 +30,24 @@
       android:layout_height="wrap_content"
       android:text="Female" />
   </RadioGroup>
+  <EditText
+    android:id="@+id/dailytargetbox"
+    android:layout_width="134dp"
+    android:layout_height="57dp"
+    android:layout_marginTop="64dp"
+    android:layout_marginStart="140dp"
+    android:ems="10"
+    android:inputType="number"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+  <Button
+    android:id="@+id/confirmdailytarget"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="300dp"
+    android:layout_marginStart="40dp"
+    android:onClick="confirmdailytarget"
+    android:text="Confirm"
+    app:layout_constraintStart_toEndOf="@+id/dailytargetbox"
+    app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
