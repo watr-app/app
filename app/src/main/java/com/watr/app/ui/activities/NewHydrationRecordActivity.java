@@ -64,7 +64,7 @@ public class NewHydrationRecordActivity extends AppCompatActivity {
 
     drinkTypeDropdown.setAdapter(adapter);
 
-    // Create click listener
+    // Set dropdown select listener
     drinkTypeDropdown.setOnItemSelectedListener(
         new OnItemSelectedListener() {
           @Override
@@ -76,6 +76,7 @@ public class NewHydrationRecordActivity extends AppCompatActivity {
           public void onNothingSelected(AdapterView<?> parent) {}
         });
 
+    // Set input change listener
     drinkAmountInput.addTextChangedListener(
         new TextWatcher() {
           @Override
@@ -103,16 +104,18 @@ public class NewHydrationRecordActivity extends AppCompatActivity {
             }
           }
         });
-  }
 
-  public void handleSaveButtonClick(View view) {
-    val replyIntent = new Intent();
+    // Set save button click listener
+    saveButton.setOnClickListener(
+        v -> {
+          val replyIntent = new Intent();
 
-    replyIntent.putExtra(REPLY_DRINK_TYPE, StringifyUtils.gson.toJson(selectedDrinkType));
-    replyIntent.putExtra(REPLY_DRINK_AMOUNT, getIntegerValueFromEditText(drinkAmountInput));
-    setResult(RESULT_OK, replyIntent);
+          replyIntent.putExtra(REPLY_DRINK_TYPE, StringifyUtils.gson.toJson(selectedDrinkType));
+          replyIntent.putExtra(REPLY_DRINK_AMOUNT, getIntegerValueFromEditText(drinkAmountInput));
+          setResult(RESULT_OK, replyIntent);
 
-    finish();
+          finish();
+        });
   }
 
   private boolean drinkAmountIsEmptyOrZero() {
