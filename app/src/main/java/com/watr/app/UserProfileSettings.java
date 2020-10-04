@@ -21,7 +21,6 @@ import lombok.ToString;
 public class UserProfileSettings extends AppCompatActivity {
   private UserProfileManager userProfileManager;
 
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -29,7 +28,7 @@ public class UserProfileSettings extends AppCompatActivity {
     setContentView(R.layout.activity_user_profile_settings);
     RadioGroup rg = (RadioGroup) findViewById(R.id.radioGroup);
 
-    //Picks users gender so it is chosen by default
+    // Picks users gender so it is chosen by default
     if (userProfileManager.getGender() == Gender.MALE) {
       rg.check(R.id.gendermale);
     } else {
@@ -38,9 +37,7 @@ public class UserProfileSettings extends AppCompatActivity {
     TextView tv = findViewById(R.id.dailytargetbox);
     tv.setText(Integer.toString(userProfileManager.getDailyTarget()));
 
-
-
-    //Listener that swaps he gender
+    // Listener that swaps he gender
     rg.setOnCheckedChangeListener(
         new OnCheckedChangeListener() {
           public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -54,9 +51,9 @@ public class UserProfileSettings extends AppCompatActivity {
             }
           }
         });
-
   }
-  public void confirmdailytarget(View view){
+
+  public void confirmdailytarget(View view) {
     TextView tv = findViewById(R.id.dailytargetbox);
     userProfileManager.setDailyTarget(Integer.parseInt(String.valueOf(tv.getText())));
   }
