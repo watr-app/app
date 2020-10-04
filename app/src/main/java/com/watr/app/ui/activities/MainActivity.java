@@ -44,12 +44,9 @@ public class MainActivity extends AppCompatActivity {
   public static final int DEFAULT_PAGE = 1;
   private static final int PAGE_COUNT = 3;
 
-  @Getter
-  private static MainViewModel mainViewModel;
-  @Getter
-  private static SettingsManager settingsManager;
-  @Getter
-  private static UserProfileManager userProfileManager;
+  @Getter private static MainViewModel mainViewModel;
+  @Getter private static SettingsManager settingsManager;
+  @Getter private static UserProfileManager userProfileManager;
 
   private TabLayout navigationBar;
   private ViewPager2 viewPager;
@@ -117,12 +114,10 @@ public class MainActivity extends AppCompatActivity {
           }
 
           @Override
-          public void onTabUnselected(Tab tab) {
-          }
+          public void onTabUnselected(Tab tab) {}
 
           @Override
-          public void onTabReselected(Tab tab) {
-          }
+          public void onTabReselected(Tab tab) {}
         });
 
     viewPager.registerOnPageChangeCallback(
@@ -165,19 +160,17 @@ public class MainActivity extends AppCompatActivity {
     viewPager.setCurrentItem(position);
   }
 
-
   /**
    * Sends the view pager to the page at the submitted index, with a special case for where
    * smoothScroll needs to be overridden.
    *
-   * @param position     {@link Integer} Page index
+   * @param position {@link Integer} Page index
    * @param smoothScroll {@link Boolean} Override for whether to trigger the scroll animation on the
-   *                     view pager
+   *     view pager
    */
   private void updateViewPager(int position, boolean smoothScroll) {
     viewPager.setCurrentItem(position, smoothScroll);
   }
-
 
   /**
    * Adapter to create ViewPager2 page fragments based on separately defined Fragment subclasses.
@@ -210,6 +203,4 @@ public class MainActivity extends AppCompatActivity {
       return PAGE_COUNT;
     }
   }
-
-
 }
