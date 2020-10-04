@@ -4,13 +4,14 @@
  * Licensed under the MIT license.
  */
 
-package com.watr.app;
+package com.watr.app.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import com.watr.app.R;
 import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
 import com.watr.app.ui.activities.MainActivity;
 import java.time.LocalTime;

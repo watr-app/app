@@ -4,7 +4,7 @@
  * Licensed under the MIT license.
  */
 
-package com.watr.app;
+package com.watr.app.ui.activities;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +12,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Switch;
 import androidx.appcompat.app.AppCompatActivity;
+import com.watr.app.R;
 import com.watr.app.datastore.sharedpreferences.settings.SettingsManager;
 import com.watr.app.ui.activities.MainActivity;
 

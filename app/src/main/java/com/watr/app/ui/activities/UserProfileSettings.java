@@ -4,7 +4,7 @@
  * Licensed under the MIT license.
  */
 
-package com.watr.app;
+package com.watr.app.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -13,9 +13,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import androidx.appcompat.app.AppCompatActivity;
+import com.watr.app.R;
 import com.watr.app.constants.Gender;
 import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
-import com.watr.app.ui.activities.MainActivity;
 
 /**
  * Editting user profile settings after first launch happens here

@@ -9,8 +9,8 @@
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
-    <activity android:name=".TimeSelect"></activity>
-    <activity android:name=".UserProfileSettings" />
+    <activity android:name=".ui.activities.TimeSelect"></activity>
+    <activity android:name=".ui.activities.UserProfileSettings" />
     <activity android:name=".Appsettings" />
     <activity android:name=".ui.activities.NewHydrationRecordActivity" />
     <activity android:name=".ui.activities.MainActivity">
