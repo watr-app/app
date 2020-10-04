@@ -1,3 +1,9 @@
+/*
+ * Watr. Android application
+ * Copyright (c) 2020 Linus Willner, Panu Eronen and Markus Hartikainen.
+ * Licensed under the MIT license.
+ */
+
 apply plugin: 'com.android.application'
 
 android {
