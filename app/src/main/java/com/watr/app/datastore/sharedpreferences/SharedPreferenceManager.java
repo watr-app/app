@@ -28,7 +28,7 @@ public abstract class SharedPreferenceManager {
    *
    * @param type {@link SharedPreferenceType}
    * @param key {@link String}
-   * @param value {@link Object
+   * @param value {@link Object}
    * @throws {@link ClassCastException} if the type coercion failed.
    */
   // Suppressing the typecast warning here because we cannot know the type before runtime and the
