@@ -6,6 +6,7 @@
 
 package com.watr.app;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -37,6 +38,7 @@ public class UserProfileSettings extends AppCompatActivity {
     TextView tv = findViewById(R.id.dailytargetbox);
     tv.setText(Integer.toString(userProfileManager.getDailyTarget()));
 
+
     // Listener that swaps he gender
     rg.setOnCheckedChangeListener(
         new OnCheckedChangeListener() {
@@ -52,9 +54,13 @@ public class UserProfileSettings extends AppCompatActivity {
           }
         });
   }
-
   public void confirmdailytarget(View view) {
     TextView tv = findViewById(R.id.dailytargetbox);
     userProfileManager.setDailyTarget(Integer.parseInt(String.valueOf(tv.getText())));
   }
+  public void gototimeedit(View view){
+    Intent nextActivity = new Intent(this, timeselect.class);
+    startActivity(nextActivity);
+  }
+
 }

@@ -30,4 +30,6 @@
   <string name="context_message_hydration_remembered">You\'re on track towards your daily target!</string>
   <string name="context_message_hydration_forgotten">You\'re at risk of dehydration!</string>
   <string name="context_message_hydration_target_achieved">You\'ve reached your daily target! Nice work!</string>
+  <!-- TODO: Remove or change this placeholder text -->
+  <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

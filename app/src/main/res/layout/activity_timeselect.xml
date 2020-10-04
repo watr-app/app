@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Watr. Android application
+  ~ Copyright (c) 2020 Linus Willner, Panu Eronen and Markus Hartikainen.
+  ~ Licensed under the MIT license.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".timeselect">
+
+  <Button
+    android:id="@+id/setwakup"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="28dp"
+    android:layout_marginStart="100dp"
+    android:text="Button"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/hhdown" />
+  <Button
+    android:id="@+id/setbed"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:layout_marginStart="28dp"
+    android:text="Button"
+    app:layout_constraintStart_toEndOf="@+id/setwakup"
+    app:layout_constraintTop_toBottomOf="@+id/mmdown" />
+  <ImageButton
+    android:id="@+id/mmup"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="300dp"
+    android:layout_marginStart="52dp"
+    android:onClick="increasemm"
+    app:layout_constraintStart_toEndOf="@+id/hhup"
+    app:layout_constraintTop_toTopOf="parent"
+    app:srcCompat="@android:drawable/arrow_up_float" />
+  <ImageButton
+    android:id="@+id/mmdown"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:layout_marginStart="244dp"
+    android:onClick="decreasemm"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/mmbox"
+    app:srcCompat="@android:drawable/arrow_down_float" />
+  <ImageButton
+    android:id="@+id/hhdown"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp"
+    android:layout_marginEnd="60dp"
+    android:onClick="decreasehh"
+    app:layout_constraintEnd_toStartOf="@+id/mmdown"
+    app:layout_constraintHorizontal_bias="1.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/hhbox"
+    app:srcCompat="@android:drawable/arrow_down_float" />
+  <ImageButton
+    android:id="@+id/hhup"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="300dp"
+    android:layout_marginStart="132dp"
+    android:onClick="increasehh"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:srcCompat="@android:drawable/arrow_up_float" />
+  <TextView
+    android:id="@+id/hhbox"
+    android:layout_width="20dp"
+    android:layout_height="13dp"
+    android:layout_marginTop="56dp"
+    android:layout_marginStart="124dp"
+    android:text="TextView"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="@+id/hhup" />
+  <TextView
+    android:id="@+id/mmbox"
+    android:layout_width="29dp"
+    android:layout_height="16dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginStart="88dp"
+    android:text="TextView"
+    app:layout_constraintStart_toEndOf="@+id/hhbox"
+    app:layout_constraintTop_toBottomOf="@+id/mmup" />
+</androidx.constraintlayout.widget.ConstraintLayout>
