@@ -47,6 +47,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import lombok.SneakyThrows;
 import lombok.val;
+import lombok.var;
 
 /**
  * Home page. All functionality specific to the home page goes here.
@@ -227,35 +228,44 @@ public class HomePage extends Fragment {
     this.hydrationRecords = filteredRecords;
     this.latestHydrationRecord = filteredRecords.size() > 0 ? filteredRecords.get(0) : null;
 
-    if (this.hydrationRecords.size() > 0 && this.latestHydrationRecord != null) {
-      // Get hydration target
-      val hydrationTarget = userProfileManager.getDailyTarget();
+    // Deduct if user has recorded hydration today
+    val userHasHydrationRecordsToday = filteredRecords.size() > 0 && latestHydrationRecord != null;
 
+    // Get current activity period
+    val currentActivityPeriod = ActivityPeriodManager.getCurrentActivityPeriod();
+
+    // Get hydration target
+    val hydrationTarget = userProfileManager.getDailyTarget();
+
+    // Set initial value for current hydration
+    var currentHydration = 0;
+
+    Date lastHydrationTimestamp = null;
+    Long timeSinceLastHydration = null;
+
+    if (userHasHydrationRecordsToday) {
       // Get current total relative hydration
-      val currentHydration =
+      currentHydration =
           filteredRecords.stream()
               .reduce(0, (curr, acc) -> curr + acc.getRelativeHydration(), Integer::sum);
 
-      // Check if target has been reached
-      val targetHasBeenReached = currentHydration >= hydrationTarget;
-
-      // Get progress towards target
-      // Convert to double, divide to get multiplier, then multiply by 100 to get percentage value
-      val progressPercentage = (double) currentHydration / (double) hydrationTarget * 100;
-
-      // Get current activity period
-      val currentActivityPeriod = ActivityPeriodManager.getCurrentActivityPeriod();
-
       // Get timestamp of last hydration and calculate how long ago it was
-      val lastHydrationTimestamp = latestHydrationRecord.getTimestamp();
-      val timeSinceLastHydration =
+      lastHydrationTimestamp = latestHydrationRecord.getTimestamp();
+      timeSinceLastHydration =
           TimeUtils.getUnixTimestampDiff(new Date().getTime(), lastHydrationTimestamp.getTime());
-
-      updateHydrationProgress(currentHydration, hydrationTarget, progressPercentage);
-      updateContextMessage(currentActivityPeriod, timeSinceLastHydration, targetHasBeenReached);
-      updateLastIngestionDisplay(lastHydrationTimestamp);
-      updateMascot(currentActivityPeriod, timeSinceLastHydration, targetHasBeenReached);
     }
+
+    // Check if target has been reached
+    val targetHasBeenReached = currentHydration >= hydrationTarget;
+
+    // Get progress towards target
+    // Convert to double, divide to get multiplier, then multiply by 100 to get percentage value
+    val progressPercentage = (double) currentHydration / (double) hydrationTarget * 100;
+
+    updateHydrationProgress(currentHydration, hydrationTarget, progressPercentage);
+    updateContextMessage(currentActivityPeriod, timeSinceLastHydration, targetHasBeenReached);
+    updateLastIngestionDisplay(lastHydrationTimestamp);
+    updateMascot(currentActivityPeriod, timeSinceLastHydration, targetHasBeenReached);
   }
 
   /**
@@ -302,17 +312,23 @@ public class HomePage extends Fragment {
    */
   private void updateContextMessage(
       ActivityPeriod currentActivityPeriod,
-      long timeSinceLastHydration,
+      @Nullable Long timeSinceLastHydration,
       boolean targetHasBeenReached) {
-    val hoursSinceLastHydration = TimeUnit.MILLISECONDS.toHours(timeSinceLastHydration);
 
     if (currentActivityPeriod == ActivityPeriod.ASLEEP) {
+      // User is sleeping
       contextMessageDisplay.setText(R.string.context_message_asleep);
+    } else if (timeSinceLastHydration == null) {
+      // User has not recorded anything today
+      contextMessageDisplay.setText(R.string.context_message_no_records_today);
     } else if (targetHasBeenReached) {
+      // User has reached target
       contextMessageDisplay.setText(R.string.context_message_hydration_target_achieved);
-    } else if (hoursSinceLastHydration >= 1) {
+    } else if (TimeUnit.MILLISECONDS.toHours(timeSinceLastHydration) >= 1) {
+      // User has forgotten hydration
       contextMessageDisplay.setText(R.string.context_message_hydration_forgotten);
     } else {
+      // User has remembered hydration
       contextMessageDisplay.setText(R.string.context_message_hydration_remembered);
     }
   }
@@ -323,9 +339,12 @@ public class HomePage extends Fragment {
    * @param lastHydrationTimestamp {@link Date} Timestamp of latest hydration record
    */
   private void updateLastIngestionDisplay(Date lastHydrationTimestamp) {
-    lastIngestionMessageDisplay.setText(
-        String.format(
-            "Last fluid ingestion: %s", TimeUtils.prettyTime.format(lastHydrationTimestamp)));
+    val message =
+        lastHydrationTimestamp == null
+            ? "Last ingestion: Not recorded yet"
+            : String.format(
+                "Last fluid ingestion: %s", TimeUtils.prettyTime.format(lastHydrationTimestamp));
+    lastIngestionMessageDisplay.setText(message);
   }
 
   /**
@@ -337,13 +356,13 @@ public class HomePage extends Fragment {
    */
   private void updateMascot(
       ActivityPeriod currentActivityPeriod,
-      long timeSinceLastHydration,
+      @Nullable Long timeSinceLastHydration,
       boolean targetHasBeenReached) {
-    val hoursSinceLastHydration = TimeUnit.MILLISECONDS.toHours(timeSinceLastHydration);
 
     if (currentActivityPeriod == ActivityPeriod.AWAKE
         && !targetHasBeenReached
-        && hoursSinceLastHydration >= 1) {
+        && timeSinceLastHydration != null // User has recorded at least one hydration record today
+        && TimeUnit.MILLISECONDS.toHours(timeSinceLastHydration) >= 1) {
       // Point mouth down (Sad)
       mascotMouth.setRotation(270f);
     } else {

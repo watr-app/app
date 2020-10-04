@@ -26,6 +26,7 @@
   <string name="home_page_action_button_hint_awake">Ready to log hydration!</string>
   <string name="home_page_action_button_hint_asleep">Your current activity period is ASLEEP, so you cannot log hydration right now.</string>
   <string name="context_message_asleep">Good work on staying hydrated today. Sweet dreams!</string>
+  <string name="context_message_no_records_today">You haven\'t recorded any hydration for today yet!</string>
   <string name="context_message_hydration_remembered">You\'re on track towards your daily target!</string>
   <string name="context_message_hydration_forgotten">You\'re at risk of dehydration!</string>
   <string name="context_message_hydration_target_achieved">You\'ve reached your daily target! Nice work!</string>
