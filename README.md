@@ -66,5 +66,6 @@ Collection of various miscellaneous utilities.
 
 ## License
 
-Copyright (c) 2020 Linus Willner, Panu Eronen and Markus Hartikainen. Licensed under the [MIT license](LICENSE).
-Logo by Dario Taddeo.
+Copyright (c) 2020 Linus Willner, Panu Eronen and Markus Hartikainen.  
+Logo by Dario Taddeo.  
+Licensed under the [MIT license](LICENSE).
