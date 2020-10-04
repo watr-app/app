@@ -7,7 +7,9 @@
 package com.watr.app.ui.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -19,6 +21,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener;
 import com.google.android.material.tabs.TabLayout.Tab;
 import com.watr.app.R;
+import com.watr.app.datastore.sharedpreferences.DataStorePreFlightCheckException;
 import com.watr.app.datastore.sharedpreferences.settings.SettingsManager;
 import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
 import com.watr.app.ui.pages.HistoryPage;
@@ -37,12 +40,16 @@ import lombok.val;
  * @version 1.0.0
  */
 public class MainActivity extends AppCompatActivity {
+
   public static final int DEFAULT_PAGE = 1;
   private static final int PAGE_COUNT = 3;
 
-  @Getter private static MainViewModel mainViewModel;
-  @Getter private static SettingsManager settingsManager;
-  @Getter private static UserProfileManager userProfileManager;
+  @Getter
+  private static MainViewModel mainViewModel;
+  @Getter
+  private static SettingsManager settingsManager;
+  @Getter
+  private static UserProfileManager userProfileManager;
 
   private TabLayout navigationBar;
   private ViewPager2 viewPager;
@@ -62,14 +69,24 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO: Check if setup is needed from the needsSetup variable before preflight
 
-    /*
+    if (settingsManager.getCtx().getBoolean("needsSetup", true)) {
+      Intent i = new Intent(MainActivity.this, CreateProfile.class);
+      MainActivity.this.startActivity(i);
+      settingsManager.addBoolean("needsSetup", true);
+    } else {
+      try {
+        userProfileManager.checkRequiredProfileSettings();
+      } catch (DataStorePreFlightCheckException e) {
+        Log.e("datastore-preflight", "Data store pre-flight checks failed: ", e);
+      }
+    }
+
     // Run pre-flight checks for data stores
     try {
       userProfileManager.checkRequiredProfileSettings();
     } catch (DataStorePreFlightCheckException e) {
       Log.e("datastore-preflight", "Data store pre-flight checks failed: ", e);
     }
-    */
 
     // Init
     navigationBar = findViewById(R.id.navigationBar);
@@ -100,10 +117,12 @@ public class MainActivity extends AppCompatActivity {
           }
 
           @Override
-          public void onTabUnselected(Tab tab) {}
+          public void onTabUnselected(Tab tab) {
+          }
 
           @Override
-          public void onTabReselected(Tab tab) {}
+          public void onTabReselected(Tab tab) {
+          }
         });
 
     viewPager.registerOnPageChangeCallback(
@@ -146,17 +165,19 @@ public class MainActivity extends AppCompatActivity {
     viewPager.setCurrentItem(position);
   }
 
+
   /**
    * Sends the view pager to the page at the submitted index, with a special case for where
    * smoothScroll needs to be overridden.
    *
-   * @param position {@link Integer} Page index
+   * @param position     {@link Integer} Page index
    * @param smoothScroll {@link Boolean} Override for whether to trigger the scroll animation on the
-   *     view pager
+   *                     view pager
    */
   private void updateViewPager(int position, boolean smoothScroll) {
     viewPager.setCurrentItem(position, smoothScroll);
   }
+
 
   /**
    * Adapter to create ViewPager2 page fragments based on separately defined Fragment subclasses.
@@ -165,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
    * @version 1.0.0
    */
   private static class PagerAdapter extends FragmentStateAdapter {
+
     public PagerAdapter(FragmentActivity fragmentActivity) {
       super(fragmentActivity);
     }
@@ -188,4 +210,6 @@ public class MainActivity extends AppCompatActivity {
       return PAGE_COUNT;
     }
   }
+
+
 }
