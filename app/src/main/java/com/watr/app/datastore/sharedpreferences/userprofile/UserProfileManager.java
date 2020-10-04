@@ -69,7 +69,7 @@ public class UserProfileManager extends SharedPreferenceManager {
    * @param gender {@link Gender}
    */
   public void setGender(@NonNull Gender gender) {
-    super.editAndApply(SharedPreferenceType.INTEGER, "genderId", gender.getGenderId());
+    super.editAndApply(SharedPreferenceType.INTEGER, "gender", gender.getGenderId());
   }
 
   /**
