@@ -57,7 +57,6 @@ public class HydrationRecordListAdapter
     return new HydrationRecordViewHolder(itemView);
   }
 
-  @SuppressLint("DefaultLocale")
   @Override
   public void onBindViewHolder(@NonNull HydrationRecordViewHolder holder, int position) {
     // Set page title based on current activity period
@@ -73,42 +72,8 @@ public class HydrationRecordListAdapter
       Log.e("history-view-adapter", "Could not determine current activity period: ", e);
     }
 
-    // Populate list item
-    if (hydrationRecords != null) {
-      HydrationEntity currentRecord = hydrationRecords.get(position);
-
-      // Determine if we need to use metric or imperial units
-      val useMetricUnits = settingsManager.getCtx().getBoolean("useMetricUnits", true);
-
-      // Determine visual representation of unit
-      val unit = useMetricUnits ? "ml" : "fl.oz";
-
-      val absoluteHydration =
-          useMetricUnits
-              ? currentRecord.getAbsoluteHydration()
-              : NumberUtils.convertMillilitresToFluidOunces(currentRecord.getAbsoluteHydration());
-
-      val relativeHydration =
-          useMetricUnits
-              ? currentRecord.getRelativeHydration()
-              : NumberUtils.convertMillilitresToFluidOunces(currentRecord.getRelativeHydration());
-
-      val drinkType = currentRecord.getDrinkType();
-      val positive = currentRecord.getRelativeHydration() > 0 ? "+" : "";
-
-      holder.hydrationRecordItemView.setText(
-          String.format(
-              "%tR: %s, %d %s (%s%d %4$s)",
-              currentRecord.getTimestamp(),
-              drinkType.getLabel(),
-              (int) absoluteHydration,
-              unit,
-              positive,
-              (int) relativeHydration));
-    } else {
-      // Show placeholder string if data is not ready yet
-      holder.hydrationRecordItemView.setText(R.string.hydration_record_list_item_default_value);
-    }
+    // Generate list item
+    generateItem(holder, position);
   }
 
   /**
@@ -138,6 +103,65 @@ public class HydrationRecordListAdapter
   @Override
   public int getItemCount() {
     return hydrationRecords != null ? hydrationRecords.size() : 0;
+  }
+
+  /**
+   * Generates a RecyclerView item from a hydration record.
+   *
+   * @param holder {@link HydrationRecordViewHolder} Parent view holder
+   * @param position {@link Integer} Position of item in array (Corresponds to position in hydration
+   *     record array)
+   */
+  private void generateItem(@NonNull HydrationRecordViewHolder holder, int position) {
+    // Populate list item
+    if (hydrationRecords != null) {
+      HydrationEntity currentRecord = hydrationRecords.get(position);
+
+      // Determine if we need to use metric or imperial units
+      val useMetricUnits = settingsManager.getCtx().getBoolean("useMetricUnits", true);
+
+      // Determine visual representation of unit
+      val unit = useMetricUnits ? "ml" : "fl.oz";
+
+      // Determine absolute and relative hydration with the correct unit
+
+      val absoluteHydration =
+          useMetricUnits
+              ? currentRecord.getAbsoluteHydration()
+              : NumberUtils.convertMillilitresToFluidOunces(currentRecord.getAbsoluteHydration());
+
+      val relativeHydration =
+          useMetricUnits
+              ? currentRecord.getRelativeHydration()
+              : NumberUtils.convertMillilitresToFluidOunces(currentRecord.getRelativeHydration());
+
+      // Determine drink type and add explicit plus to net-positive hydration
+      val drinkType = currentRecord.getDrinkType();
+      val positive = currentRecord.getRelativeHydration() > 0 ? "+" : "";
+
+      // Deduct proper time display based on whether we need to use a 24-hour or 12-hour clock
+      val use24HrClock = settingsManager.getCtx().getBoolean("use24HrClock", true);
+
+      // Construct time information
+      val time = String.format(use24HrClock ? "%tR" : "%tr", currentRecord.getTimestamp());
+
+      // Construct drink information
+      @SuppressLint("DefaultLocale")
+      val drink =
+          String.format(
+              "%s, %d %s (%s%d %4$s)",
+              drinkType.getLabel(),
+              (int) absoluteHydration,
+              unit,
+              positive,
+              (int) relativeHydration);
+
+      // Set final text
+      holder.hydrationRecordItemView.setText(String.format("%s: %s", time, drink));
+    } else {
+      // Show placeholder string if data is not ready yet
+      holder.hydrationRecordItemView.setText(R.string.hydration_record_list_item_default_value);
+    }
   }
 
   /**
