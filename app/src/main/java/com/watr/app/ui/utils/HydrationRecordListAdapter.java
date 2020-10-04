@@ -22,6 +22,7 @@ import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
 import com.watr.app.timemgmt.ActivityPeriodManager;
 import com.watr.app.timemgmt.UnknownTimeIntervalException;
 import com.watr.app.ui.activities.MainActivity;
+import com.watr.app.utils.NumberUtils;
 import com.watr.app.utils.TimeUtils;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -76,7 +77,22 @@ public class HydrationRecordListAdapter
     if (hydrationRecords != null) {
       HydrationEntity currentRecord = hydrationRecords.get(position);
 
-      val unit = settingsManager.getCtx().getBoolean("useMetricUnits", true) ? "ml" : "fl.oz";
+      // Determine if we need to use metric or imperial units
+      val useMetricUnits = settingsManager.getCtx().getBoolean("useMetricUnits", true);
+
+      // Determine visual representation of unit
+      val unit = useMetricUnits ? "ml" : "fl.oz";
+
+      val absoluteHydration =
+          useMetricUnits
+              ? currentRecord.getAbsoluteHydration()
+              : NumberUtils.convertMillilitresToFluidOunces(currentRecord.getAbsoluteHydration());
+
+      val relativeHydration =
+          useMetricUnits
+              ? currentRecord.getRelativeHydration()
+              : NumberUtils.convertMillilitresToFluidOunces(currentRecord.getRelativeHydration());
+
       val drinkType = currentRecord.getDrinkType();
       val positive = currentRecord.getRelativeHydration() > 0 ? "+" : "";
 
@@ -85,10 +101,10 @@ public class HydrationRecordListAdapter
               "%tR: %s, %d %s (%s%d %4$s)",
               currentRecord.getTimestamp(),
               drinkType.getLabel(),
-              currentRecord.getAbsoluteHydration(),
+              (int) absoluteHydration,
               unit,
               positive,
-              currentRecord.getRelativeHydration()));
+              (int) relativeHydration));
     } else {
       // Show placeholder string if data is not ready yet
       holder.hydrationRecordItemView.setText(R.string.hydration_record_list_item_default_value);

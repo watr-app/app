@@ -267,9 +267,26 @@ public class HomePage extends Fragment {
   @SuppressLint("DefaultLocale")
   private void updateHydrationProgress(
       int currentHydration, int hydrationTarget, double progressPercentage) {
-    val unit = settingsManager.getCtx().getBoolean("useMetricUnits", true) ? "ml" : "fl.oz";
-    currentHydrationAmountDisplay.setText(String.format("%d %s", currentHydration, unit));
-    targetHydrationAmountDisplay.setText(String.format("%d %s", hydrationTarget, unit));
+
+    // Determine if we need to use metric or imperial units
+    val useMetricUnits = settingsManager.getCtx().getBoolean("useMetricUnits", true);
+
+    // Determine visual representation of unit
+    val unit = useMetricUnits ? "ml" : "fl.oz";
+
+    val current =
+        useMetricUnits
+            ? currentHydration
+            : NumberUtils.convertMillilitresToFluidOunces(currentHydration);
+
+    val target =
+        useMetricUnits
+            ? hydrationTarget
+            : NumberUtils.convertMillilitresToFluidOunces(hydrationTarget);
+
+    currentHydrationAmountDisplay.setText(String.format("%d %s", (int) current, unit));
+    targetHydrationAmountDisplay.setText(String.format("%d %s", (int) target, unit));
+
     hydrationProgressBar.setProgress(
         NumberUtils.doubleToInteger(NumberUtils.normalisePercentage(progressPercentage, 100)));
   }
