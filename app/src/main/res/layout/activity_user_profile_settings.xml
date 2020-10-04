@@ -11,5 +11,28 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   tools:context=".UserProfileSettings">
-
+  <RadioGroup
+    android:layout_width="132dp"
+    android:layout_height="66dp"
+    tools:layout_editor_absoluteX="139dp"
+    tools:layout_editor_absoluteY="164dp">
+    <RadioButton
+      android:id="@+id/gendermale"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Male" />
+    <RadioButton
+      android:id="@+id/genderfemale"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Female" />
+  </RadioGroup>
+  <EditText
+    android:id="@+id/dailytarget"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:ems="10"
+    android:inputType="number"
+    tools:layout_editor_absoluteX="140dp"
+    tools:layout_editor_absoluteY="251dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

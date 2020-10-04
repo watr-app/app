@@ -67,6 +67,7 @@ public class SettingsPage extends Fragment {
           public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
             Log.d("Tag", "onItemClick(" + i + ")");
             if (i == 0) {
+              Log.d("tag","we are in if");
               Intent nextActivity = new Intent(getContext(), Appsettings.class);
               nextActivity.putExtra(EXTRA, i);
               startActivity(nextActivity);
@@ -74,7 +75,7 @@ public class SettingsPage extends Fragment {
               Intent nextActivity = new Intent(getContext(), UserProfileSettings.class);
               nextActivity.putExtra(EXTRA, i);
               startActivity(nextActivity);
-              
+
             }
           }
         });
