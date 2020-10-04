@@ -17,11 +17,20 @@ import com.watr.app.constants.Gender;
 import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
 import com.watr.app.ui.activities.MainActivity;
 
+/**
+ * Editting user profile settings after first launch happens here
+ * @author panueronen
+ * @version 1.0.0
+ */
 public class UserProfileSettings extends AppCompatActivity {
   private UserProfileManager userProfileManager;
   private RadioGroup genderSelectorRadioGroup;
   private EditText dailyTargetInput;
 
+  /**
+   *holds radio buttons for gender and buttons for navigating to timeselect.
+   *changing daily hydration target also happens from here
+   */
   @SuppressLint("SetTextI18n")
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +50,7 @@ public class UserProfileSettings extends AppCompatActivity {
 
     dailyTargetInput.setText(Integer.toString(userProfileManager.getDailyTarget()));
 
-    // Listener that swaps he gender
+    // Listener that swaps the gender
     genderSelectorRadioGroup.setOnCheckedChangeListener(
         (group, checkedId) -> {
           Gender gender;

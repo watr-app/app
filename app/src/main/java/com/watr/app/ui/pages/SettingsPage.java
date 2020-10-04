@@ -42,6 +42,10 @@ public class SettingsPage extends Fragment {
     return inflater.inflate(R.layout.fragment_settings, container, false);
   }
 
+  /**
+   *contains the apps listview.
+   * used for navigating to appsettings and user settings.
+   */
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
