@@ -225,35 +225,37 @@ public class HomePage extends Fragment {
     val filteredRecords = filterHydrationRecordsForWakePeriod(hydrationRecords);
 
     this.hydrationRecords = filteredRecords;
-    this.latestHydrationRecord = filteredRecords.get(0);
+    this.latestHydrationRecord = filteredRecords.size() > 0 ? filteredRecords.get(0) : null;
 
-    // Get hydration target
-    val hydrationTarget = userProfileManager.getDailyTarget();
+    if (this.hydrationRecords.size() > 0 && this.latestHydrationRecord != null) {
+      // Get hydration target
+      val hydrationTarget = userProfileManager.getDailyTarget();
 
-    // Get current total relative hydration
-    val currentHydration =
-        filteredRecords.stream()
-            .reduce(0, (curr, acc) -> curr + acc.getRelativeHydration(), Integer::sum);
+      // Get current total relative hydration
+      val currentHydration =
+          filteredRecords.stream()
+              .reduce(0, (curr, acc) -> curr + acc.getRelativeHydration(), Integer::sum);
 
-    // Check if target has been reached
-    val targetHasBeenReached = currentHydration >= hydrationTarget;
+      // Check if target has been reached
+      val targetHasBeenReached = currentHydration >= hydrationTarget;
 
-    // Get progress towards target
-    // Convert to double, divide to get multiplier, then multiply by 100 to get percentage value
-    val progressPercentage = (double) currentHydration / (double) hydrationTarget * 100;
+      // Get progress towards target
+      // Convert to double, divide to get multiplier, then multiply by 100 to get percentage value
+      val progressPercentage = (double) currentHydration / (double) hydrationTarget * 100;
 
-    // Get current activity period
-    val currentActivityPeriod = ActivityPeriodManager.getCurrentActivityPeriod();
+      // Get current activity period
+      val currentActivityPeriod = ActivityPeriodManager.getCurrentActivityPeriod();
 
-    // Get timestamp of last hydration and calculate how long ago it was
-    val lastHydrationTimestamp = latestHydrationRecord.getTimestamp();
-    val timeSinceLastHydration =
-        TimeUtils.getUnixTimestampDiff(new Date().getTime(), lastHydrationTimestamp.getTime());
+      // Get timestamp of last hydration and calculate how long ago it was
+      val lastHydrationTimestamp = latestHydrationRecord.getTimestamp();
+      val timeSinceLastHydration =
+          TimeUtils.getUnixTimestampDiff(new Date().getTime(), lastHydrationTimestamp.getTime());
 
-    updateHydrationProgress(currentHydration, hydrationTarget, progressPercentage);
-    updateContextMessage(currentActivityPeriod, timeSinceLastHydration, targetHasBeenReached);
-    updateLastIngestionDisplay(lastHydrationTimestamp);
-    updateMascot(currentActivityPeriod, timeSinceLastHydration, targetHasBeenReached);
+      updateHydrationProgress(currentHydration, hydrationTarget, progressPercentage);
+      updateContextMessage(currentActivityPeriod, timeSinceLastHydration, targetHasBeenReached);
+      updateLastIngestionDisplay(lastHydrationTimestamp);
+      updateMascot(currentActivityPeriod, timeSinceLastHydration, targetHasBeenReached);
+    }
   }
 
   /**
