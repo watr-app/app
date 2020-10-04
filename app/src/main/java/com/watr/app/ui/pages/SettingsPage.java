@@ -65,9 +65,9 @@ public class SettingsPage extends Fragment {
         new OnItemClickListener() {
           @Override
           public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
-            Log.d("Tag", "onItemClick(" + i + ")");
+            Log.d("Testi", "onItemClick(" + i + ")");
             if (i == 0) {
-              Log.d("tag","we are in if");
+              Log.d("testi","we are in if");
               Intent nextActivity = new Intent(getContext(), Appsettings.class);
               nextActivity.putExtra(EXTRA, i);
               startActivity(nextActivity);

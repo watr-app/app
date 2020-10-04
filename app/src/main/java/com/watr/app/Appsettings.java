@@ -8,7 +8,10 @@ package com.watr.app;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RadioButton;
+import android.widget.Switch;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.watr.app.datastore.sharedpreferences.settings.SettingsManager;
@@ -16,40 +19,25 @@ import com.watr.app.ui.activities.MainActivity;
 
 public class Appsettings extends AppCompatActivity {
     private SettingsManager settingsManager;
+    private Switch ding;
+    private Switch ding2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         settingsManager = MainActivity.getSettingsManager();
         setContentView(R.layout.activity_appsettings);
-
-
+        ding = (Switch) findViewById(R.id.switch3);
+        ding2 = (Switch) findViewById(R.id.switch4);
+        ding.setChecked(settingsManager.getCtx().getBoolean("useMetricUnits", false));
+        ding2.setChecked(settingsManager.getCtx().getBoolean("use24HrClock", false));
+        Log.d("testi", String.valueOf(settingsManager.getCtx().getBoolean("useMetricUnits",true)));
+        ding.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                settingsManager.addBoolean("useMetricUnits",isChecked);
+                settingsManager.addBoolean("use24HrClock",isChecked);
+            }
+        });
     }
-    public void onRadioButtonClicked(View view){
-        boolean checked = ((RadioButton)view).isChecked();
-        switch (view.getId()){
-            case R.id.systemmetric:
-                if(checked)
-                    settingsManager.addBoolean("useMetricUnits",true);
-                Log.d("tag","if = metric");
-                break;
-            case R.id.systemimperial:
-                if(checked)
-                    Log.d("tag","if = imperial");
-                    settingsManager.addBoolean("useMetricUnits",false);
-                break;
-        }
-        switch (view.getId()){
-            case R.id.clock24h:
-                if(checked)
-                    settingsManager.addBoolean("use24HrClock",true);
-                Log.d("tag","if = metric");
-                break;
-            case R.id.clock12h:
-                if(checked)
-                    Log.d("tag","if = imperial");
-                settingsManager.addBoolean("use24HrClock",false);
-                break;
-        }
-    }
+
 }
