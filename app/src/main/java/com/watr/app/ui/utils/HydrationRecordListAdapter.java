@@ -20,9 +20,9 @@ import com.watr.app.datastore.room.hydration.HydrationEntity;
 import com.watr.app.datastore.sharedpreferences.settings.SettingsManager;
 import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
 import com.watr.app.timemgmt.ActivityPeriodManager;
-import com.watr.app.utils.TimeUtils;
 import com.watr.app.timemgmt.UnknownTimeIntervalException;
 import com.watr.app.ui.activities.MainActivity;
+import com.watr.app.utils.TimeUtils;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.NonNull;
@@ -78,25 +78,28 @@ public class HydrationRecordListAdapter
 
       val unit = settingsManager.getCtx().getBoolean("useMetricUnits", true) ? "ml" : "fl.oz";
       val drinkType = currentRecord.getDrinkType();
-      val absoluteHydration = currentRecord.getAmount();
-      val relativeHydration = Math.round(absoluteHydration * drinkType.getHydrationCoefficient());
-      val positive = relativeHydration > 0 ? "+" : "";
+      val positive = currentRecord.getRelativeHydration() > 0 ? "+" : "";
 
       holder.hydrationRecordItemView.setText(
           String.format(
               "%tR: %s, %d %s (%s%d %4$s)",
               currentRecord.getTimestamp(),
               drinkType.getLabel(),
-              absoluteHydration,
+              currentRecord.getAbsoluteHydration(),
               unit,
               positive,
-              relativeHydration));
+              currentRecord.getRelativeHydration()));
     } else {
       // Show placeholder string if data is not ready yet
       holder.hydrationRecordItemView.setText(R.string.hydration_record_list_item_default_value);
     }
   }
 
+  /**
+   * Updates hydration record cache.
+   *
+   * @param hydrationRecords {@link List}<{@link HydrationEntity}>
+   */
   @SneakyThrows
   public void setHydrationRecords(List<HydrationEntity> hydrationRecords) {
     val activityPeriod = ActivityPeriodManager.getCurrentActivityPeriodWithOffsets();

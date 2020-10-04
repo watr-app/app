@@ -29,19 +29,23 @@ public class TimeUtils {
 
   /**
    * Globally available PrettyTime instance.
+   *
    * @see PrettyTime
    */
   public static PrettyTime prettyTime = new PrettyTime();
 
   /**
-   * Get a difference between two Unix timestamps in milliseconds.
+   * Get the absolute difference between two Unix timestamps in milliseconds.
    *
    * @param start {@link Long} Timestamp to start the interval being measured
    * @param end {@link Long} Timestamp to end the interval being measured
    * @return {@link Long} The difference between the two timestamps in milliseconds.
    */
   public static long getUnixTimestampDiff(long start, long end) {
-    return end - start;
+    // Using Math.abs() to make it such that the return value will be the literal amount of time it
+    // took the clock to reach from "start" to "end" - this prevents "2 hours ago" from being "-2
+    // hours ago"
+    return Math.abs(end - start);
   }
 
   /**

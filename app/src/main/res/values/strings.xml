@@ -11,8 +11,8 @@
   <string name="navigation_settings_button">Settings</string>
   <string name="ingested_liquid_amount_default_value">Loading…</string>
   <string name="target_liquid_amount_default_value">Loading…</string>
-  <string name="contextual_message_default_value">Loading…</string>
-  <string name="last_ingestion_default_value">Last ingestion: Loading…</string>
+  <string name="context_message_default_value">Loading…</string>
+  <string name="last_ingestion_default_value">Last fluid ingestion: Loading…</string>
   <string name="action_button_hint_default_value">Loading…</string>
   <string name="hydration_record_list_item_default_value">Loading…</string>
   <string name="ingestion_amount_hint">Ingested amount in millilitres…</string>
@@ -24,5 +24,9 @@
   <string name="history_page_title_awake">Liquids ingested today</string>
   <string name="history_page_title_asleep">Liquids ingested during the past day</string>
   <string name="home_page_action_button_hint_awake">Ready to log hydration!</string>
-  <string name="home_page_action_button_hint_asleep">Your current activity period is ASLEEP, so you cannot log hydration right now. Sweet dreams!</string>
+  <string name="home_page_action_button_hint_asleep">Your current activity period is ASLEEP, so you cannot log hydration right now.</string>
+  <string name="context_message_asleep">Good work on staying hydrated today. Sweet dreams!</string>
+  <string name="context_message_hydration_remembered">You\'re on track towards your daily target!</string>
+  <string name="context_message_hydration_forgotten">You\'re at risk of dehydration!</string>
+  <string name="context_message_hydration_target_achieved">You\'ve reached your daily target! Nice work!</string>
 </resources>

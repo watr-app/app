@@ -31,7 +31,6 @@ import com.watr.app.datastore.room.hydration.HydrationEntity;
 import com.watr.app.datastore.sharedpreferences.settings.SettingsManager;
 import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
 import com.watr.app.timemgmt.ActivityPeriodManager;
-import com.watr.app.utils.TimeUtils;
 import com.watr.app.timemgmt.UnknownTimeIntervalException;
 import com.watr.app.ui.activities.MainActivity;
 import com.watr.app.ui.activities.NewHydrationRecordActivity;
@@ -40,8 +39,12 @@ import com.watr.app.ui.utils.ImageViewAnimator;
 import com.watr.app.ui.viewmodels.MainViewModel;
 import com.watr.app.utils.NumberUtils;
 import com.watr.app.utils.StringifyUtils;
+import com.watr.app.utils.TimeUtils;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import lombok.SneakyThrows;
 import lombok.val;
 
@@ -54,7 +57,7 @@ import lombok.val;
 public class HomePage extends Fragment {
   // Constants
   public static final int NEW_HYDRATION_RECORD_REQUEST_CODE = 1;
-  private static final int ANIMATION_DURATION = 1500;
+  private static final int ANIMATION_DURATION = 1000;
   private static final int ANIMATION_START_OFFSET = 500;
 
   // Manager classes
@@ -64,6 +67,8 @@ public class HomePage extends Fragment {
   // Abstract components
   private MainViewModel mainViewModel;
   private View view;
+  private List<HydrationEntity> hydrationRecords;
+  private HydrationEntity latestHydrationRecord;
 
   // Hydration progress
   private TextView currentHydrationAmountDisplay;
@@ -71,12 +76,13 @@ public class HomePage extends Fragment {
   private ProgressBar hydrationProgressBar;
 
   // Contextual message and last ingestion time display
-  private TextView contextualMessageDisplay;
+  private TextView contextMessageDisplay;
   private TextView lastIngestionMessageDisplay;
 
   // Mascot
-  private ImageView leftEye;
-  private ImageView rightEye;
+  private ImageView mascotLeftEye;
+  private ImageView mascotRightEye;
+  private ImageView mascotMouth;
 
   // Action button and associated hint
   private FloatingActionButton newHydrationRecordButton;
@@ -130,22 +136,29 @@ public class HomePage extends Fragment {
     hydrationProgressBar = view.findViewById(R.id.hydrationProgressBar);
 
     // Contextual message and last ingestion time display
-    contextualMessageDisplay = view.findViewById(R.id.contextualMessage);
+    contextMessageDisplay = view.findViewById(R.id.contextMessage);
     lastIngestionMessageDisplay = view.findViewById(R.id.lastIngestionMessage);
 
     // Mascot
-    leftEye = view.findViewById(R.id.statusMascotLeftEye);
-    rightEye = view.findViewById(R.id.statusMascotRightEye);
+    mascotLeftEye = view.findViewById(R.id.statusMascotLeftEye);
+    mascotRightEye = view.findViewById(R.id.statusMascotRightEye);
+    mascotMouth = view.findViewById(R.id.statusMascotMouth);
 
     // Action button and associated hint
     newHydrationRecordButton = view.findViewById(R.id.newHydrationRecordButton);
     newHydrationRecordButtonHint = view.findViewById(R.id.newHydrationRecordButtonHint);
 
+    // Set action button click listener
     newHydrationRecordButton.setOnClickListener(
         v -> {
           val intent = new Intent(getContext(), NewHydrationRecordActivity.class);
           startActivityForResult(intent, NEW_HYDRATION_RECORD_REQUEST_CODE);
         });
+
+    // Start LiveData observer
+    mainViewModel
+        .getAllHydrationRecords()
+        .observe(getViewLifecycleOwner(), this::setHydrationRecords);
   }
 
   @SneakyThrows
@@ -158,7 +171,8 @@ public class HomePage extends Fragment {
               data.getStringExtra(NewHydrationRecordActivity.REPLY_DRINK_TYPE), DrinkType.class);
       val amount = data.getIntExtra(NewHydrationRecordActivity.REPLY_DRINK_AMOUNT, 1);
 
-      mainViewModel.insert(new HydrationEntity(new Date(), drinkType, amount));
+      // BUG: For reasons as to why relative hydration is set to 0 here, see HydrationEntity.java
+      mainViewModel.insert(new HydrationEntity(new Date(), drinkType, amount, 0));
     } else {
       Toast.makeText(getContext(), "Hydration record not saved!", Toast.LENGTH_SHORT).show();
     }
@@ -173,19 +187,150 @@ public class HomePage extends Fragment {
 
     // Set runtime values
     updateActionButtonState();
-    updateHydrationProgress();
   }
 
-  @SuppressLint("DefaultLocale")
-  private void updateHydrationProgress() {
-    val unit = settingsManager.getCtx().getBoolean("useMetricUnits", true) ? "ml" : "fl.oz";
-    val currentHydration = 0; // TODO: Get from DB
+  /**
+   * Filters hydration records to only those that were recorded during the current/latest wake *
+   * period.
+   *
+   * @param hydrationRecords {@link List}<{@link HydrationEntity}>
+   * @return {@link List}<{@link HydrationEntity}> of the hydration records recorded during the
+   *     current/latest wake period.
+   */
+  @SneakyThrows
+  private List<HydrationEntity> filterHydrationRecordsForWakePeriod(
+      List<HydrationEntity> hydrationRecords) {
+    val activityPeriod = ActivityPeriodManager.getCurrentActivityPeriodWithOffsets();
+    val userWakeTime = userProfileManager.getWakeTime();
+
+    // Only show items for current/most recent wake activity period
+    return hydrationRecords.stream()
+        .filter(
+            record ->
+                record.getTimestamp().getTime()
+                    > TimeUtils.localTimeToUnixTimestamp(
+                        userWakeTime, activityPeriod.wakeTimeOffset))
+        .collect(Collectors.toList());
+  }
+
+  /**
+   * Updates the hydration record cache and updates UI values that need to derive information from
+   * it.
+   *
+   * @param hydrationRecords {@link List}<{@link HydrationEntity}>
+   */
+  @SneakyThrows
+  private void setHydrationRecords(List<HydrationEntity> hydrationRecords) {
+    // Filter hydration records to only those for the current wake period
+    val filteredRecords = filterHydrationRecordsForWakePeriod(hydrationRecords);
+
+    this.hydrationRecords = filteredRecords;
+    this.latestHydrationRecord = filteredRecords.get(0);
+
+    // Get hydration target
     val hydrationTarget = userProfileManager.getDailyTarget();
 
+    // Get current total relative hydration
+    val currentHydration =
+        filteredRecords.stream()
+            .reduce(0, (curr, acc) -> curr + acc.getRelativeHydration(), Integer::sum);
+
+    // Check if target has been reached
+    val targetHasBeenReached = currentHydration >= hydrationTarget;
+
+    // Get progress towards target
+    // Convert to double, divide to get multiplier, then multiply by 100 to get percentage value
+    val progressPercentage = (double) currentHydration / (double) hydrationTarget * 100;
+
+    // Get current activity period
+    val currentActivityPeriod = ActivityPeriodManager.getCurrentActivityPeriod();
+
+    // Get timestamp of last hydration and calculate how long ago it was
+    val lastHydrationTimestamp = latestHydrationRecord.getTimestamp();
+    val timeSinceLastHydration =
+        TimeUtils.getUnixTimestampDiff(new Date().getTime(), lastHydrationTimestamp.getTime());
+
+    updateHydrationProgress(currentHydration, hydrationTarget, progressPercentage);
+    updateContextMessage(currentActivityPeriod, timeSinceLastHydration, targetHasBeenReached);
+    updateLastIngestionDisplay(lastHydrationTimestamp);
+    updateMascot(currentActivityPeriod, timeSinceLastHydration, targetHasBeenReached);
+  }
+
+  /**
+   * Updates the hydration progress bar based on how the user is tracking towards their daily
+   * target.
+   *
+   * @param currentHydration {@link Integer} Current relative hydration amount
+   * @param hydrationTarget {@link Integer} User daily target
+   * @param progressPercentage {@link Double} Percentage of target reached
+   */
+  @SuppressLint("DefaultLocale")
+  private void updateHydrationProgress(
+      int currentHydration, int hydrationTarget, double progressPercentage) {
+    val unit = settingsManager.getCtx().getBoolean("useMetricUnits", true) ? "ml" : "fl.oz";
     currentHydrationAmountDisplay.setText(String.format("%d %s", currentHydration, unit));
     targetHydrationAmountDisplay.setText(String.format("%d %s", hydrationTarget, unit));
     hydrationProgressBar.setProgress(
-        NumberUtils.normalisePercentage(currentHydration / hydrationTarget, 100));
+        NumberUtils.doubleToInteger(NumberUtils.normalisePercentage(progressPercentage, 100)));
+  }
+
+  /**
+   * Updates context message based on how user is tracking towards their daily target.
+   *
+   * @param currentActivityPeriod {@link ActivityPeriod} Current activity period
+   * @param timeSinceLastHydration {@link Long} Time in milliseconds since last hydration record
+   * @param targetHasBeenReached {@link Boolean} Whether daily target has been reached
+   */
+  private void updateContextMessage(
+      ActivityPeriod currentActivityPeriod,
+      long timeSinceLastHydration,
+      boolean targetHasBeenReached) {
+    val hoursSinceLastHydration = TimeUnit.MILLISECONDS.toHours(timeSinceLastHydration);
+
+    if (currentActivityPeriod == ActivityPeriod.ASLEEP) {
+      contextMessageDisplay.setText(R.string.context_message_asleep);
+    } else if (targetHasBeenReached) {
+      contextMessageDisplay.setText(R.string.context_message_hydration_target_achieved);
+    } else if (hoursSinceLastHydration >= 1) {
+      contextMessageDisplay.setText(R.string.context_message_hydration_forgotten);
+    } else {
+      contextMessageDisplay.setText(R.string.context_message_hydration_remembered);
+    }
+  }
+
+  /**
+   * Updates the time since the last hydration record.
+   *
+   * @param lastHydrationTimestamp {@link Date} Timestamp of latest hydration record
+   */
+  private void updateLastIngestionDisplay(Date lastHydrationTimestamp) {
+    lastIngestionMessageDisplay.setText(
+        String.format(
+            "Last fluid ingestion: %s", TimeUtils.prettyTime.format(lastHydrationTimestamp)));
+  }
+
+  /**
+   * Updates the mascot's appearance based on how user is tracking towards their daily target.
+   *
+   * @param currentActivityPeriod {@link ActivityPeriod} Current activity period
+   * @param timeSinceLastHydration {@link Long} Time in milliseconds since last hydration record
+   * @param targetHasBeenReached {@link Boolean} Whether daily target has been reached
+   */
+  private void updateMascot(
+      ActivityPeriod currentActivityPeriod,
+      long timeSinceLastHydration,
+      boolean targetHasBeenReached) {
+    val hoursSinceLastHydration = TimeUnit.MILLISECONDS.toHours(timeSinceLastHydration);
+
+    if (currentActivityPeriod == ActivityPeriod.AWAKE
+        && !targetHasBeenReached
+        && hoursSinceLastHydration >= 1) {
+      // Point mouth down (Sad)
+      mascotMouth.setRotation(270f);
+    } else {
+      // Point mouth up (Happy)
+      mascotMouth.setRotation(90f);
+    }
   }
 
   /** Updates action button state and associated hint based on user's current activity period. */
@@ -210,12 +355,12 @@ public class HomePage extends Fragment {
   private void startEyeAnimations() {
     val leftEyeAnimation =
         new ImageViewAnimator(
-            ANIMATION_DURATION, ANIMATION_START_OFFSET, leftEye, leftEyeAnimations);
+            ANIMATION_DURATION, ANIMATION_START_OFFSET, mascotLeftEye, leftEyeAnimations);
     leftEyeAnimation.start();
 
     val rightEyeAnimation =
         new ImageViewAnimator(
-            ANIMATION_DURATION, ANIMATION_START_OFFSET, rightEye, rightEyeAnimations);
+            ANIMATION_DURATION, ANIMATION_START_OFFSET, mascotRightEye, rightEyeAnimations);
     rightEyeAnimation.start();
   }
 }
