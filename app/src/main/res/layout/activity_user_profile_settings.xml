@@ -12,7 +12,7 @@
   android:layout_height="match_parent"
   tools:context=".UserProfileSettings">
   <RadioGroup
-    android:id="@+id/radioGroup"
+    android:id="@+id/genderSelectorRadioGroup"
     android:layout_width="132dp"
     android:layout_height="0dp"
     android:layout_marginTop="164dp"
@@ -20,18 +20,18 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
     <RadioButton
-      android:id="@+id/gendermale"
+      android:id="@+id/buttonMale"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="Male" />
     <RadioButton
-      android:id="@+id/genderfemale"
+      android:id="@+id/buttonFemale"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="Female" />
   </RadioGroup>
   <EditText
-    android:id="@+id/dailytargetbox"
+    android:id="@+id/dailyTargetInput"
     android:layout_width="134dp"
     android:layout_height="57dp"
     android:layout_marginTop="64dp"
@@ -39,25 +39,25 @@
     android:ems="10"
     android:inputType="number"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+    app:layout_constraintTop_toBottomOf="@+id/genderSelectorRadioGroup" />
   <Button
-    android:id="@+id/confirmdailytarget"
+    android:id="@+id/dailyTargetConfirmButton"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="300dp"
     android:layout_marginStart="40dp"
-    android:onClick="confirmdailytarget"
+    android:onClick="confirmDailyTarget"
     android:text="Confirm"
-    app:layout_constraintStart_toEndOf="@+id/dailytargetbox"
+    app:layout_constraintStart_toEndOf="@+id/dailyTargetInput"
     app:layout_constraintTop_toTopOf="parent" />
   <Button
-    android:id="@+id/timeedit"
+    android:id="@+id/goToTimeEditorButton"
     android:layout_width="132dp"
     android:layout_height="58dp"
     android:layout_marginTop="80dp"
     android:layout_marginStart="140dp"
-    android:onClick="gototimeedit"
-    android:text="Edit wakeup and bedtimes"
+    android:onClick="goToTimeEditor"
+    android:text="Edit wake up and bed time"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/dailytargetbox" />
+    app:layout_constraintTop_toBottomOf="@+id/dailyTargetInput" />
 </androidx.constraintlayout.widget.ConstraintLayout>

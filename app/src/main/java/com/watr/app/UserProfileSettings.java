@@ -6,61 +6,71 @@
 
 package com.watr.app;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.util.Log;
-import android.view.View;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import androidx.appcompat.app.AppCompatActivity;
 import com.watr.app.constants.Gender;
 import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
 import com.watr.app.ui.activities.MainActivity;
-import lombok.ToString;
 
 public class UserProfileSettings extends AppCompatActivity {
   private UserProfileManager userProfileManager;
+  private RadioGroup genderSelectorRadioGroup;
+  private EditText dailyTargetInput;
 
+  @SuppressLint("SetTextI18n")
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     userProfileManager = MainActivity.getUserProfileManager();
     setContentView(R.layout.activity_user_profile_settings);
-    RadioGroup rg = (RadioGroup) findViewById(R.id.radioGroup);
+
+    genderSelectorRadioGroup = findViewById(R.id.genderSelectorRadioGroup);
+    dailyTargetInput = findViewById(R.id.dailyTargetInput);
 
     // Picks users gender so it is chosen by default
     if (userProfileManager.getGender() == Gender.MALE) {
-      rg.check(R.id.gendermale);
+      genderSelectorRadioGroup.check(R.id.buttonMale);
     } else {
-      rg.check(R.id.genderfemale);
+      genderSelectorRadioGroup.check(R.id.buttonFemale);
     }
-    TextView tv = findViewById(R.id.dailytargetbox);
-    tv.setText(Integer.toString(userProfileManager.getDailyTarget()));
 
+    dailyTargetInput.setText(Integer.toString(userProfileManager.getDailyTarget()));
 
     // Listener that swaps he gender
-    rg.setOnCheckedChangeListener(
-        new OnCheckedChangeListener() {
-          public void onCheckedChanged(RadioGroup group, int checkedId) {
-            switch (checkedId) {
-              case R.id.gendermale:
-                userProfileManager.setGender(Gender.MALE);
-                break;
-              case R.id.genderfemale:
-                userProfileManager.setGender(Gender.FEMALE);
-                break;
-            }
+    genderSelectorRadioGroup.setOnCheckedChangeListener(
+        (group, checkedId) -> {
+          Gender gender;
+
+          switch (checkedId) {
+            case R.id.buttonMale:
+              gender = Gender.MALE;
+
+              userProfileManager.setGender(gender);
+              userProfileManager.setDailyTarget(gender.getDefaultDailyTarget());
+              dailyTargetInput.setText(Integer.toString(userProfileManager.getDailyTarget()));
+              break;
+            case R.id.buttonFemale:
+              gender = Gender.FEMALE;
+
+              userProfileManager.setGender(gender);
+              userProfileManager.setDailyTarget(gender.getDefaultDailyTarget());
+              dailyTargetInput.setText(Integer.toString(userProfileManager.getDailyTarget()));
+              break;
           }
         });
   }
-  public void confirmdailytarget(View view) {
-    TextView tv = findViewById(R.id.dailytargetbox);
-    userProfileManager.setDailyTarget(Integer.parseInt(String.valueOf(tv.getText())));
-  }
-  public void gototimeedit(View view){
-    Intent nextActivity = new Intent(this, timeselect.class);
-    startActivity(nextActivity);
+
+  public void confirmDailyTarget(View view) {
+    userProfileManager.setDailyTarget(Integer.parseInt(String.valueOf(dailyTargetInput.getText())));
   }
 
+  public void goToTimeEditor(View view) {
+    Intent nextActivity = new Intent(this, TimeSelect.class);
+    startActivity(nextActivity);
+  }
 }
