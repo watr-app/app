@@ -8,7 +8,6 @@ package com.watr.app.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -16,17 +15,14 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.watr.app.R;
 import com.watr.app.constants.Gender;
-import com.watr.app.datastore.sharedpreferences.settings.SettingsManager;
 import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Objects;
 import lombok.val;
-import lombok.var;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * Editting user profile settings after first launch happens here
+ * Editor for user profile settings after first setup.
  *
  * @author panueronen
  * @version 1.0.0
@@ -43,10 +39,6 @@ public class UserProfileSettingsActivity extends AppCompatActivity {
   private int hours = 0;
   private int minutes = 0;
 
-  /**
-   * holds radio buttons for gender and buttons for navigating to timeselect. changing daily
-   * hydration target also happens from here
-   */
   @SuppressLint("SetTextI18n")
   @Override
   protected void onCreate(Bundle savedInstanceState) {

@@ -13,10 +13,16 @@ import com.watr.app.R;
 import com.watr.app.datastore.sharedpreferences.settings.SettingsManager;
 import java.util.Objects;
 
+/**
+ * Application settings activity.
+ *
+ * @author panueronen
+ * @version 1.0.0
+ */
 public class AppSettingsActivity extends AppCompatActivity {
   private SettingsManager settingsManager;
-  private Switch ding;
-  private Switch ding2;
+  private Switch metricSwitch;
+  private Switch clockFormatSwitch;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +32,15 @@ public class AppSettingsActivity extends AppCompatActivity {
 
     settingsManager = MainActivity.getSettingsManager();
 
-    ding = findViewById(R.id.useMetricSwitch);
-    ding2 = findViewById(R.id.use24HourClockSwitch);
+    metricSwitch = findViewById(R.id.useMetricSwitch);
+    clockFormatSwitch = findViewById(R.id.use24HourClockSwitch);
 
-    ding.setChecked(settingsManager.getCtx().getBoolean("useMetricUnits", true));
-    ding2.setChecked(settingsManager.getCtx().getBoolean("use24HrClock", true));
+    metricSwitch.setChecked(settingsManager.getCtx().getBoolean("useMetricUnits", true));
+    clockFormatSwitch.setChecked(settingsManager.getCtx().getBoolean("use24HrClock", true));
 
-    ding.setOnCheckedChangeListener(
+    metricSwitch.setOnCheckedChangeListener(
         (buttonView, isChecked) -> settingsManager.addBoolean("useMetricUnits", isChecked));
-    ding2.setOnCheckedChangeListener(
+    clockFormatSwitch.setOnCheckedChangeListener(
         (buttonView, isChecked) -> settingsManager.addBoolean("use24HrClock", isChecked));
   }
 }

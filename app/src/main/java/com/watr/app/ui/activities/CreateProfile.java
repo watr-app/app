@@ -19,7 +19,12 @@ import com.watr.app.datastore.sharedpreferences.settings.SettingsManager;
 import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
 import java.util.Objects;
 
-
+/**
+ * Initial setup activity.
+ *
+ * @author mhgitti
+ * @version 1.0.0
+ */
 public class CreateProfile extends AppCompatActivity {
 
   public EditText dailyTarget;
