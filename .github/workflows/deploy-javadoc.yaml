@@ -25,5 +25,5 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: ./app/build/docs/javadoc/debug
+          FOLDER: app/build/docs/javadoc/debug
           CLEAN: true # Automatically remove deleted files from the deploy branch
