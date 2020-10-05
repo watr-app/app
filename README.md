@@ -2,7 +2,7 @@
 
 Source code for the Watr. Android application, built during the [Metropolia University of Applied Sciences](https://www.metropolia.fi) Mobile Health Applications course.
 
-The JavaDoc for this repository can be found at TODO.
+The JavaDoc for this repository can be found at https://watr-app.github.io/app.
 
 ## Package reference
 
