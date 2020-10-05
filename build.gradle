@@ -6,8 +6,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.0.1"
-        classpath "com.vanniktech:gradle-android-javadoc-plugin:0.3.0"
+        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.vanniktech:gradle-android-javadoc-plugin:0.3.0'
         // TODO: Generate Javadoc
 
         // NOTE: Do not place your application dependencies here; they belong
