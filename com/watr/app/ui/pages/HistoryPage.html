@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10};
+var methods = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -177,6 +177,10 @@ extends androidx.fragment.app.Fragment</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../com/watr/app/ui/pages/HistoryPage.html#onResume--">onResume</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../com/watr/app/ui/pages/HistoryPage.html#onViewCreated-android.view.View-android.os.Bundle-">onViewCreated</a></span>(android.view.View&nbsp;view,
              android.os.Bundle&nbsp;savedInstanceState)</code>&nbsp;</td>
 </tr>
@@ -186,7 +190,7 @@ extends androidx.fragment.app.Fragment</pre>
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;androidx.fragment.app.Fragment</h3>
-<code>dump, equals, getActivity, getAllowEnterTransitionOverlap, getAllowReturnTransitionOverlap, getArguments, getChildFragmentManager, getContext, getDefaultViewModelProviderFactory, getEnterTransition, getExitTransition, getFragmentManager, getHost, getId, getLayoutInflater, getLayoutInflater, getLifecycle, getLoaderManager, getParentFragment, getParentFragmentManager, getReenterTransition, getResources, getRetainInstance, getReturnTransition, getSavedStateRegistry, getSharedElementEnterTransition, getSharedElementReturnTransition, getString, getString, getTag, getTargetFragment, getTargetRequestCode, getText, getUserVisibleHint, getView, getViewLifecycleOwner, getViewLifecycleOwnerLiveData, getViewModelStore, hashCode, hasOptionsMenu, instantiate, instantiate, isAdded, isDetached, isHidden, isInLayout, isMenuVisible, isRemoving, isResumed, isStateSaved, isVisible, onActivityCreated, onActivityResult, onAttach, onAttach, onAttachFragment, onConfigurationChanged, onContextItemSelected, onCreate, onCreateAnimation, onCreateAnimator, onCreateContextMenu, onCreateOptionsMenu, onDestroy, onDestroyOptionsMenu, onDestroyView, onDetach, onGetLayoutInflater, onHiddenChanged, onInflate, onInflate, onLowMemory, onMultiWindowModeChanged, onOptionsItemSelected, onOptionsMenuClosed, onPause, onPictureInPictureModeChanged, onPrepareOptionsMenu, onPrimaryNavigationFragmentChanged, onRequestPermissionsResult, onResume, onSaveInstanceState, onStart, onStop, onViewStateRestored, postponeEnterTransition, postponeEnterTransition, registerForContextMenu, requestPermissions, requireActivity, requireArguments, requireContext, requireFragmentManager, requireHost, requireParentFragment, requireView, setAllowEnterTransitionOverlap, setAllowReturnTransitionOverlap, setArguments, setEnterSharedElementCallback, setEnterTransition, setExitSharedElementCallback, setExitTransition, setHasOptionsMenu, setInitialSavedState, setMenuVisibility, setReenterTransition, setRetainInstance, setReturnTransition, setSharedElementEnterTransition, setSharedElementReturnTransition, setTargetFragment, setUserVisibleHint, shouldShowRequestPermissionRationale, startActivity, startActivity, startActivityForResult, startActivityForResult, startIntentSenderForResult, startPostponedEnterTransition, toString, unregisterForContextMenu</code></li>
+<code>dump, equals, getActivity, getAllowEnterTransitionOverlap, getAllowReturnTransitionOverlap, getArguments, getChildFragmentManager, getContext, getDefaultViewModelProviderFactory, getEnterTransition, getExitTransition, getFragmentManager, getHost, getId, getLayoutInflater, getLayoutInflater, getLifecycle, getLoaderManager, getParentFragment, getParentFragmentManager, getReenterTransition, getResources, getRetainInstance, getReturnTransition, getSavedStateRegistry, getSharedElementEnterTransition, getSharedElementReturnTransition, getString, getString, getTag, getTargetFragment, getTargetRequestCode, getText, getUserVisibleHint, getView, getViewLifecycleOwner, getViewLifecycleOwnerLiveData, getViewModelStore, hashCode, hasOptionsMenu, instantiate, instantiate, isAdded, isDetached, isHidden, isInLayout, isMenuVisible, isRemoving, isResumed, isStateSaved, isVisible, onActivityCreated, onActivityResult, onAttach, onAttach, onAttachFragment, onConfigurationChanged, onContextItemSelected, onCreate, onCreateAnimation, onCreateAnimator, onCreateContextMenu, onCreateOptionsMenu, onDestroy, onDestroyOptionsMenu, onDestroyView, onDetach, onGetLayoutInflater, onHiddenChanged, onInflate, onInflate, onLowMemory, onMultiWindowModeChanged, onOptionsItemSelected, onOptionsMenuClosed, onPause, onPictureInPictureModeChanged, onPrepareOptionsMenu, onPrimaryNavigationFragmentChanged, onRequestPermissionsResult, onSaveInstanceState, onStart, onStop, onViewStateRestored, postponeEnterTransition, postponeEnterTransition, registerForContextMenu, requestPermissions, requireActivity, requireArguments, requireContext, requireFragmentManager, requireHost, requireParentFragment, requireView, setAllowEnterTransitionOverlap, setAllowReturnTransitionOverlap, setArguments, setEnterSharedElementCallback, setEnterTransition, setExitSharedElementCallback, setExitTransition, setHasOptionsMenu, setInitialSavedState, setMenuVisibility, setReenterTransition, setRetainInstance, setReturnTransition, setSharedElementEnterTransition, setSharedElementReturnTransition, setTargetFragment, setUserVisibleHint, shouldShowRequestPermissionRationale, startActivity, startActivity, startActivityForResult, startActivityForResult, startIntentSenderForResult, startPostponedEnterTransition, toString, unregisterForContextMenu</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -244,7 +248,7 @@ extends androidx.fragment.app.Fragment</pre>
 <a name="onViewCreated-android.view.View-android.os.Bundle-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>onViewCreated</h4>
 <pre>public&nbsp;void&nbsp;onViewCreated(@NonNull
@@ -254,6 +258,19 @@ extends androidx.fragment.app.Fragment</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>onViewCreated</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.Fragment</code></dd>
+</dl>
+</li>
+</ul>
+<a name="onResume--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>onResume</h4>
+<pre>public&nbsp;void&nbsp;onResume()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code>onResume</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.Fragment</code></dd>
 </dl>
 </li>
 </ul>
