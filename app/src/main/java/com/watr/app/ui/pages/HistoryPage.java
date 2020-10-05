@@ -33,6 +33,7 @@ public class HistoryPage extends Fragment {
   private View view;
   private RecyclerView recyclerView;
   private MainViewModel mainViewModel;
+  private HydrationRecordListAdapter adapter;
 
   @Override
   public View onCreateView(
@@ -50,7 +51,7 @@ public class HistoryPage extends Fragment {
 
     // Initialise view model
     val context = getContext();
-    val adapter = new HydrationRecordListAdapter(context);
+    adapter = new HydrationRecordListAdapter(context);
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
@@ -58,5 +59,11 @@ public class HistoryPage extends Fragment {
     mainViewModel
         .getAllHydrationRecords()
         .observe(getViewLifecycleOwner(), adapter::setHydrationRecords);
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+    adapter.notifyDataSetChanged();
   }
 }

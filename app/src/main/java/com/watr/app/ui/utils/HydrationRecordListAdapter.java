@@ -149,7 +149,7 @@ public class HydrationRecordListAdapter
       @SuppressLint("DefaultLocale")
       val drink =
           String.format(
-              "%s, %d %s (%s%d %4$s)",
+              "%s, %d %s (%s%d %3$s)",
               drinkType.getLabel(),
               (int) absoluteHydration,
               unit,

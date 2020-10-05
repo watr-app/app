@@ -9,6 +9,12 @@ package com.watr.app.constants;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Constants for date offsets.
+ *
+ * @author linuswillner
+ * @version 1.0.0
+ */
 @RequiredArgsConstructor
 public enum DateOffset {
   YESTERDAY(-1),

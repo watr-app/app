@@ -7,36 +7,40 @@
 package com.watr.app.ui.activities;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Switch;
 import androidx.appcompat.app.AppCompatActivity;
 import com.watr.app.R;
 import com.watr.app.datastore.sharedpreferences.settings.SettingsManager;
-import com.watr.app.ui.activities.MainActivity;
+import java.util.Objects;
 
-public class AppSettings extends AppCompatActivity {
+/**
+ * Application settings activity.
+ *
+ * @author panueronen
+ * @version 1.0.0
+ */
+public class AppSettingsActivity extends AppCompatActivity {
   private SettingsManager settingsManager;
-  private Switch ding;
-  private Switch ding2;
+  private Switch metricSwitch;
+  private Switch clockFormatSwitch;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_appsettings);
+    Objects.requireNonNull(getSupportActionBar()).hide();
 
     settingsManager = MainActivity.getSettingsManager();
 
-    ding = findViewById(R.id.switch3);
-    ding2 = findViewById(R.id.switch4);
+    metricSwitch = findViewById(R.id.useMetricSwitch);
+    clockFormatSwitch = findViewById(R.id.use24HourClockSwitch);
 
-    ding.setChecked(settingsManager.getCtx().getBoolean("useMetricUnits", true));
-    ding2.setChecked(settingsManager.getCtx().getBoolean("use24HrClock", true));
+    metricSwitch.setChecked(settingsManager.getCtx().getBoolean("useMetricUnits", true));
+    clockFormatSwitch.setChecked(settingsManager.getCtx().getBoolean("use24HrClock", true));
 
-    ding.setOnCheckedChangeListener(
+    metricSwitch.setOnCheckedChangeListener(
         (buttonView, isChecked) -> settingsManager.addBoolean("useMetricUnits", isChecked));
-    ding2.setOnCheckedChangeListener(
+    clockFormatSwitch.setOnCheckedChangeListener(
         (buttonView, isChecked) -> settingsManager.addBoolean("use24HrClock", isChecked));
   }
 }

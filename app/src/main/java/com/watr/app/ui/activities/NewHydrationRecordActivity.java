@@ -28,6 +28,12 @@ import java.util.Objects;
 import lombok.NonNull;
 import lombok.val;
 
+/**
+ * Hydration record addition activity.
+ *
+ * @author linuswillner
+ * @version 1.0.0
+ */
 public class NewHydrationRecordActivity extends AppCompatActivity {
   public static final String REPLY_DRINK_TYPE = "com.watr.app.newhydrationrecord.REPLY_DRINK_TYPE";
   public static final String REPLY_DRINK_AMOUNT =

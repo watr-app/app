@@ -48,6 +48,7 @@ import java.util.stream.Collectors;
 import lombok.SneakyThrows;
 import lombok.val;
 import lombok.var;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Home page. All functionality specific to the home page goes here.
@@ -182,12 +183,9 @@ public class HomePage extends Fragment {
   @Override
   public void onResume() {
     super.onResume();
-
-    // Start eye animations
     startEyeAnimations();
-
-    // Set runtime values
     updateActionButtonState();
+    updateUI();
   }
 
   /**
@@ -227,9 +225,16 @@ public class HomePage extends Fragment {
 
     this.hydrationRecords = filteredRecords;
     this.latestHydrationRecord = filteredRecords.size() > 0 ? filteredRecords.get(0) : null;
+    updateUI();
+  }
 
+  /**
+   * Performs an update on the dynamic values in the user interface.
+   */
+  @SneakyThrows
+  private void updateUI () {
     // Deduct if user has recorded hydration today
-    val userHasHydrationRecordsToday = filteredRecords.size() > 0 && latestHydrationRecord != null;
+    val userHasHydrationRecordsToday = (hydrationRecords != null && hydrationRecords.size() > 0) && latestHydrationRecord != null;
 
     // Get current activity period
     val currentActivityPeriod = ActivityPeriodManager.getCurrentActivityPeriod();
@@ -246,7 +251,7 @@ public class HomePage extends Fragment {
     if (userHasHydrationRecordsToday) {
       // Get current total relative hydration
       currentHydration =
-          filteredRecords.stream()
+          hydrationRecords.stream()
               .reduce(0, (curr, acc) -> curr + acc.getRelativeHydration(), Integer::sum);
 
       // Get timestamp of last hydration and calculate how long ago it was
