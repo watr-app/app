@@ -13,27 +13,63 @@
 
   <Button
     android:id="@+id/buttonOk"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="150dp"
+    android:layout_width="120dp"
+    android:layout_height="59dp"
+    android:layout_marginBottom="124dp"
     android:text="Confirm"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.498"
     app:layout_constraintStart_toStartOf="parent" />
   <EditText
-    android:id="@+id/dailytarget"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="100dp"
-    android:layout_marginBottom="16dp"
+    android:id="@+id/wakeminutes"
+    android:layout_width="71dp"
+    android:layout_height="57dp"
+    android:layout_marginBottom="284dp"
+    android:layout_marginStart="113dp"
     android:ems="10"
-    android:hint="Wakeup time (hh:mm)"
+    android:gravity="center"
+    android:hint="mm"
     android:inputType="time"
-    app:layout_constraintBottom_toTopOf="@+id/buttonOk"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+  <EditText
+    android:id="@+id/wakehours"
+    android:layout_width="71dp"
+    android:layout_height="57dp"
+    android:layout_marginStart="42dp"
+    android:ems="10"
+    android:gravity="center"
+    android:hint="hh"
+    android:inputType="time"
+    app:layout_constraintBaseline_toBaselineOf="@+id/wakeminutes"
+    app:layout_constraintStart_toStartOf="parent" />
+  <EditText
+    android:id="@+id/sleephours"
+    android:layout_width="71dp"
+    android:layout_height="57dp"
+    android:layout_marginBottom="284dp"
+    android:layout_marginEnd="113dp"
+    android:ems="10"
+    android:gravity="center"
+    android:hint="hh"
+    android:inputType="time"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+  <EditText
+    android:id="@+id/sleepminutes"
+    android:layout_width="71dp"
+    android:layout_height="57dp"
+    android:layout_marginBottom="284dp"
+    android:layout_marginEnd="42dp"
+    android:ems="10"
+    android:gravity="center"
+    android:hint="mm"
+    android:inputType="time"
+    app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/switch6" />
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toEndOf="@+id/sleephours" />
   <RadioGroup
     android:id="@+id/radioGroup"
     android:layout_width="wrap_content"
@@ -79,4 +115,26 @@
     app:layout_constraintHorizontal_bias="0.498"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/switch5" />
+  <TextView
+    android:id="@+id/textView4"
+    android:layout_width="143dp"
+    android:layout_height="21dp"
+    android:layout_marginTop="369dp"
+    android:layout_marginStart="41dp"
+    android:gravity="center"
+    android:text="My mornings start at"
+    app:layout_constraintBottom_toTopOf="@+id/wakehours"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+  <TextView
+    android:id="@+id/textView"
+    android:layout_width="142dp"
+    android:layout_height="21dp"
+    android:layout_marginTop="369dp"
+    android:layout_marginEnd="42dp"
+    android:gravity="center"
+    android:text="My day ends at"
+    app:layout_constraintBottom_toTopOf="@+id/sleephours"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

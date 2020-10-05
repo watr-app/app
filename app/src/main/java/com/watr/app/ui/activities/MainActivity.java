@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     if (settingsManager.getCtx().getBoolean("needsSetup", true)) {
       Intent i = new Intent(MainActivity.this, CreateProfile.class);
       MainActivity.this.startActivity(i);
-      settingsManager.addBoolean("needsSetup", true);
+      settingsManager.addBoolean("needsSetup", false);
     } else {
       try {
         userProfileManager.checkRequiredProfileSettings();

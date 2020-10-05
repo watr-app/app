@@ -12,11 +12,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Switch;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.watr.app.R;
 import com.watr.app.constants.Gender;
 import com.watr.app.datastore.sharedpreferences.settings.SettingsManager;
 import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
+import java.time.LocalTime;
 import java.util.Objects;
 
 /**
@@ -34,6 +36,8 @@ public class CreateProfile extends AppCompatActivity {
   private UserProfileManager userProfileManager;
   private Switch aSwitch;
   private Switch bSwitch;
+  private int hours = 0;
+  private int minutes = 0;
 
 
   @Override
@@ -59,7 +63,7 @@ public class CreateProfile extends AppCompatActivity {
         (buttonView, isChecked) -> settingsManager.addBoolean("useMetricUnits", isChecked));
 
     // set gender and daily target
-    rg.check(R.id.gendermale); // <-
+    rg.check(R.id.gendermale);
     rg.setOnCheckedChangeListener(
         (group, checkedId) -> {
           switch (checkedId) {
@@ -74,8 +78,24 @@ public class CreateProfile extends AppCompatActivity {
           }
         });
 
-    //go back to MainActivity
+    // on click = set wake- and sleeptime
     final Button button = findViewById(R.id.buttonOk);
-    button.setOnClickListener(v -> finish());
+    button.setOnClickListener(v -> {
+      TextView temp = (TextView) findViewById(R.id.wakehours);
+      String wakehours = temp.getText().toString();
+      TextView temp2 = (TextView) findViewById(R.id.wakeminutes);
+      String wakeminutes = temp2.getText().toString();
+      TextView temp3 = (TextView) findViewById(R.id.sleephours);
+      String sleephours = temp3.getText().toString();
+      TextView temp4 = (TextView) findViewById(R.id.sleepminutes);
+      String sleepminutes = temp4.getText().toString();
+
+      LocalTime waketime = LocalTime.parse(String.format("%s:%s:00", wakehours, wakeminutes));
+      LocalTime sleeptime = LocalTime.parse(String.format("%s:%s:00", sleephours, sleepminutes));
+
+      userProfileManager.setWakeTime(waketime);
+      userProfileManager.setBedTime(sleeptime);
+      finish();
+    });
   }
 }
