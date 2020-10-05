@@ -6,8 +6,8 @@ on:
       - 'master'
 
 jobs:
-  build-artifacts:
-    runs-on: windows-latest
+  deploy-javadoc:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
