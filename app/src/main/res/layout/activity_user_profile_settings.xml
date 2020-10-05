@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Watr. Android application
   ~ Copyright (c) 2020 Linus Willner, Panu Eronen and Markus Hartikainen.
   ~ Licensed under the MIT license.
@@ -10,54 +9,261 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".ui.activities.UserProfileSettings">
+  tools:context=".ui.activities.UserProfileSettingsActivity">
+  <Button
+    android:id="@+id/dailyTargetUpdateButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:backgroundTint="@color/colorPrimary"
+    android:onClick="confirmDailyTarget"
+    android:text="@string/user_profile_settings_daily_target_update_button"
+    android:textColor="@color/colorTextWhite"
+    app:layout_constraintEnd_toStartOf="@+id/verticalRightGuideline"
+    app:layout_constraintStart_toStartOf="@+id/verticalMiddleGuideline"
+    app:layout_constraintTop_toBottomOf="@+id/dailyTargetInput" />
+  <Button
+    android:id="@+id/setBedTimeButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp"
+    android:backgroundTint="@color/colorPrimary"
+    android:onClick="setBedTime"
+    android:text="@string/user_profile_settings_wake_and_bed_time_set_bed_time_button"
+    android:textColor="@color/colorTextWhite"
+    app:layout_constraintEnd_toEndOf="@+id/decreaseMinuteButton"
+    app:layout_constraintHorizontal_bias="0.592"
+    app:layout_constraintStart_toStartOf="@+id/decreaseMinuteButton"
+    app:layout_constraintTop_toBottomOf="@+id/decreaseMinuteButton" />
+  <Button
+    android:id="@+id/setWakeTimeButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp"
+    android:backgroundTint="@color/colorPrimary"
+    android:onClick="setWakeTime"
+    android:text="@string/user_profile_settings_wake_and_bed_time_set_wake_time_button"
+    android:textColor="@color/colorTextWhite"
+    app:layout_constraintEnd_toEndOf="@+id/decreaseHourButton"
+    app:layout_constraintStart_toStartOf="@+id/decreaseHourButton"
+    app:layout_constraintTop_toBottomOf="@+id/decreaseHourButton" />
+  <EditText
+    android:id="@+id/dailyTargetInput"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:ems="10"
+    android:hint="@string/user_profile_settings_daily_target_input"
+    android:inputType="number"
+    android:textAlignment="center"
+    app:layout_constraintEnd_toStartOf="@+id/verticalRightGuideline"
+    app:layout_constraintStart_toStartOf="@+id/verticalMiddleGuideline"
+    app:layout_constraintTop_toTopOf="@+id/firstSettingControlGroupGuideline"
+    tools:ignore="Autofill" />
+
+  <ImageButton
+    android:id="@+id/increaseHourButton"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:layout_marginTop="24dp"
+    android:layout_marginEnd="24dp"
+    android:backgroundTint="@color/colorAccent"
+    android:contentDescription="@string/user_profile_settings_wake_and_bed_time_increase_hour_content_description"
+    android:onClick="increaseHour"
+    app:layout_constraintEnd_toStartOf="@+id/verticalMiddleGuideline"
+    app:layout_constraintTop_toTopOf="@+id/secondSettingControlGroupGuideline"
+    app:srcCompat="@drawable/ic_baseline_arrow_drop_up_64" />
+  <ImageButton
+    android:id="@+id/decreaseHourButton"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:backgroundTint="@color/colorAccent"
+    android:contentDescription="@string/user_profile_settings_wake_and_bed_time_decrease_hour_button_content_description"
+    android:onClick="decreaseHour"
+    app:layout_constraintEnd_toEndOf="@+id/increaseHourButton"
+    app:layout_constraintStart_toStartOf="@+id/increaseHourButton"
+    app:layout_constraintTop_toBottomOf="@+id/hourDisplay"
+    app:srcCompat="@drawable/ic_baseline_arrow_drop_down_64" />
+  <ImageButton
+    android:id="@+id/increaseMinuteButton"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:layout_marginTop="24dp"
+    android:layout_marginStart="24dp"
+    android:backgroundTint="@color/colorAccent"
+    android:contentDescription="@string/user_profile_settings_wake_and_bed_time_increase_minute_content_description"
+    android:onClick="increaseMinute"
+    app:layout_constraintStart_toStartOf="@+id/verticalMiddleGuideline"
+    app:layout_constraintTop_toTopOf="@+id/secondSettingControlGroupGuideline"
+    app:srcCompat="@drawable/ic_baseline_arrow_drop_up_64" />
+  <ImageButton
+    android:id="@+id/decreaseMinuteButton"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:backgroundTint="@color/colorAccent"
+    android:contentDescription="@string/user_profile_settings_wake_and_bed_time_decrease_minute_content_description"
+    android:onClick="decreaseMinute"
+    app:layout_constraintEnd_toEndOf="@+id/increaseMinuteButton"
+    app:layout_constraintStart_toStartOf="@+id/increaseMinuteButton"
+    app:layout_constraintTop_toBottomOf="@+id/minuteDisplay"
+    app:srcCompat="@drawable/ic_baseline_arrow_drop_down_64" />
   <RadioGroup
-    android:id="@+id/genderSelectorRadioGroup"
+    android:id="@+id/genderSelector"
     android:layout_width="132dp"
     android:layout_height="0dp"
-    android:layout_marginTop="164dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    app:layout_constraintEnd_toStartOf="@+id/verticalMiddleGuideline"
+    app:layout_constraintStart_toStartOf="@+id/verticalLeftGuideline"
+    app:layout_constraintTop_toTopOf="@+id/firstSettingControlGroupGuideline">
     <RadioButton
       android:id="@+id/buttonMale"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="Male" />
+      android:text="@string/user_profile_settings_gender_selector_male" />
     <RadioButton
       android:id="@+id/buttonFemale"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="Female" />
+      android:text="@string/user_profile_settings_gender_selector_female" />
   </RadioGroup>
-  <EditText
-    android:id="@+id/dailyTargetInput"
-    android:layout_width="134dp"
-    android:layout_height="57dp"
-    android:layout_marginTop="64dp"
-    android:layout_marginStart="140dp"
-    android:ems="10"
-    android:inputType="number"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/genderSelectorRadioGroup" />
-  <Button
-    android:id="@+id/dailyTargetConfirmButton"
+  <TextView
+    android:id="@+id/userProfileSettingsTitle"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="300dp"
-    android:layout_marginStart="40dp"
-    android:onClick="confirmDailyTarget"
-    android:text="Confirm"
-    app:layout_constraintStart_toEndOf="@+id/dailyTargetInput"
+    android:layout_marginTop="48dp"
+    android:text="@string/user_profile_settings_title"
+    android:textColor="@color/colorText"
+    android:textSize="30sp"
+    app:layout_constraintEnd_toStartOf="@+id/verticalRightGuideline"
+    app:layout_constraintHorizontal_bias="0.495"
+    app:layout_constraintStart_toStartOf="@+id/verticalLeftGuideline"
     app:layout_constraintTop_toTopOf="parent" />
-  <Button
-    android:id="@+id/goToTimeEditorButton"
-    android:layout_width="132dp"
-    android:layout_height="58dp"
-    android:layout_marginTop="80dp"
-    android:layout_marginStart="140dp"
-    android:onClick="goToTimeEditor"
-    android:text="Edit wake up and bed time"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/dailyTargetInput" />
+  <TextView
+    android:id="@+id/genderSelectorTitle"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:text="@string/user_profile_settings_gender_selector_title"
+    android:textAlignment="center"
+    android:textSize="18sp"
+    app:layout_constraintBottom_toTopOf="@+id/firstSettingControlGroupGuideline"
+    app:layout_constraintEnd_toEndOf="@+id/genderSelector"
+    app:layout_constraintStart_toStartOf="@+id/genderSelector"
+    app:layout_constraintTop_toTopOf="@+id/firstSettingTitleGroupGuideline" />
+  <TextView
+    android:id="@+id/dailyTargetInputTitle"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:text="@string/user_profile_settings_daily_target_title"
+    android:textAlignment="center"
+    android:textSize="18sp"
+    app:layout_constraintBottom_toTopOf="@+id/firstSettingControlGroupGuideline"
+    app:layout_constraintEnd_toEndOf="@+id/dailyTargetInput"
+    app:layout_constraintStart_toStartOf="@+id/dailyTargetInput"
+    app:layout_constraintTop_toTopOf="@+id/firstSettingTitleGroupGuideline" />
+  <TextView
+    android:id="@+id/timeSelectorTitle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/user_profile_settings_wake_and_bed_time_title"
+    android:textSize="18sp"
+    app:layout_constraintBottom_toTopOf="@+id/secondSettingControlGroupGuideline"
+    app:layout_constraintEnd_toStartOf="@+id/verticalRightGuideline"
+    app:layout_constraintStart_toStartOf="@+id/verticalLeftGuideline"
+    app:layout_constraintTop_toTopOf="@+id/secondSettingTitleGroupGuideline" />
+  <TextView
+    android:id="@+id/hourDisplay"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/user_profile_settings_wake_and_bed_time_hour_default_value"
+    android:textAlignment="center"
+    android:textColor="@color/colorText"
+    android:textSize="36sp"
+    app:layout_constraintEnd_toEndOf="@+id/increaseHourButton"
+    app:layout_constraintStart_toStartOf="@+id/increaseHourButton"
+    app:layout_constraintTop_toBottomOf="@+id/increaseHourButton" />
+  <TextView
+    android:id="@+id/minuteDisplay"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/user_profile_settings_wake_and_bed_time_minute_default_value"
+    android:textAlignment="center"
+    android:textColor="@color/colorText"
+    android:textSize="36sp"
+    app:layout_constraintEnd_toEndOf="@+id/increaseMinuteButton"
+    app:layout_constraintStart_toStartOf="@+id/increaseMinuteButton"
+    app:layout_constraintTop_toBottomOf="@+id/increaseMinuteButton" />
+  <TextView
+    android:id="@+id/timeModifier12Hr"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/user_profile_settings_clock_12_hour_modifier"
+    android:textColor="@color/colorText"
+    android:textSize="24sp"
+    app:layout_constraintBottom_toTopOf="@+id/decreaseMinuteButton"
+    app:layout_constraintEnd_toStartOf="@+id/verticalRightGuideline"
+    app:layout_constraintStart_toEndOf="@+id/increaseMinuteButton"
+    app:layout_constraintTop_toBottomOf="@+id/increaseMinuteButton" />
+  <TextView
+    android:id="@+id/currentWakeTimeDisplay"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:text="@string/user_profile_settings_current_wake_time_display_default_value"
+    android:textAlignment="center"
+    android:textSize="18sp"
+    app:layout_constraintEnd_toEndOf="@+id/setWakeTimeButton"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="@+id/setWakeTimeButton"
+    app:layout_constraintTop_toBottomOf="@+id/setWakeTimeButton" />
+  <TextView
+    android:id="@+id/currentBedTimeDisplay"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:text="@string/user_profile_settings_current_bed_time_display_default_value"
+    android:textAlignment="center"
+    android:textSize="18sp"
+    app:layout_constraintEnd_toEndOf="@+id/setBedTimeButton"
+    app:layout_constraintStart_toStartOf="@+id/setBedTimeButton"
+    app:layout_constraintTop_toBottomOf="@+id/setBedTimeButton" />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/verticalLeftGuideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_percent="0.05109489" />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/verticalMiddleGuideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_percent="0.5" />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/verticalRightGuideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_percent="0.95" />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/firstSettingTitleGroupGuideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_percent="0.2" />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/firstSettingControlGroupGuideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_percent="0.25" />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/secondSettingTitleGroupGuideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_percent="0.45" />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/secondSettingControlGroupGuideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_percent="0.5" />
 </androidx.constraintlayout.widget.ConstraintLayout>

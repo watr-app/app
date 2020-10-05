@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Watr. Android application
   ~ Copyright (c) 2020 Linus Willner, Panu Eronen and Markus Hartikainen.
   ~ Licensed under the MIT license.
@@ -10,23 +9,154 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".Appsettings">
+  tools:context=".ui.activities.AppSettingsActivity">
+  <ImageView
+    android:id="@+id/appLogo"
+    android:layout_width="110dp"
+    android:layout_height="110dp"
+    android:src="@mipmap/ic_launcher"
+    app:layout_constraintBottom_toBottomOf="@+id/aboutLocationTime"
+    app:layout_constraintEnd_toStartOf="@+id/verticalMiddleGuideline"
+    app:layout_constraintStart_toStartOf="@+id/verticalLeftGuideline"
+    app:layout_constraintTop_toTopOf="@+id/aboutAppTitle"
+    android:contentDescription="@string/about_app_logo_content_description" />
   <Switch
-    android:id="@+id/switch3"
-    android:layout_width="179dp"
-    android:layout_height="33dp"
-    android:layout_marginTop="288dp"
-    android:layout_marginStart="100dp"
-    android:text="Use metric units"
-    app:layout_constraintStart_toStartOf="parent"
+    android:id="@+id/use24HourClockSwitch"
+    android:layout_width="185dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:checked="true"
+    android:text="@string/app_settings_clock_switch_title"
+    android:textSize="16sp"
+    app:layout_constraintEnd_toEndOf="@+id/useMetricSwitch"
+    app:layout_constraintHorizontal_bias="1.0"
+    app:layout_constraintStart_toStartOf="@+id/useMetricSwitch"
+    app:layout_constraintTop_toBottomOf="@+id/useMetricSwitch"
+    tools:ignore="UseSwitchCompatOrMaterialXml" />
+  <Switch
+    android:id="@+id/useMetricSwitch"
+    android:layout_width="185dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:checked="true"
+    android:text="@string/app_settings_unit_switch_title"
+    android:textSize="16sp"
+    app:layout_constraintEnd_toEndOf="@+id/measurementSettingsTitle"
+    app:layout_constraintStart_toStartOf="@+id/measurementSettingsTitle"
+    app:layout_constraintTop_toTopOf="@+id/measurementControlsGuideline"
+    tools:ignore="UseSwitchCompatOrMaterialXml" />
+  <TextView
+    android:id="@+id/appSettingsTitle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp"
+    android:text="@string/app_settings_title"
+    android:textColor="@color/colorText"
+    android:textSize="30sp"
+    app:layout_constraintEnd_toStartOf="@+id/verticalRightGuideline"
+    app:layout_constraintHorizontal_bias="0.498"
+    app:layout_constraintStart_toStartOf="@+id/verticalLeftGuideline"
     app:layout_constraintTop_toTopOf="parent" />
-  <Switch
-    android:id="@+id/switch4"
-    android:layout_width="179dp"
-    android:layout_height="33dp"
-    android:layout_marginTop="76dp"
-    android:layout_marginStart="100dp"
-    android:text="Use 24h clock"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/switch3" />
+  <TextView
+    android:id="@+id/measurementSettingsTitle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    android:text="@string/app_settings_measurement_controls_title"
+    android:textSize="20sp"
+    app:layout_constraintBottom_toTopOf="@+id/measurementControlsGuideline"
+    app:layout_constraintEnd_toStartOf="@+id/verticalRightGuideline"
+    app:layout_constraintStart_toStartOf="@+id/verticalLeftGuideline" />
+  <TextView
+    android:id="@+id/aboutTitle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/about_title"
+    android:textColor="@color/colorText"
+    android:textSize="30sp"
+    app:layout_constraintEnd_toStartOf="@+id/verticalRightGuideline"
+    app:layout_constraintStart_toStartOf="@+id/verticalLeftGuideline"
+    app:layout_constraintTop_toTopOf="@+id/aboutTitleGuideline" />
+  <TextView
+    android:id="@+id/aboutAppTitle"
+    android:textStyle="bold"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp"
+    android:text="@string/about_app_title"
+    app:layout_constraintEnd_toStartOf="@+id/verticalRightGuideline"
+    app:layout_constraintStart_toStartOf="@+id/verticalMiddleGuideline"
+    app:layout_constraintTop_toTopOf="@+id/aboutBodyGuideline" />
+  <TextView
+    android:id="@+id/aboutCopyright"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:text="@string/about_app_copyright"
+    app:layout_constraintEnd_toStartOf="@+id/verticalRightGuideline"
+    app:layout_constraintStart_toStartOf="@+id/verticalMiddleGuideline"
+    app:layout_constraintTop_toBottomOf="@+id/aboutAppTitle" />
+  <TextView
+    android:id="@+id/aboutLicense"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:text="@string/about_app_license"
+    app:layout_constraintEnd_toStartOf="@+id/verticalRightGuideline"
+    app:layout_constraintStart_toStartOf="@+id/verticalMiddleGuideline"
+    app:layout_constraintTop_toBottomOf="@+id/aboutCopyright" />
+  <TextView
+    android:id="@+id/aboutLocation"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:text="@string/about_app_location"
+    app:layout_constraintEnd_toStartOf="@+id/verticalRightGuideline"
+    app:layout_constraintHorizontal_bias="1.0"
+    app:layout_constraintStart_toStartOf="@+id/verticalMiddleGuideline"
+    app:layout_constraintTop_toBottomOf="@+id/aboutLicense" />
+  <TextView
+    android:id="@+id/aboutLocationTime"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:text="@string/about_app_location_time"
+    app:layout_constraintStart_toStartOf="@+id/verticalMiddleGuideline"
+    app:layout_constraintTop_toBottomOf="@+id/aboutLocation" />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/verticalRightGuideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_percent="0.95" />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/verticalMiddleGuideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_percent="0.5" />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/verticalLeftGuideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_percent="0.05109489" />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/measurementControlsGuideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_percent="0.2" />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/aboutTitleGuideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_percent="0.52" />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/aboutBodyGuideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_percent="0.59" />
 </androidx.constraintlayout.widget.ConstraintLayout>
