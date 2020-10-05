@@ -64,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
     userProfileManager =
         new UserProfileManager(getSharedPreferences("userprofile", Context.MODE_PRIVATE));
 
-    // TODO: Check if setup is needed from the needsSetup variable before preflight
-
     if (settingsManager.getCtx().getBoolean("needsSetup", true)) {
       Intent i = new Intent(MainActivity.this, CreateProfile.class);
       MainActivity.this.startActivity(i);
@@ -76,13 +74,6 @@ public class MainActivity extends AppCompatActivity {
       } catch (DataStorePreFlightCheckException e) {
         Log.e("datastore-preflight", "Data store pre-flight checks failed: ", e);
       }
-    }
-
-    // Run pre-flight checks for data stores
-    try {
-      userProfileManager.checkRequiredProfileSettings();
-    } catch (DataStorePreFlightCheckException e) {
-      Log.e("datastore-preflight", "Data store pre-flight checks failed: ", e);
     }
 
     // Init
