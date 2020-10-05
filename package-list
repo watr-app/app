@@ -1,0 +1,11 @@
+com.watr.app.constants
+com.watr.app.datastore.room.hydration
+com.watr.app.datastore.sharedpreferences
+com.watr.app.datastore.sharedpreferences.settings
+com.watr.app.datastore.sharedpreferences.userprofile
+com.watr.app.timemgmt
+com.watr.app.ui.activities
+com.watr.app.ui.pages
+com.watr.app.ui.utils
+com.watr.app.ui.viewmodels
+com.watr.app.utils
