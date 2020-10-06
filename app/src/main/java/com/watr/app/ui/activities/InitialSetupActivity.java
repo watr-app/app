@@ -193,17 +193,9 @@ public class InitialSetupActivity extends AppCompatActivity {
       if (inputField.getError() == null) { // Only set error if there isn't one already
         inputField.setError("This field must not be empty!");
       }
-
-      if (confirmButton.isEnabled()) { // Only disable button if isn't disabled already
-        ButtonStateToggler.disableButton(confirmButton);
-      }
     } else {
       if (inputField.getError() != null) { // Only unset error if there is one already
         inputField.setError(null);
-      }
-
-      if (confirmButton.isEnabled()) { // Only re-enable button if isn't enabled already
-        ButtonStateToggler.enableButton(confirmButton);
       }
     }
   }
