@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         new UserProfileManager(getSharedPreferences("userprofile", Context.MODE_PRIVATE));
 
     if (settingsManager.getCtx().getBoolean("needsSetup", true)) {
-      val setupActivity = new Intent(MainActivity.this, CreateProfile.class);
+      val setupActivity = new Intent(MainActivity.this, InitialSetupActivity.class);
       startActivity(setupActivity);
     } else {
       try {

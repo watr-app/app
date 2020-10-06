@@ -11,7 +11,7 @@
     android:theme="@style/AppTheme">
     <activity android:name=".ui.activities.UserProfileSettingsActivity" />
     <activity android:name=".ui.activities.AppSettingsActivity" />
-    <activity android:name=".ui.activities.CreateProfile" />
+    <activity android:name=".ui.activities.InitialSetupActivity" />
     <activity android:name=".ui.activities.NewHydrationRecordActivity" />
     <activity android:name=".ui.activities.MainActivity">
       <intent-filter>

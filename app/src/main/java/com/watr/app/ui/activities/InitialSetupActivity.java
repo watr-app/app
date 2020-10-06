@@ -34,7 +34,7 @@ import lombok.val;
  * @version 1.0.0
  */
 @SuppressLint("UseSwitchCompatOrMaterialCode")
-public class CreateProfile extends AppCompatActivity {
+public class InitialSetupActivity extends AppCompatActivity {
   private SettingsManager settingsManager;
   private UserProfileManager userProfileManager;
   private Switch metricSwitch;
