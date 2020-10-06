@@ -6,20 +6,26 @@
 
 package com.watr.app.ui.activities;
 
-import android.content.SharedPreferences;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Switch;
-import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.watr.app.R;
 import com.watr.app.constants.Gender;
 import com.watr.app.datastore.sharedpreferences.settings.SettingsManager;
 import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
-import java.time.LocalTime;
+import com.watr.app.ui.utils.ButtonStateToggler;
+import com.watr.app.ui.utils.NumberInputValueCoercer;
+import com.watr.app.utils.InputUtils;
+import com.watr.app.utils.TimeUtils;
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
+import lombok.val;
 
 /**
  * Initial setup activity.
@@ -27,75 +33,178 @@ import java.util.Objects;
  * @author mhgitti
  * @version 1.0.0
  */
+@SuppressLint("UseSwitchCompatOrMaterialCode")
 public class CreateProfile extends AppCompatActivity {
-
-  public EditText dailyTarget;
-  public int a;
-  private SharedPreferences context;
   private SettingsManager settingsManager;
   private UserProfileManager userProfileManager;
-  private Switch aSwitch;
-  private Switch bSwitch;
-  private int hours = 0;
-  private int minutes = 0;
-
+  private Switch metricSwitch;
+  private Switch clockFormatSwitch;
+  private RadioGroup genderSelector;
+  private EditText wakeHourInput;
+  private EditText wakeMinuteInput;
+  private EditText sleepHourInput;
+  private EditText sleepMinuteInput;
+  private Button confirmButton;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    userProfileManager = MainActivity.getUserProfileManager();
-    settingsManager = MainActivity.getSettingsManager();
     setContentView(R.layout.activity_set_profile);
-    RadioGroup rg = (RadioGroup) findViewById(R.id.radioGroup);
     Objects.requireNonNull(getSupportActionBar()).hide();
 
-    // EditText dailyTarget = findViewById(R.id.dailytarget);
+    userProfileManager = MainActivity.getUserProfileManager();
+    settingsManager = MainActivity.getSettingsManager();
 
-    // boolean metric units and 24h clock
-    aSwitch = findViewById(R.id.switch5);
-    bSwitch = findViewById(R.id.switch6);
-    aSwitch.setChecked(settingsManager.getCtx().getBoolean("useMetricUnits", true));
-    bSwitch.setChecked(settingsManager.getCtx().getBoolean("use24HrClock", true));
-    bSwitch.setOnCheckedChangeListener(
+    // Unit and clock format, gender selector
+    metricSwitch = findViewById(R.id.setupMetricSwitch);
+    clockFormatSwitch = findViewById(R.id.setupClockSwitch);
+    genderSelector = findViewById(R.id.setupGenderSelector);
+
+    // Input fields
+    wakeHourInput = findViewById(R.id.wakeHourInput);
+    wakeMinuteInput = findViewById(R.id.wakeMinuteInput);
+    sleepHourInput = findViewById(R.id.sleepHourInput);
+    sleepMinuteInput = findViewById(R.id.sleepMinuteInput);
+
+    // Confirm button
+    confirmButton = findViewById(R.id.setupConfirmButton);
+
+    setFieldDefaults();
+    addEventListeners();
+  }
+
+  /** Sets default values for setup fields. */
+  @SuppressLint("SetTextI18n")
+  private void setFieldDefaults() {
+    // Units and clock
+    metricSwitch.setChecked(settingsManager.getCtx().getBoolean("useMetricUnits", true));
+    clockFormatSwitch.setChecked(settingsManager.getCtx().getBoolean("use24HrClock", true));
+
+    // Gender selector
+    genderSelector.check(R.id.setupGenderMale);
+
+    // Wake and bed time inputs
+
+    val wakeTime = userProfileManager.getWakeTime();
+    val bedTime = userProfileManager.getBedTime();
+
+    wakeHourInput.setText(Integer.toString(wakeTime.getHour()));
+    wakeMinuteInput.setText(Integer.toString(wakeTime.getMinute()));
+
+    sleepHourInput.setText(Integer.toString(bedTime.getHour()));
+    sleepMinuteInput.setText(Integer.toString(bedTime.getMinute()));
+  }
+
+  /** Adds event listeners to input controls. */
+  private void addEventListeners() {
+    // Switch change listeners
+    metricSwitch.setOnCheckedChangeListener(
+        (buttonView, isChecked) -> settingsManager.addBoolean("useMetricUnits", isChecked));
+    clockFormatSwitch.setOnCheckedChangeListener(
         (buttonView, isChecked) -> settingsManager.addBoolean("use24HrClock", isChecked));
 
-    aSwitch.setOnCheckedChangeListener(
-        (buttonView, isChecked) -> settingsManager.addBoolean("useMetricUnits", isChecked));
-
-    // set gender and daily target
-    rg.check(R.id.gendermale);
-    rg.setOnCheckedChangeListener(
+    // Gender radio group change listener
+    genderSelector.setOnCheckedChangeListener(
         (group, checkedId) -> {
+          Gender gender;
+
           switch (checkedId) {
-            case R.id.gendermale:
-              userProfileManager.setGender(Gender.MALE);
-              userProfileManager.setDailyTarget(2700);
+            case R.id.setupGenderMale:
+              gender = Gender.MALE;
               break;
-            case R.id.genderfemale:
-              userProfileManager.setGender(Gender.FEMALE);
-              userProfileManager.setDailyTarget(3700);
+            case R.id.setupGenderFemale:
+              gender = Gender.FEMALE;
               break;
+            default:
+              throw new IllegalStateException(
+                  String.format(
+                      "Received unexpected gender choice: Expected %d for male or %d for female, but got %d",
+                      R.id.setupGenderMale, R.id.setupGenderFemale, checkedId));
+          }
+
+          userProfileManager.setGender(gender);
+          userProfileManager.setDailyTarget(gender.getDefaultDailyTarget());
+        });
+
+    // Hour / minute input value coercers
+    wakeHourInput.addTextChangedListener(new NumberInputValueCoercer(wakeHourInput, 0, 23));
+    wakeMinuteInput.addTextChangedListener(new NumberInputValueCoercer(wakeMinuteInput, 0, 59));
+    sleepHourInput.addTextChangedListener(new NumberInputValueCoercer(sleepHourInput, 0, 23));
+    sleepMinuteInput.addTextChangedListener(new NumberInputValueCoercer(sleepMinuteInput, 0, 59));
+  }
+
+  /**
+   * Click handler for user clicking the confirmation button.
+   *
+   * @param view {@link View}
+   */
+  public void onConfirm(View view) {
+    val inputs = new ArrayList<EditText>();
+
+    inputs.add(wakeHourInput);
+    inputs.add(wakeMinuteInput);
+    inputs.add(sleepHourInput);
+    inputs.add(sleepMinuteInput);
+
+    // Having to use an AtomicInteger here since lambda variables should be (effectively) final
+    val invalidInputAmount = new AtomicInteger();
+
+    // Validate that inputs are non-empty
+    inputs.forEach(
+        input -> {
+          val isInvalid = InputUtils.inputIsEmpty(input);
+
+          if (isInvalid) {
+            invalidInputAmount.getAndIncrement();
+            toggleInputErrorState(input, true);
+          } else {
+            toggleInputErrorState(input, false);
           }
         });
 
-    // on click = set wake- and sleeptime
-    final Button button = findViewById(R.id.buttonOk);
-    button.setOnClickListener(v -> {
-      TextView temp = (TextView) findViewById(R.id.wakehours);
-      String wakehours = temp.getText().toString();
-      TextView temp2 = (TextView) findViewById(R.id.wakeminutes);
-      String wakeminutes = temp2.getText().toString();
-      TextView temp3 = (TextView) findViewById(R.id.sleephours);
-      String sleephours = temp3.getText().toString();
-      TextView temp4 = (TextView) findViewById(R.id.sleepminutes);
-      String sleepminutes = temp4.getText().toString();
+    // If there were no invalid inputs, we're good to go here
+    if (invalidInputAmount.get() == 0) {
+      val wakeTime =
+          TimeUtils.parseHoursAndMinutesToLocalTime(
+              InputUtils.getInteger(wakeHourInput), InputUtils.getInteger(wakeMinuteInput));
+      val bedTime =
+          TimeUtils.parseHoursAndMinutesToLocalTime(
+              InputUtils.getInteger(sleepHourInput), InputUtils.getInteger(sleepMinuteInput));
 
-      LocalTime waketime = LocalTime.parse(String.format("%s:%s:00", wakehours, wakeminutes));
-      LocalTime sleeptime = LocalTime.parse(String.format("%s:%s:00", sleephours, sleepminutes));
+      // Update profile values
+      userProfileManager.setWakeTime(wakeTime);
+      userProfileManager.setBedTime(bedTime);
 
-      userProfileManager.setWakeTime(waketime);
-      userProfileManager.setBedTime(sleeptime);
+      // Ensure setup does not run again
+      settingsManager.addBoolean("needsSetup", false);
       finish();
-    });
+    }
+  }
+
+  /**
+   * Toggles a number input's error state without rewriting the field value unnecessarily to save
+   * memory.
+   *
+   * @param inputField {@link EditText} Input field
+   * @param hasError {@link Boolean} Whether input content is invalid
+   */
+  private void toggleInputErrorState(EditText inputField, boolean hasError) {
+    if (hasError) {
+      if (inputField.getError() == null) { // Only set error if there isn't one already
+        inputField.setError("This field must not be empty!");
+      }
+
+      if (confirmButton.isEnabled()) { // Only disable button if isn't disabled already
+        ButtonStateToggler.disableButton(confirmButton);
+      }
+    } else {
+      if (inputField.getError() != null) { // Only unset error if there is one already
+        inputField.setError(null);
+      }
+
+      if (confirmButton.isEnabled()) { // Only re-enable button if isn't enabled already
+        ButtonStateToggler.enableButton(confirmButton);
+      }
+    }
   }
 }
