@@ -16,10 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.watr.app.R;
 import com.watr.app.constants.Gender;
 import com.watr.app.datastore.sharedpreferences.userprofile.UserProfileManager;
-import java.time.LocalTime;
+import com.watr.app.utils.InputUtils;
+import com.watr.app.utils.TimeUtils;
 import java.util.Objects;
 import lombok.val;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Editor for user profile settings after first setup.
@@ -83,24 +83,30 @@ public class UserProfileSettingsActivity extends AppCompatActivity {
           switch (checkedId) {
             case R.id.buttonMale:
               gender = Gender.MALE;
-
-              userProfileManager.setGender(gender);
-              userProfileManager.setDailyTarget(gender.getDefaultDailyTarget());
-              dailyTargetInput.setText(Integer.toString(userProfileManager.getDailyTarget()));
               break;
             case R.id.buttonFemale:
               gender = Gender.FEMALE;
-
-              userProfileManager.setGender(gender);
-              userProfileManager.setDailyTarget(gender.getDefaultDailyTarget());
-              dailyTargetInput.setText(Integer.toString(userProfileManager.getDailyTarget()));
               break;
+            default:
+              throw new IllegalStateException(
+                  String.format(
+                      "Received unexpected gender choice: Expected %d for male or %d for female, but got %d",
+                      R.id.buttonMale, R.id.buttonFemale, checkedId));
           }
+
+          userProfileManager.setGender(gender);
+          userProfileManager.setDailyTarget(gender.getDefaultDailyTarget());
+          dailyTargetInput.setText(Integer.toString(userProfileManager.getDailyTarget()));
         });
   }
 
   public void confirmDailyTarget(View view) {
-    userProfileManager.setDailyTarget(Integer.parseInt(String.valueOf(dailyTargetInput.getText())));
+    if (InputUtils.inputIsEmptyOrZero(dailyTargetInput)) {
+      dailyTargetInput.setError("Daily target must be non-zero!");
+    } else {
+      dailyTargetInput.setError(null);
+      userProfileManager.setDailyTarget(InputUtils.getInteger(dailyTargetInput));
+    }
   }
 
   public void increaseHour(View view) {
@@ -145,14 +151,14 @@ public class UserProfileSettingsActivity extends AppCompatActivity {
 
   /** Saves the user's desired wake time. */
   public void setWakeTime(View view) {
-    val newWakeTime = parseInputsToLocalTime();
+    val newWakeTime = TimeUtils.parseHoursAndMinutesToLocalTime(hours, minutes);
     userProfileManager.setWakeTime(newWakeTime);
     currentWakeTimeDisplay.setText(String.format("Wake time: %s", newWakeTime.toString()));
   }
 
   /** Saves the user's desired bed time. */
   public void setBedTime(View view) {
-    val newBedTime = parseInputsToLocalTime();
+    val newBedTime = TimeUtils.parseHoursAndMinutesToLocalTime(hours, minutes);
     userProfileManager.setBedTime(newBedTime);
     currentBedTimeDisplay.setText(String.format("Bed time: %s", newBedTime.toString()));
   }
@@ -162,12 +168,5 @@ public class UserProfileSettingsActivity extends AppCompatActivity {
   private void updateCounters() {
     hourDisplay.setText(Integer.toString(hours));
     minuteDisplay.setText(Integer.toString(minutes));
-  }
-
-  /** Parses the provided hour and minute values to LocalTime. */
-  private LocalTime parseInputsToLocalTime() {
-    val hourString = StringUtils.leftPad(Integer.toString(hours), 2, "0");
-    val minuteString = StringUtils.rightPad(Integer.toString(minutes), 2, "0");
-    return LocalTime.parse(String.format("%s:%s:00", hourString, minuteString));
   }
 }

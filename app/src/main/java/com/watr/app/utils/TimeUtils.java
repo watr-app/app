@@ -12,6 +12,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import lombok.NonNull;
 import lombok.val;
+import org.apache.commons.lang3.StringUtils;
 import org.ocpsoft.prettytime.PrettyTime;
 
 /**
@@ -178,5 +179,18 @@ public class TimeUtils {
 
     return now.atDate(today).isAfter(startTimeAtOffset)
         && now.atDate(today).isBefore(endTimeAtOffset);
+  }
+
+  /**
+   * Parses hour and minute integers to LocalTime.
+   *
+   * @param hours {@link Integer}
+   * @param minutes {@link Integer}
+   * @return {@link LocalTime} Parsed LocalTime instance
+   */
+  public static LocalTime parseHoursAndMinutesToLocalTime(int hours, int minutes) {
+    val hourString = StringUtils.leftPad(Integer.toString(hours), 2, "0");
+    val minuteString = StringUtils.rightPad(Integer.toString(minutes), 2, "0");
+    return LocalTime.parse(String.format("%s:%s:00", hourString, minuteString));
   }
 }

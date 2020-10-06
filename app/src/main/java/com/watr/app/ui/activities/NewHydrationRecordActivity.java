@@ -9,6 +9,7 @@ package com.watr.app.ui.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup.Input;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.watr.app.R;
 import com.watr.app.constants.DrinkType;
 import com.watr.app.ui.utils.ButtonStateToggler;
+import com.watr.app.utils.InputUtils;
 import com.watr.app.utils.StringifyUtils;
 import java.util.Objects;
 import lombok.NonNull;
@@ -96,7 +98,7 @@ public class NewHydrationRecordActivity extends AppCompatActivity {
             if (!userHasChangedInput) { // Do not complain on activity start
               userHasChangedInput = true;
             } else {
-              if (drinkAmountIsEmptyOrZero()) {
+              if (InputUtils.inputIsEmptyOrZero(drinkAmountInput)) {
                 ButtonStateToggler.disableButton(saveButton);
                 drinkAmountInput.setError("Amount has to be non-zero!");
                 saveButtonHint.setText(R.string.hydration_record_save_hint_error);
@@ -117,23 +119,10 @@ public class NewHydrationRecordActivity extends AppCompatActivity {
           val replyIntent = new Intent();
 
           replyIntent.putExtra(REPLY_DRINK_TYPE, StringifyUtils.gson.toJson(selectedDrinkType));
-          replyIntent.putExtra(REPLY_DRINK_AMOUNT, getIntegerValueFromEditText(drinkAmountInput));
+          replyIntent.putExtra(REPLY_DRINK_AMOUNT, InputUtils.getInteger(drinkAmountInput));
           setResult(RESULT_OK, replyIntent);
 
           finish();
         });
-  }
-
-  private boolean drinkAmountIsEmptyOrZero() {
-    val input = drinkAmountInput;
-    return getStringValueFromEditText(input).equals("") || getIntegerValueFromEditText(input) == 0;
-  }
-
-  private String getStringValueFromEditText(@NonNull EditText editText) {
-    return editText.getText().toString();
-  }
-
-  private int getIntegerValueFromEditText(@NonNull EditText editText) {
-    return Integer.parseInt(getStringValueFromEditText(editText));
   }
 }
