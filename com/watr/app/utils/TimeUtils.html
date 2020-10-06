@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9};
+var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -230,6 +230,13 @@ extends java.lang.Object</pre>
                         @NonNull <a href="../../../../com/watr/app/constants/DateOffset.html" title="enum in com.watr.app.constants">DateOffset</a>&nbsp;dateOffset)</code>
 <div class="block">Same as <a href="../../../../com/watr/app/utils/TimeUtils.html" title="class in com.watr.app.utils"><code>TimeUtils</code></a>.localTimeToUnixTimestamp(), but takes a date offset to allow
  calculation across date boundaries.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>static java.time.LocalTime</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/watr/app/utils/TimeUtils.html#parseHoursAndMinutesToLocalTime-int-int-">parseHoursAndMinutesToLocalTime</a></span>(int&nbsp;hours,
+                               int&nbsp;minutes)</code>
+<div class="block">Parses hour and minute integers to LocalTime.</div>
 </td>
 </tr>
 </table>
@@ -448,7 +455,7 @@ extends java.lang.Object</pre>
 <a name="currentTimeIsInterval-java.time.LocalTime-com.watr.app.constants.DateOffset-java.time.LocalTime-com.watr.app.constants.DateOffset-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>currentTimeIsInterval</h4>
 <pre>public static&nbsp;boolean&nbsp;currentTimeIsInterval(@NonNull
@@ -469,6 +476,24 @@ extends java.lang.Object</pre>
 <dd><code>endOffset</code> - <a href="../../../../com/watr/app/constants/DateOffset.html" title="enum in com.watr.app.constants"><code>DateOffset</code></a> DateOffset enum for the end of the interval</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>Boolean</code> Whether current time is between the provided LocalTime instances</dd>
+</dl>
+</li>
+</ul>
+<a name="parseHoursAndMinutesToLocalTime-int-int-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>parseHoursAndMinutesToLocalTime</h4>
+<pre>public static&nbsp;java.time.LocalTime&nbsp;parseHoursAndMinutesToLocalTime(int&nbsp;hours,
+                                                                  int&nbsp;minutes)</pre>
+<div class="block">Parses hour and minute integers to LocalTime.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>hours</code> - <code>Integer</code></dd>
+<dd><code>minutes</code> - <code>Integer</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>LocalTime</code> Parsed LocalTime instance</dd>
 </dl>
 </li>
 </ul>

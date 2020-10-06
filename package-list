@@ -1,4 +1,3 @@
-com.watr.app
 com.watr.app.constants
 com.watr.app.datastore.room.hydration
 com.watr.app.datastore.sharedpreferences
