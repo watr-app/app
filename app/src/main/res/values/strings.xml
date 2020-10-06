@@ -58,8 +58,22 @@
   <string name="app_settings_measurement_controls_title">Measurement settings</string>
   <string name="about_title">About</string>
   <string name="about_app_title">Watr. Android application</string>
-  <string name="about_app_copyright">Copyright (c) 2020 Linus Willner, Panu Eronen and Markus Hartikainen.</string>
+  <string name="about_app_copyright">Copyright © 2020 Linus Willner, Panu Eronen and Markus Hartikainen.</string>
   <string name="about_app_license">Licensed under the MIT license.</string>
   <string name="about_app_location">Metropolia University of Applied Sciences, Mobile Health Applications course</string>
   <string name="about_app_location_time">Autumn 2020</string>
+  <string name="setup_confirm_button_title">Done, get me started!</string>
+  <string name="setup_minutes_field_default_value">mm</string>
+  <string name="setup_hours_field_default_value">hh</string>
+  <string name="setup_wake_time_title">When do you get up? (hh:mm):</string>
+  <string name="setup_bed_time_title">When do you go to bed? (hh:mm):</string>
+  <string name="setup_title">Welcome to Watr!</string>
+  <string name="setup_subtitle">Let\'s get you up and going.</string>
+  <string name="setup_unit_controls_title">First, please tell me what units and time format you would like to use.</string>
+  <string name="setup_gender_controls_title">Next, please tell me a few things about yourself.</string>
+  <string name="setup_gender_controls_subtitle">What is your biological gender?</string>
+  <string name="setup_gender_controls_disclaimer">This is only used to set your default daily hydration target. You can always change it later.</string>
+  <string name="setup_time_controls_title">Finally, please tell me just a few things about your daily routine.</string>
+  <string name="setup_metric_switch">Use metric units</string>
+  <string name="setup_clock_switch">Use 24h clock</string>
 </resources>
