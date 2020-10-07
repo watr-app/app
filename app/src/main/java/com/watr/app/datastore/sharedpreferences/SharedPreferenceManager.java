@@ -8,6 +8,7 @@ package com.watr.app.datastore.sharedpreferences;
 
 import android.content.SharedPreferences;
 import com.watr.app.constants.SharedPreferenceType;
+import com.watr.app.utils.StringifyUtils;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -36,7 +37,8 @@ public abstract class SharedPreferenceManager {
   // Suppressing the typecast warning here because we cannot know the type before runtime and the
   // Set<String> coercion will complain otherwise
   @SuppressWarnings("unchecked")
-  protected void editAndApply(SharedPreferenceType type, String key, Object value) throws ClassCastException {
+  protected void editAndApply(SharedPreferenceType type, String key, Object value)
+      throws ClassCastException, UnknownSharedPreferenceTypeException {
     val editor = ctx.edit();
 
     switch (type) {
@@ -58,6 +60,9 @@ public abstract class SharedPreferenceManager {
       case STRINGSET:
         editor.putStringSet(key, (Set<String>) value);
         break;
+      default:
+        throw new UnknownSharedPreferenceTypeException(
+            String.format("Unknown shared preference type %s", StringifyUtils.gson.toJson(type)));
     }
 
     editor.apply();

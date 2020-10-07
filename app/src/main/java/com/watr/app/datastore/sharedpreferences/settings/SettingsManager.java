@@ -11,6 +11,7 @@ import com.watr.app.datastore.sharedpreferences.SharedPreferenceManager;
 import com.watr.app.constants.SharedPreferenceType;
 import java.util.Set;
 import lombok.Getter;
+import lombok.SneakyThrows;
 
 /**
  * User settings manager leveraging SharedPreferences. All methods in this class modify the provided
@@ -33,6 +34,7 @@ public class SettingsManager extends SharedPreferenceManager {
    * @param key {@link String}
    * @param value {@link String}
    */
+  @SneakyThrows
   public void addString(String key, String value) {
     super.editAndApply(SharedPreferenceType.STRING, key, value);
   }
@@ -43,6 +45,7 @@ public class SettingsManager extends SharedPreferenceManager {
    * @param key {@link String}
    * @param value {@link Integer}
    */
+  @SneakyThrows
   public void addInt(String key, int value) {
     super.editAndApply(SharedPreferenceType.INTEGER, key, value);
   }
@@ -53,6 +56,7 @@ public class SettingsManager extends SharedPreferenceManager {
    * @param key {@link String}
    * @param value {@link Boolean}
    */
+  @SneakyThrows
   public void addBoolean(String key, boolean value) {
     super.editAndApply(SharedPreferenceType.BOOLEAN, key, value);
   }
@@ -63,6 +67,7 @@ public class SettingsManager extends SharedPreferenceManager {
    * @param key {@link String}
    * @param value {@link Float}
    */
+  @SneakyThrows
   public void addFloat(String key, float value) {
     super.editAndApply(SharedPreferenceType.FLOAT, key, value);
   }
@@ -73,6 +78,7 @@ public class SettingsManager extends SharedPreferenceManager {
    * @param key {@link String}
    * @param value {@link Long}
    */
+  @SneakyThrows
   public void addLong(String key, long value) {
     super.editAndApply(SharedPreferenceType.LONG, key, value);
   }
@@ -83,6 +89,7 @@ public class SettingsManager extends SharedPreferenceManager {
    * @param key {@link String}
    * @param value {@link Set}<{@link String}>
    */
+  @SneakyThrows
   public void addStringSet(String key, Set<String> value) {
     super.editAndApply(SharedPreferenceType.STRINGSET, key, value);
   }

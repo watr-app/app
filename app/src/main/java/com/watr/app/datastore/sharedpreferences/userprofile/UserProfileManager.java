@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import lombok.val;
 
 /**
@@ -68,6 +69,7 @@ public class UserProfileManager extends SharedPreferenceManager {
    *
    * @param gender {@link Gender}
    */
+  @SneakyThrows
   public void setGender(@NonNull Gender gender) {
     super.editAndApply(SharedPreferenceType.INTEGER, "gender", gender.getGenderId());
   }
@@ -87,6 +89,7 @@ public class UserProfileManager extends SharedPreferenceManager {
    *
    * @param millilitres {@link Integer} Drink target in millilitres
    */
+  @SneakyThrows
   public void setDailyTarget(int millilitres) {
     super.editAndApply(SharedPreferenceType.INTEGER, "dailyTarget", millilitres);
   }
@@ -96,6 +99,7 @@ public class UserProfileManager extends SharedPreferenceManager {
    *
    * @return {@link LocalTime} LocalTime object representing the user's preferred wake up time
    */
+  @SneakyThrows
   public LocalTime getWakeTime() {
     // Using noon as default even though this value will always be set
     return LocalTime.parse(ctx.getString("wakeTime", LocalTime.NOON.toString()));
@@ -106,6 +110,7 @@ public class UserProfileManager extends SharedPreferenceManager {
    *
    * @param time {@link LocalTime} User's preferred wake-up time
    */
+  @SneakyThrows
   public void setWakeTime(@NonNull LocalTime time) {
     super.editAndApply(SharedPreferenceType.STRING, "wakeTime", time.toString());
   }
@@ -125,6 +130,7 @@ public class UserProfileManager extends SharedPreferenceManager {
    *
    * @param time {@link LocalTime} User's preferred bed time
    */
+  @SneakyThrows
   public void setBedTime(@NonNull LocalTime time) {
     super.editAndApply(SharedPreferenceType.STRING, "bedTime", time.toString());
   }
