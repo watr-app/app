@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../com/watr/app/datastore/sharedpreferences/DataStorePreFlightCheckException.html" title="class in com.watr.app.datastore.sharedpreferences"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
+<li><a href="../../../../../com/watr/app/datastore/sharedpreferences/UnknownSharedPreferenceTypeException.html" title="class in com.watr.app.datastore.sharedpreferences"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?com/watr/app/datastore/sharedpreferences/SharedPreferenceManager.html" target="_top">Frames</a></li>
@@ -206,7 +206,8 @@ extends java.lang.Object</pre>
 <pre>protected&nbsp;void&nbsp;editAndApply(<a href="../../../../../com/watr/app/constants/SharedPreferenceType.html" title="enum in com.watr.app.constants">SharedPreferenceType</a>&nbsp;type,
                             java.lang.String&nbsp;key,
                             java.lang.Object&nbsp;value)
-                     throws java.lang.ClassCastException</pre>
+                     throws java.lang.ClassCastException,
+                            <a href="../../../../../com/watr/app/datastore/sharedpreferences/UnknownSharedPreferenceTypeException.html" title="class in com.watr.app.datastore.sharedpreferences">UnknownSharedPreferenceTypeException</a></pre>
 <div class="block">Edit and apply a change to the provided SharedPreferences instance.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -214,8 +215,9 @@ extends java.lang.Object</pre>
 <dd><code>key</code> - <code>String</code></dd>
 <dd><code>value</code> - <code>Object</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>{@link</code> - ClassCastException} if the type coercion failed.</dd>
-<dd><code>java.lang.ClassCastException</code></dd>
+<dd><code>java.lang.ClassCastException</code> - if the type coercion failed.</dd>
+<dd><code><a href="../../../../../com/watr/app/datastore/sharedpreferences/UnknownSharedPreferenceTypeException.html" title="class in com.watr.app.datastore.sharedpreferences">UnknownSharedPreferenceTypeException</a></code> - if the shared preference type did not match those
+     found in <a href="../../../../../com/watr/app/constants/SharedPreferenceType.html" title="enum in com.watr.app.constants"><code>SharedPreferenceType</code></a>.</dd>
 </dl>
 </li>
 </ul>
@@ -247,7 +249,7 @@ extends java.lang.Object</pre>
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../com/watr/app/datastore/sharedpreferences/DataStorePreFlightCheckException.html" title="class in com.watr.app.datastore.sharedpreferences"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
+<li><a href="../../../../../com/watr/app/datastore/sharedpreferences/UnknownSharedPreferenceTypeException.html" title="class in com.watr.app.datastore.sharedpreferences"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?com/watr/app/datastore/sharedpreferences/SharedPreferenceManager.html" target="_top">Frames</a></li>

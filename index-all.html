@@ -74,7 +74,7 @@
 <dl>
 <dt><a href="com/watr/app/constants/ActivityPeriod.html" title="enum in com.watr.app.constants"><span class="typeNameLink">ActivityPeriod</span></a> - Enum in <a href="com/watr/app/constants/package-summary.html">com.watr.app.constants</a></dt>
 <dd>
-<div class="block">Constants for activity periods (I.e.</div>
+<div class="block">Constants for activity periods (When user is supposed to be awake or asleep).</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/watr/app/timemgmt/ActivityPeriodWithOffsets.html#activityPeriod">activityPeriod</a></span> - Variable in class com.watr.app.timemgmt.<a href="com/watr/app/timemgmt/ActivityPeriodWithOffsets.html" title="class in com.watr.app.timemgmt">ActivityPeriodWithOffsets</a></dt>
 <dd>&nbsp;</dd>
@@ -138,7 +138,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/watr/app/datastore/room/hydration/HydrationDao.html#bulkDelete-java.util.List-">bulkDelete(List&lt;HydrationEntity&gt;)</a></span> - Method in interface com.watr.app.datastore.room.hydration.<a href="com/watr/app/datastore/room/hydration/HydrationDao.html" title="interface in com.watr.app.datastore.room.hydration">HydrationDao</a></dt>
 <dd>
-<div class="block">Deletes hydration records in bulk with a matcher, i.e.</div>
+<div class="block">Deletes hydration records in bulk with a matcher, AKA an entity with a matching primary key
+ will be deleted.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/watr/app/datastore/room/hydration/HydrationDatabaseController.html#bulkDelete-java.util.List-">bulkDelete(List&lt;HydrationEntity&gt;)</a></span> - Method in class com.watr.app.datastore.room.hydration.<a href="com/watr/app/datastore/room/hydration/HydrationDatabaseController.html" title="class in com.watr.app.datastore.room.hydration">HydrationDatabaseController</a></dt>
 <dd>&nbsp;</dd>
@@ -231,7 +232,7 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/watr/app/utils/TimeUtils.html#currentTimeIsInInterval-java.time.LocalTime-java.time.LocalTime-">currentTimeIsInInterval(LocalTime, LocalTime)</a></span> - Static method in class com.watr.app.utils.<a href="com/watr/app/utils/TimeUtils.html" title="class in com.watr.app.utils">TimeUtils</a></dt>
 <dd>
-<div class="block">Checks if current time is between two LocalTime instances, i.e.</div>
+<div class="block">Checks if current time is between two LocalTime instances (As in is in their interval).</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/watr/app/utils/TimeUtils.html#currentTimeIsInterval-java.time.LocalTime-com.watr.app.constants.DateOffset-java.time.LocalTime-com.watr.app.constants.DateOffset-">currentTimeIsInterval(LocalTime, DateOffset, LocalTime, DateOffset)</a></span> - Static method in class com.watr.app.utils.<a href="com/watr/app/utils/TimeUtils.html" title="class in com.watr.app.utils">TimeUtils</a></dt>
 <dd>
@@ -246,7 +247,8 @@
 <dl>
 <dt><a href="com/watr/app/datastore/sharedpreferences/DataStorePreFlightCheckException.html" title="class in com.watr.app.datastore.sharedpreferences"><span class="typeNameLink">DataStorePreFlightCheckException</span></a> - Exception in <a href="com/watr/app/datastore/sharedpreferences/package-summary.html">com.watr.app.datastore.sharedpreferences</a></dt>
 <dd>
-<div class="block">Indicates an exception (I.e.</div>
+<div class="block">Indicates an exception (A missing value or failure to set default value) in data store
+ pre-flight checks.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/watr/app/datastore/sharedpreferences/DataStorePreFlightCheckException.html#DataStorePreFlightCheckException-java.lang.String-">DataStorePreFlightCheckException(String)</a></span> - Constructor for exception com.watr.app.datastore.sharedpreferences.<a href="com/watr/app/datastore/sharedpreferences/DataStorePreFlightCheckException.html" title="class in com.watr.app.datastore.sharedpreferences">DataStorePreFlightCheckException</a></dt>
 <dd>&nbsp;</dd>
@@ -270,7 +272,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/watr/app/datastore/room/hydration/HydrationDao.html#delete-com.watr.app.datastore.room.hydration.HydrationEntity-">delete(HydrationEntity)</a></span> - Method in interface com.watr.app.datastore.room.hydration.<a href="com/watr/app/datastore/room/hydration/HydrationDao.html" title="interface in com.watr.app.datastore.room.hydration">HydrationDao</a></dt>
 <dd>
-<div class="block">Delete a hydration record through a matcher, i.e.</div>
+<div class="block">Delete a hydration record through a matcher, AKA an entity with a matching primary key will be
+ deleted.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/watr/app/datastore/room/hydration/HydrationDatabaseController.html#delete-com.watr.app.datastore.room.hydration.HydrationEntity-">delete(HydrationEntity)</a></span> - Method in class com.watr.app.datastore.room.hydration.<a href="com/watr/app/datastore/room/hydration/HydrationDatabaseController.html" title="class in com.watr.app.datastore.room.hydration">HydrationDatabaseController</a></dt>
 <dd>&nbsp;</dd>
@@ -723,8 +726,16 @@
 </a>
 <h2 class="title">U</h2>
 <dl>
-<dt><a href="com/watr/app/timemgmt/UnknownTimeIntervalException.html" title="class in com.watr.app.timemgmt"><span class="typeNameLink">UnknownTimeIntervalException</span></a> - Exception in <a href="com/watr/app/timemgmt/package-summary.html">com.watr.app.timemgmt</a></dt>
+<dt><a href="com/watr/app/datastore/sharedpreferences/UnknownSharedPreferenceTypeException.html" title="class in com.watr.app.datastore.sharedpreferences"><span class="typeNameLink">UnknownSharedPreferenceTypeException</span></a> - Exception in <a href="com/watr/app/datastore/sharedpreferences/package-summary.html">com.watr.app.datastore.sharedpreferences</a></dt>
+<dd>
+<div class="block">Thrown when the provided shared preference type did not match any of those found in <a href="com/watr/app/constants/SharedPreferenceType.html" title="enum in com.watr.app.constants"><code>SharedPreferenceType</code></a>.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/watr/app/datastore/sharedpreferences/UnknownSharedPreferenceTypeException.html#UnknownSharedPreferenceTypeException-java.lang.String-">UnknownSharedPreferenceTypeException(String)</a></span> - Constructor for exception com.watr.app.datastore.sharedpreferences.<a href="com/watr/app/datastore/sharedpreferences/UnknownSharedPreferenceTypeException.html" title="class in com.watr.app.datastore.sharedpreferences">UnknownSharedPreferenceTypeException</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/watr/app/timemgmt/UnknownTimeIntervalException.html" title="class in com.watr.app.timemgmt"><span class="typeNameLink">UnknownTimeIntervalException</span></a> - Exception in <a href="com/watr/app/timemgmt/package-summary.html">com.watr.app.timemgmt</a></dt>
+<dd>
+<div class="block">Thrown when a time interval is unknown (Not wake => bed or bed => wake).</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/watr/app/timemgmt/UnknownTimeIntervalException.html#UnknownTimeIntervalException-java.lang.String-">UnknownTimeIntervalException(String)</a></span> - Constructor for exception com.watr.app.timemgmt.<a href="com/watr/app/timemgmt/UnknownTimeIntervalException.html" title="class in com.watr.app.timemgmt">UnknownTimeIntervalException</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/watr/app/datastore/room/hydration/HydrationDao.html#update-com.watr.app.datastore.room.hydration.HydrationEntity-">update(HydrationEntity)</a></span> - Method in interface com.watr.app.datastore.room.hydration.<a href="com/watr/app/datastore/room/hydration/HydrationDao.html" title="interface in com.watr.app.datastore.room.hydration">HydrationDao</a></dt>
