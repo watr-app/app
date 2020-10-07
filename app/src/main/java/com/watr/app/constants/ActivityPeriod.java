@@ -7,7 +7,7 @@
 package com.watr.app.constants;
 
 /**
- * Constants for activity periods (I.e. when user is supposed to be awake or asleep).
+ * Constants for activity periods (When user is supposed to be awake or asleep).
  *
  * @author linuswillner
  * @version 1.0.0

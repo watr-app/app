@@ -6,6 +6,12 @@
 
 package com.watr.app.timemgmt;
 
+/**
+ * Thrown when a time interval is unknown (Not wake => bed or bed => wake).
+ *
+ * @author linuswillner
+ * @version 1.0.0
+ */
 public class UnknownTimeIntervalException extends Exception {
   public UnknownTimeIntervalException(String message) {
     super(message);

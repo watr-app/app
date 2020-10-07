@@ -90,7 +90,7 @@ public interface HydrationDao {
   void bulkUpdate(List<HydrationEntity> patcherEntityList);
 
   /**
-   * Delete a hydration record through a matcher, i.e. an entity with a matching primary key will be
+   * Delete a hydration record through a matcher, AKA an entity with a matching primary key will be
    * deleted.
    *
    * @see Delete
@@ -100,7 +100,7 @@ public interface HydrationDao {
   void delete(HydrationEntity matcherEntity);
 
   /**
-   * Deletes hydration records in bulk with a matcher, i.e. an entity with a matching primary key
+   * Deletes hydration records in bulk with a matcher, AKA an entity with a matching primary key
    * will be deleted.
    *
    * @see Delete

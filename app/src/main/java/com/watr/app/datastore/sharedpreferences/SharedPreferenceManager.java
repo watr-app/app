@@ -29,7 +29,9 @@ public abstract class SharedPreferenceManager {
    * @param type {@link SharedPreferenceType}
    * @param key {@link String}
    * @param value {@link Object}
-   * @throws {@link ClassCastException} if the type coercion failed.
+   * @throws ClassCastException if the type coercion failed.
+   * @throws UnknownSharedPreferenceTypeException if the shared preference type did not match those
+   *     found in {@link SharedPreferenceType}.
    */
   // Suppressing the typecast warning here because we cannot know the type before runtime and the
   // Set<String> coercion will complain otherwise

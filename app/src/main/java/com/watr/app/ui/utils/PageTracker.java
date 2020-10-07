@@ -74,7 +74,8 @@ public class PageTracker {
    * history to actually run out at some point, instead of just flipping between the same two items
    * all the time.
    *
-   * @param isBackPress {@link Boolean} Whether this function was triggered from a backpress, i.e. pressing Back
+   * @param isBackPress {@link Boolean} Whether this function was triggered from a backpress, AKA
+   *     pressing Back
    * @return {@link Boolean} Whether this page is the first instance (Or not)
    */
   public boolean currentPageIsFirst(boolean isBackPress) {

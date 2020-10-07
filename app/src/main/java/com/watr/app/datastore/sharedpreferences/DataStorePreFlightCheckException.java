@@ -7,7 +7,7 @@
 package com.watr.app.datastore.sharedpreferences;
 
 /**
- * Indicates an exception (I.e. a missing value or failure to set default value) in data store
+ * Indicates an exception (A missing value or failure to set default value) in data store
  * pre-flight checks.
  *
  * @author linuswillner

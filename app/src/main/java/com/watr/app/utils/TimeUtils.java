@@ -145,7 +145,7 @@ public class TimeUtils {
   }
 
   /**
-   * Checks if current time is between two LocalTime instances, i.e. in their interval.
+   * Checks if current time is between two LocalTime instances (As in is in their interval).
    *
    * @param start {@link LocalTime} Interval-starting LocalTime instance
    * @param end {@link LocalTime} Interval-ending LocalTime instance
