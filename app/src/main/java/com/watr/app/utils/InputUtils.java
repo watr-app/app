@@ -25,7 +25,7 @@ public class InputUtils {
    */
   public static boolean inputIsEmpty (EditText inputField) {
     val input = inputField.getText();
-    return input != null && input.toString().equals("");
+    return input == null || input.toString().equals("");
   }
 
   /**
@@ -36,7 +36,7 @@ public class InputUtils {
    */
   public static boolean inputIsEmptyOrZero (EditText inputField) {
     val input = inputField.getText();
-    return input != null && input.toString().equals("") && Integer.parseInt(input.toString()) == 0;
+    return input == null || input.toString().equals("") || Integer.parseInt(input.toString()) == 0;
   }
 
   /**
